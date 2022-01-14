@@ -1,0 +1,68 @@
+
+#=========================================
+# 铬合金装备
+#=========================================
+铬合金头盔 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=想要个涂装，可惜是文字游戏 type=15 enchanting-rapid=3 enchanting-strong=3
+铬合金甲 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=I Am Iron Man type=16 enchanting-rapid=3 enchanting-strong=3
+铬合金护腿 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=总有些怪物喜欢攻击下盘 type=17 enchanting-rapid=3 enchanting-strong=3
+铬合金靴 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=还是好硬啊，穿着不舒服 type=18 enchanting-rapid=3 enchanting-strong=3
+
+铬合金剑 attack=16 armor=4 cost=-1 sell=50 comments=顶尖的合金工艺 type=111 enchanting-sharp=3 enchanting-rapid=3
+铬合金斧 attack=20 armor=0 cost=-1 sell=50 comments=重量刚刚好！ type=112 enchanting-sharp=3 enchanting-rapid=3
+铬合金枪 attack=24 armor=-2 cost=-1 sell=50 comments=有些沉，但很好用 type=113 enchanting-sharp=3 enchanting-rapid=3
+铬合金火铳 attack=18 armor=0 speed=20 cost=-1 sell=50 comments=口径就是正义 type=115 enchanting-sharp=3 enchanting-rapid=3
+铬合金弩 attack=10 armor=0 speed=50 cost=-1 sell=50 comments=十字弩，双连发！ type=116 enchanting-sharp=3 enchanting-rapid=3
+
+#=========================================
+# 钨合金装备
+#=========================================
+钨合金头盔 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=想要个涂装，可惜是文字游戏 type=15 enchanting-rapid=3 enchanting-strong=3
+钨合金甲 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=I Am Iron Man type=16 enchanting-rapid=3 enchanting-strong=3
+钨合金护腿 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=总有些怪物喜欢攻击下盘 type=17 enchanting-rapid=3 enchanting-strong=3
+钨合金靴 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=还是好硬啊，穿着不舒服 type=18 enchanting-rapid=3 enchanting-strong=3
+
+钨合金剑 attack=16 armor=4 cost=-1 sell=50 comments=顶尖的合金工艺 type=111 enchanting-sharp=4 enchanting-rapid=4
+钨合金斧 attack=20 armor=0 cost=-1 sell=50 comments=重量刚刚好！ type=112 enchanting-sharp=4 enchanting-rapid=4
+钨合金枪 attack=24 armor=-2 cost=-1 sell=50 comments=有些沉，但很好用 type=113 enchanting-sharp=4 enchanting-rapid=4
+钨合金火铳 attack=18 armor=0 speed=20 cost=-1 sell=50 comments=口径就是正义 type=115 enchanting-sharp=4 enchanting-rapid=4
+钨合金弩 attack=10 armor=0 speed=50 cost=-1 sell=50 comments=十字弩，双连发！ type=116 enchanting-sharp=4 enchanting-rapid=4
+
+#=========================================
+# 九天玄铁装备
+#=========================================
+九天玄铁头盔 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=想要个涂装，可惜是文字游戏 type=15 enchanting-rapid=4 enchanting-strong=4
+九天玄铁甲 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=I Am Iron Man type=16 enchanting-rapid=4 enchanting-strong=4
+九天玄铁护腿 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=总有些怪物喜欢攻击下盘 type=17 enchanting-rapid=4 enchanting-strong=4
+九天玄铁靴 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=还是好硬啊，穿着不舒服 type=18 enchanting-rapid=4 enchanting-strong=4
+
+九天玄铁剑 attack=16 armor=4 cost=-1 sell=50 comments=顶尖的合金工艺 type=111 enchanting-sharp=4 enchanting-rapid=4
+九天玄铁斧 attack=20 armor=0 cost=-1 sell=50 comments=重量刚刚好！ type=112 enchanting-sharp=4 enchanting-rapid=4
+九天玄铁镐 attack=20 armor=0 cost=-1 sell=50 comments=重量刚刚好！ type=112 enchanting-sharp=4 enchanting-rapid=4
+
+#=========================================
+# 秘银装备
+#=========================================
+秘银头盔 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=想要个涂装，可惜是文字游戏 type=15 enchanting-rapid=5 enchanting-strong=5
+秘银甲 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=I Am Iron Man type=16 enchanting-rapid=5 enchanting-strong=5
+秘银护腿 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=总有些怪物喜欢攻击下盘 type=17 enchanting-rapid=5 enchanting-strong=5
+秘银靴 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=还是好硬啊，穿着不舒服 type=18 enchanting-rapid=5 enchanting-strong=5
+
+秘银剑 attack=16 armor=4 cost=-1 sell=50 comments=顶尖的合金工艺 type=111 enchanting-sharp=5 enchanting-rapid=5
+秘银斧 attack=20 armor=0 cost=-1 sell=50 comments=重量刚刚好！ type=112 enchanting-sharp=5 enchanting-rapid=5
+秘银枪 attack=24 armor=-2 cost=-1 sell=50 comments=有些沉，但很好用 type=113 enchanting-sharp=5 enchanting-rapid=5
+秘银火铳 attack=18 armor=0 speed=20 cost=-1 sell=50 comments=口径就是正义 type=115 enchanting-sharp=5 enchanting-rapid=5
+秘银弓 attack=10 armor=0 speed=50 cost=-1 sell=50 comments=十字弩，双连发！ type=116 enchanting-sharp=5 enchanting-rapid=5
+
+#=========================================
+# 太古合金装备
+#=========================================
+太古合金头盔 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=想要个涂装，可惜是文字游戏 type=15 enchanting-rapid=6 enchanting-strong=6
+太古合金甲 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=I Am Iron Man type=16 enchanting-rapid=6 enchanting-strong=6
+太古合金护腿 attack=2 armor=6 speed=-6 cost=-1 sell=40 comments=总有些怪物喜欢攻击下盘 type=17 enchanting-rapid=6 enchanting-strong=6
+太古合金靴 attack=2 armor=5 speed=-6 cost=-1 sell=40 comments=还是好硬啊，穿着不舒服 type=18 enchanting-rapid=6 enchanting-strong=6
+
+太古合金剑 attack=16 armor=4 cost=-1 sell=50 comments=顶尖的合金工艺 type=111 enchanting-sharp=6 enchanting-rapid=6
+太古合金斧 attack=20 armor=0 cost=-1 sell=50 comments=重量刚刚好！ type=112 enchanting-sharp=6 enchanting-rapid=6
+太古合金枪 attack=24 armor=-2 cost=-1 sell=50 comments=有些沉，但很好用 type=113 enchanting-sharp=6 enchanting-rapid=6
+太古合金火铳 attack=18 armor=0 speed=20 cost=-1 sell=50 comments=口径就是正义 type=115 enchanting-sharp=6 enchanting-rapid=6
+太古合金弓 attack=10 armor=0 speed=50 cost=-1 sell=50 comments=十字弩，双连发！ type=116 enchanting-sharp=6 enchanting-rapid=6

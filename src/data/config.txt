@@ -1,0 +1,13 @@
+version=0.6.11
+qq=
+name=小柒
+color=天蓝色
+age=14
+master=
+masterRight=
+administrator=
+contributor=
+RPGadministrator=
+blacklistGroup=
+blacklistMember=
+testGroup=7

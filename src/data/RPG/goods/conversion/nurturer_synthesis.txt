@@ -1,0 +1,59 @@
+# 培育师合成表
+# 书写格式
+#        合成物品 level=1 path=物品1x数量，物品2x数量
+#        表示矿工1级时可以使用该合成路线，会覆盖掉原来的合成路线（如果有的话）
+#        高等级的路线会覆盖掉低等级路线
+#        每个物品应该最后只有一个有效合成路线（不同级别的遵循上诉原则）
+
+
+#=========================================
+# 植物
+#=========================================
+橡树苗 additional=木板x15 level=1 path=橡树苗x1 time=180
+水稻种子 additional=米x8 level=1 path=水稻种子x1 time=90
+苹果苗 additional=苹果x6 level=1 path=苹果苗x1 time=120
+
+杂交水稻种子 additional=米x36 level=3 path=杂交水稻种子x1 time=360
+灵木树苗 additional=灵木x20 level=3 path=灵木树苗x1 time=1440
+棉花种子 additional=棉花x5 level=4 path=棉花种子x1 time=480
+
+生姜 additional=生姜粉x10 level=4 path=生姜x1 time=60
+茶树 additional=茶叶x10 level=4 path=茶树x1 time=60
+板蓝根种子 additional=板蓝根x2 level=4 path=板蓝根种子x1 time=60
+
+#=========================================
+# 牲畜
+#=========================================
+羊犊子 additional=羊犊子x1，肉x2 level=2 path=羊犊子x1 time=60
+牛犊子 additional=牛犊子x1，肉x3 level=2 path=牛犊子x1 time=90
+空间兽 additional=空间碎片x1 level=5 path=空间兽x1 time=1410
+
+蚕 additional=蚕丝x3 level=6 path=蚕x1 time=210
+
+胡萝卜 additional=胡萝卜x2 level=6 path=胡萝卜x1 time=30
+土豆块 additional=土豆x1 level=6 path=土豆块x1 time=30
+
+#=========================================
+# 药水
+#=========================================
+体力药水 level=1 path=米x2，苹果x2
+生命药水 level=2 path=肉x2，米x1
+熟肉 level=2 path=肉x2
+布 level=4 path=棉花x2
+
+茶水 level=4 path=茶叶x5
+
+面粉 level=4 path=米x3
+冰粉 level=4 path=面粉x2
+
+姜汤 level=4 path=生姜粉x5
+丝绸 level=6 path=蚕丝x5
+
+金苹果 level=6 path=苹果x1，金锭x30
+金萝卜 level=6 path=胡萝卜x1，金锭x3
+
+薯条 level=6 path=土豆x3
+薯片 level=6 path=土豆x2
+土豆泥 level=6 path=土豆x2，面粉x1
+
+金丝楠木 level=6 path=灵木x3，蚕丝x6
