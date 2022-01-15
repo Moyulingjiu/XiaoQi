@@ -4,7 +4,7 @@ import random
 import base64
 
 from mirai import Plain, At, AtAll, Image
-from mirai.models.message import FlashImage
+from mirai.models.message import FlashImage, MusicShare, MusicShareKind
 
 from plugins import BaseFunction
 from plugins import Clash
@@ -1762,12 +1762,14 @@ class MessageProcessing:
                 need_reply = True
 
             elif message == '拾取漂流瓶' or message == '捡漂流瓶' or message == '捞漂流瓶':
-                reply_text = self.bottle.pick()
+                # reply_text = self.bottle.pick()
+                reply_text = '因为色情、广告、辱骂内容屡禁不止，所以漂流瓶功能暂时封禁'
                 need_reply = True
             elif message[:4] == '扔漂流瓶' and message_len > 4:
                 text = message[4:].strip()
                 if len(text) > 0:
-                    reply_text = self.bottle.throw(qq, text)
+                    reply_text = '因为色情、广告、辱骂内容屡禁不止，所以漂流瓶功能暂时封禁'
+                    # reply_text = self.bottle.throw(qq, text)
                     need_reply = True
 
             elif message[:5] == '随机字符串' and message_len > 5:
@@ -1775,6 +1777,15 @@ class MessageProcessing:
                 if text.isdigit():
                     need_reply = True
                     reply_text = BaseFunction.random_char(int(text))
+            elif message == '测试消息':
+                await bot.send(event, MusicShare(MusicShareKind.NeteaseCloudMusic,
+                                                 "万疆",
+                                                 "李玉刚",
+                                                 "https://music.163.com/#/song?id=1840861309",
+                                                 "http://p1.music.126.net/-JDzwGiMUcSl3Ghgx-jagQ==/109951165892665962.jpg",
+                                                 "http://music.163.com/song/media/outer/url?id=1840861309",
+                                                 "[分享]万疆"))
+                return
 
             if need_reply:
                 self.statistics['base_function'] += 1
