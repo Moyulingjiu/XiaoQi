@@ -1,34 +1,45 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+"""
+入口文件，直接运行该文件即可
 
-import nonebot
+author：墨羽翎玖
+version：1.0.0
+"""
+import asyncio
 
-# Custom your logger
-# 
-# from nonebot.log import logger, default_format
-# logger.add("error.log",
-#            rotation="00:00",
-#            diagnose=False,
-#            level="ERROR",
-#            format=default_format)
+from graia.ariadne.event.message import FriendMessage, GroupMessage
+from graia.broadcast import Broadcast
 
-# You can pass some keyword args config to init function
-nonebot.init()
-app = nonebot.get_asgi()
+from graia.ariadne.app import Ariadne
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import Plain, Source
+from graia.ariadne.model import Friend, MiraiSession, Member, Group
 
-driver = nonebot.get_driver()
+loop = asyncio.new_event_loop()
 
-
-# Please DO NOT modify this file unless you know what you are doing!
-# As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
-nonebot.load_from_toml("pyproject.toml")
-
-# Modify some config / config depends on loaded configs
-# 
-# config = driver.config
-# do something...
+bcc = Broadcast(loop=loop)
+app = Ariadne(
+    broadcast=bcc,
+    connect_info=MiraiSession(
+        host="http://localhost:8080",  # 填入 HTTP API 服务运行的地址
+        verify_key="Xiao_Qi_Key",  # 填入 verifyKey
+        account=1812322920,  # 你的机器人的 qq 号
+    )
+)
 
 
-if __name__ == "__main__":
-    nonebot.logger.warning("Always use `nb run` to start the bot instead of manually running!")
-    nonebot.run(app="__mp_main__:app")
+@bcc.receiver(FriendMessage)
+async def friend_message_listener(app: Ariadne, friend: Friend, source: Source):
+    message = await app.getMessageFromId(source.id)
+    print(message)
+    await app.sendMessage(friend, MessageChain.create(Plain("Hello, World!")))
+
+
+@bcc.receiver(GroupMessage)
+async def group_message_listener(app: Ariadne, member: Member, group: Group, source: Source):
+    message = await app.getMessageFromId(source.id)
+    if message.messageChain == [Plain("小玖")]:
+        await app.sendMessage(group, MessageChain.create(Plain("我在~")))
+
+
+if __name__ == '__main__':
+    loop.run_until_complete(app.lifecycle())
