@@ -5,25 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/AuthorizationDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/BotDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/AuthorizationPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/Authorization.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/Bot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/KeyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/AuthorizationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/BotService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/DecorativeReturnObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/FunctionUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/KeyPoMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/KeyPo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AuthorizationPo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/KeyPoExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AuthorizationPoExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/ReturnNo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/ReturnNo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/resources/mybatis-generator-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/mybatis-generator-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/KeyPoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/AuthorizationPoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BaseFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BaseFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +72,7 @@
       <recent name="E:\GitHub项目\小柒\1.x" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.ServiceApplication">
+  <component name="RunManager" selected="应用程序.Main (1)">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="top.beforedawn.Main" />
       <module name="client" />
@@ -92,7 +86,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestLogger.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRequest.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
         <pattern>
@@ -101,7 +95,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="top.beforedawn.util" />
-      <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestLogger" />
+      <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestRequest" />
       <option name="METHOD_NAME" value="test1" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -166,10 +160,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Main (1)" />
+        <item itemvalue="JUnit.TestRequest.test1" />
         <item itemvalue="JUnit.TestYamlReader.testRead1" />
         <item itemvalue="JUnit.TestYamlReader.testWrite1" />
         <item itemvalue="JUnit.TestYamlReader.test1" />
-        <item itemvalue="JUnit.TestLogger.test1" />
       </list>
     </recent_temporary>
   </component>
@@ -187,7 +181,7 @@
       <workItem from="1644551012936" duration="15459000" />
       <workItem from="1644645260359" duration="5141000" />
       <workItem from="1644722374261" duration="26443000" />
-      <workItem from="1644802117695" duration="9802000" />
+      <workItem from="1644802117695" duration="15404000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>
