@@ -192,7 +192,7 @@
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
-        <table tableName="key" domainObjectName="KeyPo"
+        <table tableName="authorization" domainObjectName="AuthorizationPo"
                enableCountByExample="false" enableUpdateByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="false" delimitAllColumns="true">

@@ -26,6 +26,9 @@ public class Common {
      * @author 墨羽翎玖
      */
     public static <T> T cloneVo(Object bo, Class<T> voClass) {
+        if (bo == null) {
+            return null;
+        }
         Class boClass = bo.getClass();
         T newVo = null;
         try {
@@ -139,5 +142,17 @@ public class Common {
             e.printStackTrace();
         }
         return newVo;
+    }
+
+    public static DecorativeReturnObject decorate(ReturnObject ret) {
+        return new DecorativeReturnObject(ret);
+    }
+
+    public static DecorativeReturnObject decorate(ReturnNo returnNo) {
+        return new DecorativeReturnObject(new ReturnObject(returnNo));
+    }
+
+    public static DecorativeReturnObject decorate(ReturnNo returnNo, Object obj) {
+        return new DecorativeReturnObject(new ReturnObject(returnNo, obj));
     }
 }
