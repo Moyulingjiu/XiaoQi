@@ -5,87 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotSwitcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/Blacklist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/SimpleBlacklist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/SystemRight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BaseFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/ConfigUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SimpleCombineBot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/YamlReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestYamlReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/AbstractPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/BlacklistPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/BotPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/DriftingBottlePoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/FortunePoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/GroupPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/IdiomPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/KeyPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/QuestionsAnswersPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/RiddlePoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/UserPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/mapper/VocabularyPoMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/UserRight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AbstractPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AbstractPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/BlacklistPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/BlacklistPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/BotPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/BotPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/DriftingBottlePo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/DriftingBottlePoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/FortunePo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/FortunePoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/GroupPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/GroupPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/IdiomPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/IdiomPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/KeyPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/KeyPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/QuestionsAnswersPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/QuestionsAnswersPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/RiddlePo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/RiddlePoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/UserPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/UserPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/VocabularyPo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/VocabularyPoExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/UserRetVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/Common.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/ReturnNo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/ReturnObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/mybatis-generator-config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/AbstractPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/BlacklistPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/BotPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/DriftingBottlePoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/FortunePoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/GroupPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/IdiomPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/KeyPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/QuestionsAnswersPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/RiddlePoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/UserPoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/VocabularyPoMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/ServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/ServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +55,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../人才项目组/backend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../OOAD项目/选做模块/OOAD" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
@@ -140,7 +64,7 @@
       <recent name="E:\GitHub项目\小柒\1.x" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Main (1)">
+  <component name="RunManager" selected="Spring Boot.ServiceApplication">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="top.beforedawn.Main" />
       <module name="client" />
@@ -248,7 +172,7 @@
       <workItem from="1644473112727" duration="18157000" />
       <workItem from="1644551012936" duration="15459000" />
       <workItem from="1644645260359" duration="5141000" />
-      <workItem from="1644722374261" duration="21007000" />
+      <workItem from="1644722374261" duration="26443000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

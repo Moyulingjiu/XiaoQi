@@ -1,10 +1,10 @@
 package top.beforedawn.service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.beforedawn.service.model.vo.ret.UserRetVo;
 import top.beforedawn.service.service.UserService;
+import top.beforedawn.service.util.ReturnNo;
 import top.beforedawn.service.util.ReturnObject;
 
 @RestController
@@ -14,7 +14,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    public ReturnObject getUserByQq() {
-
+    @GetMapping("/user/{qq}")
+    public ReturnObject<UserRetVo> getUserByQq(
+            @PathVariable Long qq,
+            @RequestParam(required = false) Long botId
+    ) {
+        System.out.println(qq);
+        UserRetVo user = userService.getUser(qq, botId);
+        return new ReturnObject<>(ReturnNo.OK, user);
     }
 }
