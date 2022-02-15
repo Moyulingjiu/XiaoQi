@@ -91,6 +91,12 @@ public class CommonUtil {
         return instant.atZone(zoneId).toLocalDateTime();
     }
 
+    public static String LocalDateTime2String(LocalDateTime dateTime) {
+        if (dateTime == null) return "";
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return f.format(LocalDateTime2Date(dateTime));
+    }
+
     /**
      * 将LocalDate转为Date
      *
@@ -100,6 +106,18 @@ public class CommonUtil {
     public static Date LocalDate2Date(LocalDate localDate) {
         ZoneId zoneId = ZoneId.systemDefault();
         ZonedDateTime zdt = localDate.atStartOfDay(zoneId);
+        return Date.from(zdt.toInstant());
+    }
+
+    /**
+     * 将LocalDate转为Date
+     *
+     * @param localDate 日期
+     * @return Date类型的日期
+     */
+    public static Date LocalDateTime2Date(LocalDateTime localDate) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zdt = localDate.atZone(zoneId);
         return Date.from(zdt.toInstant());
     }
 
@@ -127,8 +145,8 @@ public class CommonUtil {
      */
     public static LocalDateTime getLocalDateTime(String str) {
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
-            return LocalDate.parse(str, formatter).atStartOfDay();
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return Date2LocalDateTime(format.parse(str.replace("T", " ")));
         } catch (Exception e) {
             return LocalDateTime.now();
         }

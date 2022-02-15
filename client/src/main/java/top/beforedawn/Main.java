@@ -5,10 +5,12 @@ import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import top.beforedawn.config.BotConfig;
+import top.beforedawn.models.bo.BotRemoteInformation;
 import top.beforedawn.models.bo.SimpleBlacklist;
 import top.beforedawn.plugins.BaseFunction;
 import top.beforedawn.plugins.BasePlugin;
 import top.beforedawn.util.CommonUtil;
+import top.beforedawn.util.FunctionUtil;
 import top.beforedawn.util.MyBot;
 import top.beforedawn.util.SingleEvent;
 
@@ -85,6 +87,30 @@ public class Main {
         }
     }
 
+    private static void checkAuthorization(SingleEvent singleEvent) {
+        if (singleEvent.getMessage().plainEqual("机器人信息")) {
+            BotRemoteInformation bot = FunctionUtil.getBot(singleEvent);
+            if (bot != null) {
+                StringBuilder builder = new StringBuilder();
+                builder.append("机器人id：").append(bot.getQq()).append("\n");
+                builder.append("名字：").append(bot.getName()).append("\n");
+                builder.append("主人：").append(bot.getMasterQq()).append("\n");
+                builder.append("激活码：").append(bot.getKeyValue()).append("\n");
+                if (bot.getKeyType().equals("NORMAL")) {
+                    builder
+                            .append("有效期：")
+                            .append(CommonUtil.LocalDateTime2String(bot.getKeyValidBeginDate()))
+                            .append("—")
+                            .append(CommonUtil.LocalDateTime2String(bot.getKeyValidEndDate()));
+                } else {
+                    builder.append("激活码有效期：无限期");
+                }
+
+                singleEvent.send(builder.toString());
+            }
+        }
+    }
+
     public static void handle(SingleEvent singleEvent) {
         if (!singleEvent.valid()) {
             return;
@@ -93,6 +119,7 @@ public class Main {
             return;
         }
         checkRight(singleEvent);
+        checkAuthorization(singleEvent);
 
         // 所有插件进行轮询
         for (BasePlugin plugin : plugins) {

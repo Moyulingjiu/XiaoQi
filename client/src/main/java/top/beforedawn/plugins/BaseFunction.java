@@ -29,7 +29,7 @@ public class BaseFunction extends BasePlugin {
                 singleEvent.sendAt("你抛出的是：反面");
             }
         } else if (singleEvent.getMessage().plainEqual("运势")) {
-            MyUser user = FunctionUtil.getLuck(singleEvent.getSenderId(), singleEvent.getBotId());
+            MyUser user = FunctionUtil.getLuck(singleEvent);
             int luck = user.getLuck();
             singleEvent.sendAt("你今天的运势是：" + luck);
         }

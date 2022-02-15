@@ -2,9 +2,11 @@ package top.beforedawn.service.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 通用工具类
@@ -12,6 +14,21 @@ import java.time.ZonedDateTime;
  * @author 墨羽翎玖
  */
 public class Common {
+    /**
+     * 解析文本中的时间
+     *
+     * @param str 日期时间
+     *            eg: 2020-01-01T12:32:00
+     * @return LocalDateTime
+     */
+    public static LocalDateTime getLocalDateTime(String str) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return LocalDateTime.parse(str, formatter);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     /**
      * 根据class实例化一个对象，并深度克隆bo中对应属性到这个新对象
@@ -150,6 +167,10 @@ public class Common {
 
     public static DecorativeReturnObject decorate(ReturnNo returnNo) {
         return new DecorativeReturnObject(new ReturnObject(returnNo));
+    }
+
+    public static DecorativeReturnObject decorate(Object obj) {
+        return new DecorativeReturnObject(new ReturnObject(obj));
     }
 
     public static DecorativeReturnObject decorate(ReturnNo returnNo, Object obj) {
