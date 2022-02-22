@@ -86,7 +86,8 @@ public class MessageStatistics {
     }
 
     public void record(Long userId, String title) {
-        plugins.put(title, plugins.getOrDefault(title, 1L));
+        Long number = plugins.getOrDefault(title, 0L);
+        plugins.put(title, ++number);
         record(userId);
     }
 

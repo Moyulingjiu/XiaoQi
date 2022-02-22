@@ -163,6 +163,7 @@ public class Main {
 
     public static void main(String[] args) {
         // 统一配置路径
+        // todo: 这两个参数应该由args获取而非写死
         String workdir = "C:/mirai";
         Long botId = 1812322920L;
 

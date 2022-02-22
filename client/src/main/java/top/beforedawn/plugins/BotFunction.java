@@ -146,6 +146,62 @@ public class BotFunction extends BasePlugin {
             if (!flag) {
                 singleEvent.send("格式错误！");
             }
+        } else if (singleEvent.getMessage().plainStartWith("添加黑名单群")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("添加黑名单群");
+            ArrayList<String> split = analysis.split();
+            boolean flag = false;
+            if (split.size() == 2) {
+                long id = CommonUtil.getLong(split.get(0));
+                if (id > 0L) {
+                    flag = true;
+                    if (singleEvent.aboveBotAdmin()) {
+                        if (id != singleEvent.getConfig().getOfficialGroup()) {
+                            SimpleBlacklist simpleBlacklist = new SimpleBlacklist();
+                            simpleBlacklist.setKey(id);
+                            simpleBlacklist.setComment(split.get(1));
+                            simpleBlacklist.setCreateId(singleEvent.getSenderId());
+                            simpleBlacklist.setCreate(LocalDateTime.now());
+                            simpleBlacklist.setModifiedId(singleEvent.getSenderId());
+                            simpleBlacklist.setModified(LocalDateTime.now());
+                            singleEvent.getConfig().getBlacklist().appendGroup(simpleBlacklist);
+                            singleEvent.getConfig().save();
+                            singleEvent.send("添加成功~");
+                        } else {
+                            singleEvent.send("不可以添加官方群");
+                        }
+                    } else {
+                        singleEvent.send("权限不足");
+                    }
+                }
+            }
+            if (!flag) {
+                singleEvent.send("格式错误！");
+            }
+        } else if (singleEvent.getMessage().plainStartWith("删除黑名单群")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("删除黑名单群");
+            ArrayList<String> split = analysis.split();
+            boolean flag = false;
+            if (split.size() == 1) {
+                long id = CommonUtil.getLong(split.get(0));
+                if (id > 0L) {
+                    flag = true;
+                    if (singleEvent.aboveBotAdmin()) {
+                        if (singleEvent.getConfig().getBlacklist().removeGroup(id)) {
+                            singleEvent.getConfig().save();
+                            singleEvent.send("删除成功~");
+                        } else {
+                            singleEvent.send("该群不在黑名单中~");
+                        }
+                    } else {
+                        singleEvent.send("权限不足");
+                    }
+                }
+            }
+            if (!flag) {
+                singleEvent.send("格式错误！");
+            }
         }
     }
 
