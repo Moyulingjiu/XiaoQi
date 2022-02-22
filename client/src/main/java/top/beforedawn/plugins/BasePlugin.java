@@ -14,14 +14,17 @@ import top.beforedawn.util.SingleEvent;
  */
 public abstract class BasePlugin {
     protected MessageChainBuilder messages = new MessageChainBuilder();
+    protected String pluginName = "default_plugin";
 
     public void handle(SingleEvent singleEvent) {
+        singleEvent.setTitle(pluginName);
         handleCommon(singleEvent);
         if (singleEvent.isFriendMessage()) {
             handleFriend(singleEvent);
         } else if (singleEvent.isGroupMessage()) {
             handleGroup(singleEvent);
         }
+        singleEvent.setTitle(null);
     }
 
     public abstract void handleCommon(SingleEvent singleEvent);

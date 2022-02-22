@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/user/{qq}")
     public Object getUserByQq(
             @PathVariable Long qq,
-            @RequestParam(required = false) Long botId
+            @RequestParam() Long botId
     ) {
         if (botService.invalidBot(botId)) {
             return Common.decorate(ReturnNo.FORBIDDEN);
@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/luck/{qq}")
     public Object getUserLuckByQq (
             @PathVariable Long qq,
-            @RequestParam(required = false) Long botId
+            @RequestParam Long botId
     ) {
         if (botService.invalidBot(botId)) {
             return Common.decorate(ReturnNo.FORBIDDEN);

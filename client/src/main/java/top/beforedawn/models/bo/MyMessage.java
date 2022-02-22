@@ -30,6 +30,16 @@ public class MyMessage {
     }
 
     /**
+     * 文本严格等于并且还需要被艾特
+     *
+     * @param str 文本信息
+     * @return boolean
+     */
+    public boolean plainBeAtEqual(String str) {
+        return plainEqual(str) && beAt;
+    }
+
+    /**
      * 判断文字是否严格等于
      *
      * @param str 文字

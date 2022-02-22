@@ -1,9 +1,11 @@
 package top.beforedawn.util;
 
+import com.alibaba.fastjson.JSONArray;
+import top.beforedawn.models.bo.Blacklist;
 import top.beforedawn.models.bo.BotRemoteInformation;
 import top.beforedawn.models.bo.MyUser;
 
-public class FunctionUtil {
+public class HttpUtil {
     private static final String serviceIp = "localhost";
     private static final int servicePort = 8080;
 
@@ -14,6 +16,10 @@ public class FunctionUtil {
             builder.append(":").append(servicePort);
         }
         return builder.toString();
+    }
+
+    public static MyUser getUser(SingleEvent singleEvent) {
+        return new MyUser();
     }
 
     public static MyUser getLuck(SingleEvent singleEvent) {
@@ -56,9 +62,6 @@ public class FunctionUtil {
         bot.setKeyUserId(response.getData().getLong("keyUserId"));
         bot.setKeyValidBeginDate(CommonUtil.getLocalDateTime(response.getData().getString("keyValidBeginDate")));
         bot.setKeyValidEndDate(CommonUtil.getLocalDateTime(response.getData().getString("keyValidEndDate")));
-        System.out.println(bot.getKeyValidEndDate());
-        System.out.println(response.getData().getString("keyValidEndDate"));
-        System.out.println(CommonUtil.getLocalDateTime(response.getData().getString("keyValidEndDate")));
 
         bot.setKeyType(response.getData().getString("keyType"));
 
@@ -67,5 +70,16 @@ public class FunctionUtil {
         bot.setCreate(CommonUtil.getLocalDateTime(response.getData().getString("create")));
         bot.setCreateId(response.getData().getLong("createId"));
         return bot;
+    }
+
+    public static Blacklist getBlacklist(SingleEvent singleEvent) {
+        HttpResponse response = HttpRequest.sendGet(serverAddress() + "/blacklist/blacklists" , "botId=" + singleEvent.getBotId());
+        Blacklist blacklist = new Blacklist();
+        if (response.getCode()!= 0) {
+            singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
+            return null;
+        }
+        JSONArray user = response.getData().getJSONArray("user");
+        return blacklist;
     }
 }

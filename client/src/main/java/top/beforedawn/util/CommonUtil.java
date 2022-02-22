@@ -153,30 +153,6 @@ public class CommonUtil {
     }
 
     /**
-     * 是否需要提醒
-     *
-     * @param key key键值
-     * @return 是否需要提醒
-     */
-    public static boolean needRemind(SimpleBlacklist key) {
-        boolean remind = true;
-        if (key.getLastRemindTime() != null) {
-            remind = false;
-            Duration duration = Duration.between(key.getLastRemindTime(), LocalDateTime.now());
-            long days = duration.toDays();
-            // 间隔天数大于1天，并且最多提醒十次
-            if (days >= 1 && key.getRemind() < 10L) {
-                remind = true;
-            }
-        }
-        if (remind) {
-            key.setRemind(key.getRemind() + 1);
-            key.setLastRemindTime(LocalDateTime.now());
-        }
-        return remind;
-    }
-
-    /**
      * 获取消息转为自己的格式
      *
      * @param chain 消息链

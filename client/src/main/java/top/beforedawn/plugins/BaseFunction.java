@@ -1,15 +1,8 @@
 package top.beforedawn.plugins;
 
-import net.mamoe.mirai.event.events.FriendMessageEvent;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageChainBuilder;
-import net.mamoe.mirai.message.data.PlainText;
-import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.bo.MyUser;
 import top.beforedawn.util.CommonUtil;
-import top.beforedawn.util.FunctionUtil;
-import top.beforedawn.util.SimpleCombineBot;
+import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
 
 /**
@@ -18,6 +11,10 @@ import top.beforedawn.util.SingleEvent;
  * @author 墨羽翎玖
  */
 public class BaseFunction extends BasePlugin {
+    public BaseFunction() {
+        pluginName = "base_function";
+    }
+
     @Override
     public void handleCommon(SingleEvent singleEvent) {
         if (singleEvent.getMessage().plainEqual("骰子") || singleEvent.getMessage().plainEqual("色子")) {
@@ -29,7 +26,7 @@ public class BaseFunction extends BasePlugin {
                 singleEvent.sendAt("你抛出的是：反面");
             }
         } else if (singleEvent.getMessage().plainEqual("运势")) {
-            MyUser user = FunctionUtil.getLuck(singleEvent);
+            MyUser user = HttpUtil.getLuck(singleEvent);
             int luck = user.getLuck();
             singleEvent.sendAt("你今天的运势是：" + luck);
         }

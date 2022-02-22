@@ -3,11 +3,14 @@ package top.beforedawn.util;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.*;
 import top.beforedawn.config.BotConfig;
+import top.beforedawn.models.bo.GroupRight;
 import top.beforedawn.models.bo.MyMessage;
+import top.beforedawn.models.bo.SystemRight;
 
 /**
  * 事件抽象类
@@ -15,8 +18,8 @@ import top.beforedawn.models.bo.MyMessage;
  * @author 墨羽翎玖
  */
 @Data
-@NoArgsConstructor
 public class SingleEvent {
+    public String title;
     private Long botId;
     private Long groupId;
     private Long senderId;
@@ -24,6 +27,10 @@ public class SingleEvent {
     private SimpleCombineBot combineBot;
     private GroupMessageEvent groupMessageEvent;
     private FriendMessageEvent friendMessageEvent;
+
+    public SingleEvent() {
+
+    }
 
     public SingleEvent(GroupMessageEvent event) {
         setGroupMessageEvent(event);
@@ -80,6 +87,95 @@ public class SingleEvent {
         return friendMessageEvent != null;
     }
 
+    public SystemRight getRight() {
+        if (combineBot == null) {
+            return SystemRight.MEMBER;
+        }
+        return combineBot.getConfig().checkRight(getSenderId());
+    }
+
+    public GroupRight getGroupRight() {
+        if (isGroupMessage()) {
+            switch (groupMessageEvent.getPermission().getLevel()) {
+                case 2:
+                    return GroupRight.MASTER;
+                case 1:
+                    return GroupRight.ADMIN;
+                default:
+                    return GroupRight.MEMBER;
+            }
+        } else {
+            return GroupRight.NONE;
+        }
+    }
+
+    /**
+     * 权限是否是大于群管理的
+     *
+     * @return boolean
+     */
+    public boolean aboveGroupAdmin() {
+        return !(getRight() == SystemRight.MEMBER && getGroupRight() == GroupRight.MEMBER);
+    }
+
+    /**
+     * 权限是否是大于机器人主人的
+     *
+     * @return boolean
+     */
+    public boolean aboveBotMaster() {
+        return getRight() != SystemRight.MEMBER && getRight() != SystemRight.ADMIN;
+    }
+
+    /**
+     * 退群
+     */
+    public void quit() {
+        if (isGroupMessage()) {
+            groupMessageEvent.getSubject().quit();
+        }
+    }
+
+    public void record() {
+        if (title != null && title.length() != 0) {
+            getConfig().getStatistics().record(getSenderId(), title);
+        } else {
+            getConfig().getStatistics().record(getSenderId());
+        }
+    }
+
+    /**
+     * 给主人发送消息
+     *
+     * @param chain 消息链
+     */
+    public void sendMaster(MessageChain chain) {
+        if (combineBot == null) {
+            return;
+        }
+        Friend friend = combineBot.getBot().getFriend(getConfig().getMaster());
+        if (friend != null) {
+            record();
+            friend.sendMessage(chain);
+        }
+    }
+
+    /**
+     * 给主人发送消息
+     *
+     * @param plain 文本
+     */
+    public void sendMaster(String plain) {
+        if (combineBot == null) {
+            return;
+        }
+        Friend friend = combineBot.getBot().getFriend(getConfig().getMaster());
+        if (friend != null) {
+            record();
+            friend.sendMessage(plain);
+        }
+    }
+
     /**
      * 发送消息
      *
@@ -87,8 +183,10 @@ public class SingleEvent {
      */
     public void send(MessageChain chain) {
         if (isGroupMessage()) {
+            record();
             groupMessageEvent.getSubject().sendMessage(chain);
         } else if (isFriendMessage()) {
+            record();
             friendMessageEvent.getSubject().sendMessage(chain);
         }
     }
@@ -100,8 +198,10 @@ public class SingleEvent {
      */
     public void send(String plain) {
         if (isGroupMessage()) {
+            record();
             groupMessageEvent.getSubject().sendMessage(plain);
         } else if (isFriendMessage()) {
+            record();
             friendMessageEvent.getSubject().sendMessage(plain);
         }
     }
@@ -143,8 +243,10 @@ public class SingleEvent {
      */
     public void sendTemp(MessageChain chain) {
         if (isGroupMessage()) {
+            record();
             groupMessageEvent.getSubject().sendMessage(chain);
         } else if (isFriendMessage()) {
+            record();
             friendMessageEvent.getSubject().sendMessage(chain);
         }
     }

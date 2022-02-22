@@ -16,9 +16,6 @@ public class TestYamlReader {
         System.out.println(a.getClass().getName());
         System.out.println(a.get(0).getClass().getName());
 
-        Blacklist member = ConfigUtil.analysisBlacklist(a);
-        System.out.println(member);
-
         ArrayList<Long> admin = (ArrayList<Long>) yamlReader.getValueByKey("admin");
         System.out.println(admin);
         ArrayList<Long> systemSuperAdministrator = (ArrayList<Long>) yamlReader.getValueByKey("system_super_administrator");

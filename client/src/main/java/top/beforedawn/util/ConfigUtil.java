@@ -43,9 +43,6 @@ public class ConfigUtil {
                     if (map.containsKey("create_id")) {
                         simpleBlacklist.setCreateId(((Integer) map.get("create_id")).longValue());
                     }
-                    if (simpleBlacklist.getKey() != null) {
-                        blacklist.append(simpleBlacklist);
-                    }
                 }
             }
         }
