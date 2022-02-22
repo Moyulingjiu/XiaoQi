@@ -385,63 +385,63 @@ public class DriftingBottlePoExample {
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentIsNull() {
-            addCriterion("`permanment` is null");
+        public Criteria andPermanentIsNull() {
+            addCriterion("`permanent` is null");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentIsNotNull() {
-            addCriterion("`permanment` is not null");
+        public Criteria andPermanentIsNotNull() {
+            addCriterion("`permanent` is not null");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentEqualTo(Byte value) {
-            addCriterion("`permanment` =", value, "permanment");
+        public Criteria andPermanentEqualTo(Byte value) {
+            addCriterion("`permanent` =", value, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentNotEqualTo(Byte value) {
-            addCriterion("`permanment` <>", value, "permanment");
+        public Criteria andPermanentNotEqualTo(Byte value) {
+            addCriterion("`permanent` <>", value, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentGreaterThan(Byte value) {
-            addCriterion("`permanment` >", value, "permanment");
+        public Criteria andPermanentGreaterThan(Byte value) {
+            addCriterion("`permanent` >", value, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentGreaterThanOrEqualTo(Byte value) {
-            addCriterion("`permanment` >=", value, "permanment");
+        public Criteria andPermanentGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`permanent` >=", value, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentLessThan(Byte value) {
-            addCriterion("`permanment` <", value, "permanment");
+        public Criteria andPermanentLessThan(Byte value) {
+            addCriterion("`permanent` <", value, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentLessThanOrEqualTo(Byte value) {
-            addCriterion("`permanment` <=", value, "permanment");
+        public Criteria andPermanentLessThanOrEqualTo(Byte value) {
+            addCriterion("`permanent` <=", value, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentIn(List<Byte> values) {
-            addCriterion("`permanment` in", values, "permanment");
+        public Criteria andPermanentIn(List<Byte> values) {
+            addCriterion("`permanent` in", values, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentNotIn(List<Byte> values) {
-            addCriterion("`permanment` not in", values, "permanment");
+        public Criteria andPermanentNotIn(List<Byte> values) {
+            addCriterion("`permanent` not in", values, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentBetween(Byte value1, Byte value2) {
-            addCriterion("`permanment` between", value1, value2, "permanment");
+        public Criteria andPermanentBetween(Byte value1, Byte value2) {
+            addCriterion("`permanent` between", value1, value2, "permanent");
             return (Criteria) this;
         }
 
-        public Criteria andPermanmentNotBetween(Byte value1, Byte value2) {
-            addCriterion("`permanment` not between", value1, value2, "permanment");
+        public Criteria andPermanentNotBetween(Byte value1, Byte value2) {
+            addCriterion("`permanent` not between", value1, value2, "permanent");
             return (Criteria) this;
         }
 

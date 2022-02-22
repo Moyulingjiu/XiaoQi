@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 /**
  * 通用工具类
@@ -175,5 +176,38 @@ public class Common {
 
     public static DecorativeReturnObject decorate(ReturnNo returnNo, Object obj) {
         return new DecorativeReturnObject(new ReturnObject(returnNo, obj));
+    }
+
+    /**
+     * 生成一个随机数
+     *
+     * @return 随机数
+     */
+    public static int randomInteger() {
+        Random random = new Random();
+        return random.nextInt();
+    }
+
+    /**
+     * 生成一个不大于最大值的随机数
+     *
+     * @param max 最大值
+     * @return 随机数
+     */
+    public static int randomInteger(int max) {
+        Random random = new Random();
+        return random.nextInt(max);
+    }
+
+    /**
+     * 生成一个范围内的随机数
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return 范围内的随机数
+     */
+    public static int randomInteger(int min, int max) {
+        Random random = new Random();
+        return random.nextInt(max - min) + min;
     }
 }

@@ -219,7 +219,7 @@ public class CommonUtil {
      *
      * @return 随机数
      */
-    public static int RandomInteger() {
+    public static int randomInteger() {
         Random random = new Random();
         return random.nextInt();
     }
@@ -230,7 +230,7 @@ public class CommonUtil {
      * @param max 最大值
      * @return 随机数
      */
-    public static int RandomInteger(int max) {
+    public static int randomInteger(int max) {
         Random random = new Random();
         return random.nextInt(max);
     }
@@ -242,7 +242,7 @@ public class CommonUtil {
      * @param max 最大值
      * @return 范围内的随机数
      */
-    public static int RandomInteger(int min, int max) {
+    public static int randomInteger(int min, int max) {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }

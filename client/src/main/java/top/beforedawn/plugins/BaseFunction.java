@@ -18,9 +18,9 @@ public class BaseFunction extends BasePlugin {
     @Override
     public void handleCommon(SingleEvent singleEvent) {
         if (singleEvent.getMessage().plainEqual("骰子") || singleEvent.getMessage().plainEqual("色子")) {
-            singleEvent.sendAt(String.format("你投出的点数是：%d", CommonUtil.RandomInteger(1, 6)));
+            singleEvent.sendAt(String.format("你投出的点数是：%d", CommonUtil.randomInteger(1, 6)));
         } else if (singleEvent.getMessage().plainEqual("硬币")) {
-            if (CommonUtil.RandomInteger() % 2 == 0) {
+            if (CommonUtil.randomInteger() % 2 == 0) {
                 singleEvent.sendAt("你抛出的是：正面");
             } else {
                 singleEvent.sendAt("你抛出的是：反面");
