@@ -21,4 +21,6 @@ public class MyUser {
     private LocalDateTime lastLuck; // 上一次测运势的时间
     private LocalDateTime modified;
     private LocalDateTime create;
+
+    private LocalDateTime updateTime; // 上一次更新的时间
 }

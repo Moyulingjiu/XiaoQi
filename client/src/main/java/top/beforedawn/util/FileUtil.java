@@ -1,9 +1,6 @@
 package top.beforedawn.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class FileUtil {
     /**
@@ -21,9 +18,25 @@ public class FileUtil {
             while ((line = br.readLine()) != null) {
                 stringBuilder.append(line);
             }
+            br.close();
             return stringBuilder.toString();
         } catch (IOException e) {
             return "";
+        }
+    }
+
+    /**
+     * 写文件
+     *
+     * @param filepath 文件路径
+     * @param content 内容
+     */
+    public static void writeFile(String filepath, String content) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filepath));
+            writer.write(content);
+            writer.close();
+        } catch (IOException ignored) {
         }
     }
 }

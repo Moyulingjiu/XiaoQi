@@ -18,10 +18,12 @@ import java.time.LocalDateTime;
 public class SimpleBlacklist {
     Long key; // 主键
     String comment; // 备注
-    Long remind; // 提醒次数
+    Long remind = 0L; // 提醒次数
     LocalDateTime lastRemindTime; // 上次提醒
     Long createId; // 创建人
     LocalDateTime create; // 创建时间
+    Long modifiedId; // 创建人
+    LocalDateTime modified; // 创建时间
 
     public boolean needRemind() {
         boolean isRemind = true;
@@ -39,5 +41,10 @@ public class SimpleBlacklist {
             lastRemindTime = LocalDateTime.now();
         }
         return isRemind;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d[%s]", key, comment);
     }
 }

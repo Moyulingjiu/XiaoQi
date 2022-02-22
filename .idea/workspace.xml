@@ -5,34 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupEntryRule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/MessageStatistics.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/GroupRight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/Context.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/FileUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/BlacklistController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/BlacklistDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/Blacklist.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/BlacklistType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/AllBlacklistRetVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/BlacklistRetVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/BlacklistService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/UserPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MessageLinearAnalysis.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestClone.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/MessageStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/MessageStatistics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/Blacklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/Blacklist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/SimpleBlacklist.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/SimpleBlacklist.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BaseFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BaseFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/ConfigUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/ConfigUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/FunctionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/FileUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/FileUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestYamlReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestYamlReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestLogger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +77,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../BearLibrary/back" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -105,6 +98,22 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestClone.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.beforedawn.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="top.beforedawn.util" />
+      <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestClone" />
+      <option name="METHOD_NAME" value="test1" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -157,22 +166,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestYamlReader.testWrite1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="top.beforedawn.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="top.beforedawn.util" />
-      <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestYamlReader" />
-      <option name="METHOD_NAME" value="testWrite1" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="service" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="top.beforedawn.service.ServiceApplication" />
@@ -183,10 +176,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Main (1)" />
+        <item itemvalue="JUnit.TestClone.test1" />
         <item itemvalue="JUnit.TestDate.test1" />
         <item itemvalue="JUnit.TestRequest.test1" />
         <item itemvalue="JUnit.TestYamlReader.testRead1" />
-        <item itemvalue="JUnit.TestYamlReader.testWrite1" />
       </list>
     </recent_temporary>
   </component>
@@ -215,6 +208,10 @@
       <workItem from="1645495631363" duration="723000" />
       <workItem from="1645496398471" duration="133000" />
       <workItem from="1645496701513" duration="226000" />
+      <workItem from="1645497499211" duration="3333000" />
+      <workItem from="1645506980259" duration="3484000" />
+      <workItem from="1645527693997" duration="7580000" />
+      <workItem from="1645537061147" duration="3211000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

@@ -42,4 +42,12 @@ public class UserController {
         UserRetVo user = userService.getLuck(qq, botId);
         return Common.decorate(ReturnNo.OK, user);
     }
+
+    @PostMapping("/user/{qq}")
+    public Object updateUserByQq (
+            @PathVariable Long qq,
+            @RequestParam() Long botId
+    ) {
+        return null;
+    }
 }

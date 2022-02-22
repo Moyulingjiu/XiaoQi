@@ -1,15 +1,14 @@
 package top.beforedawn.util;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import top.beforedawn.config.BotConfig;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
+import org.jetbrains.annotations.NotNull;
+import top.beforedawn.config.BotConfig;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 /**
@@ -26,8 +25,15 @@ public class MyBot {
      * @param qq qq号
      * @return 配置类 & 机器人 组合对象
      */
-    public static SimpleCombineBot getSimpleCombineBot(@NotNull Long qq) {
-        return botPool.get(qq);
+    public static SimpleCombineBot getSimpleCombineBot(@NotNull Long qq, SingleEvent singleEvent) {
+        SimpleCombineBot simpleCombineBot = botPool.get(qq);
+        if (Duration.between(simpleCombineBot.getConfig().getUpdateTime(), LocalDateTime.now()).toMinutes() > BotConfig.EXPIRATION_TIME) {
+            simpleCombineBot.getConfig().update(singleEvent);
+        }
+        if (Duration.between(simpleCombineBot.getConfig().getSaveTime(), LocalDateTime.now()).toMinutes() > BotConfig.EXPIRATION_TIME) {
+            simpleCombineBot.getConfig().save();
+        }
+        return simpleCombineBot;
     }
 
     /**

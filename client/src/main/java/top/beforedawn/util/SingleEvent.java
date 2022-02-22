@@ -32,6 +32,11 @@ public class SingleEvent {
 
     }
 
+    public SingleEvent(Long botId, Long userId) {
+        this.botId = botId;
+        senderId = userId;
+    }
+
     public SingleEvent(GroupMessageEvent event) {
         setGroupMessageEvent(event);
     }
@@ -56,7 +61,7 @@ public class SingleEvent {
         friendMessageEvent = null;
         groupMessageEvent = event;
         botId = groupMessageEvent.getBot().getId();
-        combineBot = MyBot.getSimpleCombineBot(botId);
+        combineBot = MyBot.getSimpleCombineBot(botId, this);
         message = CommonUtil.analysisMessage(event.getMessage(), botId);
         senderId = groupMessageEvent.getSender().getId();
         groupId = groupMessageEvent.getGroup().getId();
@@ -66,7 +71,7 @@ public class SingleEvent {
         groupMessageEvent = null;
         friendMessageEvent = event;
         botId = friendMessageEvent.getBot().getId();
-        combineBot = MyBot.getSimpleCombineBot(botId);
+        combineBot = MyBot.getSimpleCombineBot(botId, this);
         message = CommonUtil.analysisMessage(event.getMessage(), botId);
         senderId = friendMessageEvent.getSender().getId();
         groupId = 0L;
@@ -110,7 +115,7 @@ public class SingleEvent {
     }
 
     /**
-     * 权限是否是大于群管理的
+     * 权限是否是大于等于群管理
      *
      * @return boolean
      */
@@ -119,12 +124,48 @@ public class SingleEvent {
     }
 
     /**
-     * 权限是否是大于机器人主人的
+     * 权限是否大于等于群主
+     *
+     * @return boolean
+     */
+    public boolean aboveGroupMaster() {
+        return getGroupRight() == GroupRight.MASTER || getRight() != SystemRight.MEMBER;
+    }
+
+    /**
+     * 权限是否大于等于机器人管理员
+     *
+     * @return boolean
+     */
+    public boolean aboveBotAdmin() {
+        return getRight() == SystemRight.ADMIN || getRight() == SystemRight.MASTER || getRight() == SystemRight.SYSTEM_ADMIN || getRight() == SystemRight.SYSTEM_SUPER_ADMIN;
+    }
+
+    /**
+     * 权限是否是大于等于机器人主人
      *
      * @return boolean
      */
     public boolean aboveBotMaster() {
-        return getRight() != SystemRight.MEMBER && getRight() != SystemRight.ADMIN;
+        return getRight() == SystemRight.MASTER || getRight() == SystemRight.SYSTEM_ADMIN || getRight() == SystemRight.SYSTEM_SUPER_ADMIN;
+    }
+
+    /**
+     * 权限是否大于等于系统管理员
+     *
+     * @return boolean
+     */
+    public boolean aboveSystemAdmin() {
+        return getRight() == SystemRight.SYSTEM_ADMIN || getRight() == SystemRight.SYSTEM_SUPER_ADMIN;
+    }
+
+    /**
+     * 权限是否大于等于系统超级管理员
+     *
+     * @return boolean
+     */
+    public boolean aboveSystemSuperAdmin() {
+        return getRight() == SystemRight.SYSTEM_SUPER_ADMIN;
     }
 
     /**
@@ -142,6 +183,7 @@ public class SingleEvent {
         } else {
             getConfig().getStatistics().record(getSenderId());
         }
+        getConfig().getStatistics().save(getConfig().getWorkdir() + getConfig().getStatisticsFilename());
     }
 
     /**

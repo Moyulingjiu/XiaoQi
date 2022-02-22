@@ -146,6 +146,9 @@ public class CommonUtil {
     public static LocalDateTime getLocalDateTime(String str) {
         try {
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            if (str.contains(".")) {
+                str = str.substring(0, str.indexOf("."));
+            }
             return Date2LocalDateTime(format.parse(str.replace("T", " ")));
         } catch (Exception e) {
             return LocalDateTime.now();

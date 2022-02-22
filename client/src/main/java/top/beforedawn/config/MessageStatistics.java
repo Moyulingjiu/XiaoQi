@@ -1,8 +1,10 @@
 package top.beforedawn.config;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.beforedawn.util.FileUtil;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -24,6 +26,28 @@ public class MessageStatistics {
     private long totalMessage = 0;
     private Map<String, Long> plugins = new HashMap<>();
     private Map<Long, ArrayList<LocalDateTime>> userRecord = new HashMap<>();
+
+    public void load(String filename) {
+        String content = FileUtil.readFile(filename);
+        if (content.equals("")) {
+            return;
+        }
+        JSONObject jsonObject = JSONObject.parseObject(content);
+        dailyMessage = jsonObject.getLong("dailyMessage");
+        totalMessage = jsonObject.getLong("totalMessage");
+        JSONObject plugins = jsonObject.getJSONObject("plugins");
+        for (String key : plugins.keySet()) {
+            this.plugins.put(key, plugins.getLong(key));
+        }
+    }
+
+    public void save(String filename) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("dailyMessage", dailyMessage);
+        jsonObject.put("totalMessage", totalMessage);
+        jsonObject.put("plugins", plugins);
+        FileUtil.writeFile(filename, jsonObject.toJSONString());
+    }
 
     /**
      * 检验1分钟之内的消息数是否有超过阈值
@@ -75,9 +99,9 @@ public class MessageStatistics {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("全部消息：").append(totalMessage).append("\n");
-        builder.append("每日消息：").append(dailyMessage).append("\n");
+        builder.append("每日消息：").append(dailyMessage);
         for (String key : plugins.keySet()) {
-            builder.append(key).append("模组：").append(plugins.get(key)).append("\n");
+            builder.append("\n").append(key).append("模组消息：").append(plugins.get(key));
         }
         return builder.toString();
     }

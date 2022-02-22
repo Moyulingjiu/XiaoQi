@@ -48,6 +48,7 @@ public class Main {
                     String.format("本群目前在黑名单中【原因：%s】\n如有疑问前往官方群（%d）询问，或者更换群使用\n每天仅提醒一次", temp.getComment(), singleEvent.getConfig().getOfficialGroup())
             );
         }
+        singleEvent.getConfig().save();
     }
 
     private static void awaken(SingleEvent singleEvent) {
@@ -75,17 +76,21 @@ public class Main {
         // 全局开关
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("退群")) {
             if (singleEvent.aboveGroupAdmin()) {
-                singleEvent.send("再见啦~" + singleEvent.getBotName() + "会想你们的~");
-                singleEvent.quit();
-                if (singleEvent.getConfig().getBotSwitcher().isRemindQuit()) {
-                    singleEvent.sendMaster(String.format(
-                            "[%s]退出群<%s>(%d)",
-                            LocalDateTime.now(),
-                            singleEvent.getGroupMessageEvent().getGroup().getName(),
-                            singleEvent.getGroupId()
-                    ));
+                if (singleEvent.getGroupId() != singleEvent.getConfig().getOfficialGroup()) {
+                    singleEvent.send("再见啦~" + singleEvent.getBotName() + "会想你们的~");
+                    singleEvent.quit();
+                    if (singleEvent.getConfig().getBotSwitcher().isRemindQuit()) {
+                        singleEvent.sendMaster(String.format(
+                                "[%s]退出群<%s>(%d)",
+                                LocalDateTime.now(),
+                                singleEvent.getGroupMessageEvent().getGroup().getName(),
+                                singleEvent.getGroupId()
+                        ));
+                    }
+                    return true;
+                } else {
+                    singleEvent.send("当前群聊为官方群，无法退出");
                 }
-                return true;
             } else {
                 singleEvent.send("你无权执行该操作");
             }
@@ -161,7 +166,7 @@ public class Main {
         String workdir = "C:/mirai";
         Long botId = 1812322920L;
 
-        Bot bot = MyBot.getBot(new BotConfig(workdir));
+        Bot bot = MyBot.getBot(new BotConfig(workdir, botId));
         registerPlugins();
 
         GlobalEventChannel.INSTANCE.subscribeAlways(GroupMessageEvent.class, event -> {

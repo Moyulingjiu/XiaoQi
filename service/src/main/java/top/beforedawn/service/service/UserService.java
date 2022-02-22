@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.beforedawn.service.dao.UserDao;
 import top.beforedawn.service.model.bo.User;
+import top.beforedawn.service.model.bo.UserRight;
 import top.beforedawn.service.model.vo.ret.UserRetVo;
 import top.beforedawn.service.util.Common;
 
@@ -21,6 +22,8 @@ public class UserService {
         user.setCreateId(botId);
         user.setModified(LocalDateTime.now());
         user.setModifiedId(botId);
+        user.setRight(UserRight.NORMAL);
+        user.setPoint(0);
         int insert = userDao.insert(user);
         if (insert != 1) {
             System.out.println("插入失败");

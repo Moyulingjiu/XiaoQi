@@ -30,6 +30,19 @@ public class MyMessage {
     }
 
     /**
+     * 克隆消息
+     *
+     * @return 消息
+     */
+    public MyMessage clone() {
+        MyMessage message = new MyMessage();
+        message.setBeAt(beAt);
+        message.setAt(new HashSet<>(at));
+        message.setPlain(new ArrayList<>(plain));
+        return message;
+    }
+
+    /**
      * 文本严格等于并且还需要被艾特
      *
      * @param str 文本信息
@@ -50,6 +63,16 @@ public class MyMessage {
     }
 
     /**
+     * 判断文字是否以str开头
+     *
+     * @param str 文本
+     * @return boolean
+     */
+    public boolean plainStartWith(String str) {
+        return getPlainString().startsWith(str) && (at.size() == 0);
+    }
+
+    /**
      * 判断文字是否等于（而不关心at）
      *
      * @param str 文字
@@ -58,4 +81,15 @@ public class MyMessage {
     public boolean plainEqualWithoutAt(String str) {
         return getPlainString().equals(str);
     }
+
+    /**
+     * 判断文字是否以str开头（而不关心at）
+     *
+     * @param str 文本
+     * @return boolean
+     */
+    public boolean plainStartWithoutAt(String str) {
+        return getPlainString().startsWith(str);
+    }
+
 }
