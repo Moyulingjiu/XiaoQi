@@ -85,6 +85,10 @@ public class HttpUtil {
         bot.setKeyValidEndDate(CommonUtil.getLocalDateTime(response.getData().getString("keyValidEndDate")));
 
         bot.setKeyType(response.getData().getString("keyType"));
+        bot.setAllowCoc(response.getData().getByte("allowCoc"));
+        bot.setAllowRpg(response.getData().getByte("allowRpg"));
+        bot.setAllowPic(response.getData().getByte("allowPic"));
+        bot.setAllowAssistant(response.getData().getByte("allowAssistant"));
 
         bot.setModified(CommonUtil.getLocalDateTime(response.getData().getString("modified")));
         bot.setModifiedId(response.getData().getLong("modifiedId"));

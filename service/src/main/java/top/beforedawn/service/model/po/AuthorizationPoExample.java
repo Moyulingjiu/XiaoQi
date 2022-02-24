@@ -565,6 +565,246 @@ public class AuthorizationPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andAllowCocIsNull() {
+            addCriterion("`allow_coc` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocIsNotNull() {
+            addCriterion("`allow_coc` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocEqualTo(Byte value) {
+            addCriterion("`allow_coc` =", value, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocNotEqualTo(Byte value) {
+            addCriterion("`allow_coc` <>", value, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocGreaterThan(Byte value) {
+            addCriterion("`allow_coc` >", value, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`allow_coc` >=", value, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocLessThan(Byte value) {
+            addCriterion("`allow_coc` <", value, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocLessThanOrEqualTo(Byte value) {
+            addCriterion("`allow_coc` <=", value, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocIn(List<Byte> values) {
+            addCriterion("`allow_coc` in", values, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocNotIn(List<Byte> values) {
+            addCriterion("`allow_coc` not in", values, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_coc` between", value1, value2, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowCocNotBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_coc` not between", value1, value2, "allowCoc");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgIsNull() {
+            addCriterion("`allow_rpg` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgIsNotNull() {
+            addCriterion("`allow_rpg` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgEqualTo(Byte value) {
+            addCriterion("`allow_rpg` =", value, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgNotEqualTo(Byte value) {
+            addCriterion("`allow_rpg` <>", value, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgGreaterThan(Byte value) {
+            addCriterion("`allow_rpg` >", value, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`allow_rpg` >=", value, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgLessThan(Byte value) {
+            addCriterion("`allow_rpg` <", value, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgLessThanOrEqualTo(Byte value) {
+            addCriterion("`allow_rpg` <=", value, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgIn(List<Byte> values) {
+            addCriterion("`allow_rpg` in", values, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgNotIn(List<Byte> values) {
+            addCriterion("`allow_rpg` not in", values, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_rpg` between", value1, value2, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowRpgNotBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_rpg` not between", value1, value2, "allowRpg");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicIsNull() {
+            addCriterion("`allow_pic` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicIsNotNull() {
+            addCriterion("`allow_pic` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicEqualTo(Byte value) {
+            addCriterion("`allow_pic` =", value, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicNotEqualTo(Byte value) {
+            addCriterion("`allow_pic` <>", value, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicGreaterThan(Byte value) {
+            addCriterion("`allow_pic` >", value, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`allow_pic` >=", value, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicLessThan(Byte value) {
+            addCriterion("`allow_pic` <", value, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicLessThanOrEqualTo(Byte value) {
+            addCriterion("`allow_pic` <=", value, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicIn(List<Byte> values) {
+            addCriterion("`allow_pic` in", values, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicNotIn(List<Byte> values) {
+            addCriterion("`allow_pic` not in", values, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_pic` between", value1, value2, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowPicNotBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_pic` not between", value1, value2, "allowPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantIsNull() {
+            addCriterion("`allow_assistant` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantIsNotNull() {
+            addCriterion("`allow_assistant` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantEqualTo(Byte value) {
+            addCriterion("`allow_assistant` =", value, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantNotEqualTo(Byte value) {
+            addCriterion("`allow_assistant` <>", value, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantGreaterThan(Byte value) {
+            addCriterion("`allow_assistant` >", value, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantGreaterThanOrEqualTo(Byte value) {
+            addCriterion("`allow_assistant` >=", value, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantLessThan(Byte value) {
+            addCriterion("`allow_assistant` <", value, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantLessThanOrEqualTo(Byte value) {
+            addCriterion("`allow_assistant` <=", value, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantIn(List<Byte> values) {
+            addCriterion("`allow_assistant` in", values, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantNotIn(List<Byte> values) {
+            addCriterion("`allow_assistant` not in", values, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_assistant` between", value1, value2, "allowAssistant");
+            return (Criteria) this;
+        }
+
+        public Criteria andAllowAssistantNotBetween(Byte value1, Byte value2) {
+            addCriterion("`allow_assistant` not between", value1, value2, "allowAssistant");
+            return (Criteria) this;
+        }
+
         public Criteria andModifiedIsNull() {
             addCriterion("`modified` is null");
             return (Criteria) this;

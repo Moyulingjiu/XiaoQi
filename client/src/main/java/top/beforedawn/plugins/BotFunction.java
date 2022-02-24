@@ -1,5 +1,6 @@
 package top.beforedawn.plugins;
 
+import top.beforedawn.config.GroupPool;
 import top.beforedawn.config.UserPool;
 import top.beforedawn.models.bo.*;
 import top.beforedawn.util.CommonUtil;
@@ -36,6 +37,7 @@ public class BotFunction extends BasePlugin {
         } else if (singleEvent.getMessage().plainEqual("统计信息")) {
             StringBuilder builder = new StringBuilder(singleEvent.getConfig().getStatistics().toString());
             builder.append("\n").append("缓存User：").append(UserPool.size()).append("/").append(UserPool.POOL_MAX);
+            builder.append("\n").append("缓存Group：").append(GroupPool.size()).append("/").append(GroupPool.POOL_MAX);
             singleEvent.send(builder.toString());
         } else if (singleEvent.getMessage().plainEqual("我的权限")) {
             switch (singleEvent.getRight()) {

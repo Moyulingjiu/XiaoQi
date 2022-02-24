@@ -5,16 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/DriftingBottleDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/DriftingBottle.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/DriftingBottleVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/DriftingBottleRetVo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/DriftingBottleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/MatchReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/CocFunction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/DriftingBottlePo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/DriftingBottlePo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/DriftingBottlePoExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/DriftingBottlePoExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/util/Common.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/DriftingBottlePoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/DriftingBottlePoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotSwitcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotSwitcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/UserPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/UserPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/BotRemoteInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/BotRemoteInformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/Authorization.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/Authorization.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AuthorizationPo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AuthorizationPo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AuthorizationPoExample.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/po/AuthorizationPoExample.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/BotRetVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/BotRetVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/BotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/BotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/AuthorizationPoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/top/beforedawn/service/mapper/AuthorizationPoMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,8 +96,8 @@
       <recent name="top.beforedawn.service.model.vo" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Main (1)">
-    <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="应用程序.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="top.beforedawn.Main" />
       <module name="client" />
       <extension name="coverage">
@@ -166,9 +181,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.TestClone.test1" />
+      <item itemvalue="JUnit.TestDate.test1" />
+      <item itemvalue="JUnit.TestRequest.test1" />
+      <item itemvalue="JUnit.TestYamlReader.testRead1" />
+      <item itemvalue="Spring Boot.ServiceApplication" />
+      <item itemvalue="应用程序.Main" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.Main (1)" />
+        <item itemvalue="应用程序.Main" />
         <item itemvalue="JUnit.TestClone.test1" />
         <item itemvalue="JUnit.TestDate.test1" />
         <item itemvalue="JUnit.TestRequest.test1" />
@@ -204,7 +227,13 @@
       <workItem from="1645497499211" duration="3333000" />
       <workItem from="1645506980259" duration="3484000" />
       <workItem from="1645527693997" duration="7580000" />
-      <workItem from="1645537061147" duration="5654000" />
+      <workItem from="1645537061147" duration="5897000" />
+      <workItem from="1645581563262" duration="1492000" />
+      <workItem from="1645588100222" duration="579000" />
+      <workItem from="1645602217927" duration="590000" />
+      <workItem from="1645605818614" duration="6115000" />
+      <workItem from="1645668609904" duration="130000" />
+      <workItem from="1645669072177" duration="5427000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

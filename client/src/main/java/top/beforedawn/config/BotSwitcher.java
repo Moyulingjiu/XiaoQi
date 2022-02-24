@@ -29,14 +29,4 @@ public class BotSwitcher {
 
     private boolean heart; // 是否进行心跳
     private int heartInterval; // 心跳报时间隔
-
-    private Set<Long> muteGroup = new HashSet<>(); // 所有禁言的群
-    private Set<Long> muteFriend = new HashSet<>(); // 所有禁言的人
-    private Set<Long> limit = new HashSet<>(); // 处在限制模式的群
-
-    private Set<Long> unlockFlashImage = new HashSet<>(); // 解除闪照的群
-    private Set<Long> recallGuard = new HashSet<>(); // 防撤回的群
-    private Set<Long> memberWatcher = new HashSet<>(); // 开启成员监控的群
-
-    private Map<Long, GroupEntryRule> groupEntryRuleMap = new HashMap<>(); // 自动审核入群
 }

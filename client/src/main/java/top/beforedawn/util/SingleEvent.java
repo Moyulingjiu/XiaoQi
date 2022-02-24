@@ -7,10 +7,13 @@ import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.*;
+import net.mamoe.mirai.utils.ExternalResource;
 import top.beforedawn.config.BotConfig;
 import top.beforedawn.models.bo.GroupRight;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.bo.SystemRight;
+
+import java.io.File;
 
 /**
  * 事件抽象类
@@ -291,5 +294,21 @@ public class SingleEvent {
             record();
             friendMessageEvent.getSubject().sendMessage(chain);
         }
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param filepath 文件路径
+     * @return 图片类型
+     */
+    public Image uploadImage(String filepath) {
+        File file = new File(filepath);
+        if (isGroupMessage()) {
+            return getGroupMessageEvent().getGroup().uploadImage(ExternalResource.create(file));
+        } else if (isFriendMessage()) {
+            return getFriendMessageEvent().getFriend().uploadImage(ExternalResource.create(file));
+        }
+        return null;
     }
 }

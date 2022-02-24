@@ -5,10 +5,10 @@ import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import top.beforedawn.config.BotConfig;
+import top.beforedawn.config.GroupPool;
+import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.bo.SimpleBlacklist;
-import top.beforedawn.plugins.BaseFunction;
-import top.beforedawn.plugins.BasePlugin;
-import top.beforedawn.plugins.BotFunction;
+import top.beforedawn.plugins.*;
 import top.beforedawn.util.MyBot;
 import top.beforedawn.util.SingleEvent;
 
@@ -18,9 +18,14 @@ import java.util.ArrayList;
 public class Main {
     private static final ArrayList<BasePlugin> plugins = new ArrayList<>();
 
+    /**
+     * 注册插件
+     */
     private static void registerPlugins() {
         plugins.add(new BotFunction());
         plugins.add(new BaseFunction());
+        plugins.add(new CocFunction());
+        plugins.add(new AutoReplyFunction());
     }
 
     private static void inBlacklist(SingleEvent singleEvent) {
@@ -73,6 +78,9 @@ public class Main {
     }
 
     private static boolean globalSwitcher(SingleEvent singleEvent) {
+        if (!singleEvent.isGroupMessage()) {
+            return false;
+        }
         // 全局开关
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("退群")) {
             if (singleEvent.aboveGroupAdmin()) {
@@ -96,10 +104,12 @@ public class Main {
             }
         }
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("禁言")) {
-            if (!singleEvent.getConfig().getBotSwitcher().getMuteGroup().contains(singleEvent.getGroupId())) {
-                if (singleEvent.aboveGroupAdmin()) {
+            MyGroup group = GroupPool.get(singleEvent);
+            if (singleEvent.aboveGroupAdmin()) {
+                if (group != null && !group.isMute()) {
                     singleEvent.send("那" + singleEvent.getBotName() + "还是闭嘴吧");
-                    singleEvent.getConfig().getBotSwitcher().getMuteGroup().add(singleEvent.getGroupId());
+                    group.setMute(true);
+                    GroupPool.save(singleEvent);
                     if (singleEvent.getConfig().getBotSwitcher().isRemindMute()) {
                         singleEvent.sendMaster(String.format(
                                 "[%s]在群<%s>(%d)禁言",
@@ -110,14 +120,19 @@ public class Main {
                     }
                     return true;
                 } else {
-                    singleEvent.send("你无权执行该操作");
+                    singleEvent.send(singleEvent.getBotName() + "正在禁言呢");
                 }
+            } else {
+                singleEvent.send("你无权执行该操作");
             }
         }
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("解除禁言")) {
             if (singleEvent.aboveGroupAdmin()) {
-                if (singleEvent.getConfig().getBotSwitcher().getMuteGroup().remove(singleEvent.getGroupId())) {
+                MyGroup group = GroupPool.get(singleEvent);
+                if (group != null && group.isMute()) {
                     singleEvent.send("呜呜呜，憋死我了，终于可以说话了");
+                    group.setMute(false);
+                    GroupPool.save(singleEvent);
                     if (singleEvent.getConfig().getBotSwitcher().isRemindMute()) {
                         singleEvent.sendMaster(String.format(
                                 "[%s]在群<%s>(%d)解除禁言",
@@ -141,7 +156,7 @@ public class Main {
         if (
                 !singleEvent.valid() ||
                         globalSwitcher(singleEvent) ||
-                        singleEvent.getConfig().isMute(singleEvent.getSenderId(), singleEvent.getGroupId())
+                        singleEvent.getConfig().isMute(singleEvent)
         ) {
             return;
         }
@@ -151,7 +166,7 @@ public class Main {
             return;
         }
         // 限制模式判断
-        if (singleEvent.getConfig().getBotSwitcher().getLimit().contains(singleEvent.getGroupId())) {
+        if (!singleEvent.getMessage().isBeAt() && singleEvent.getConfig().isLimit(singleEvent)) {
             return;
         }
 

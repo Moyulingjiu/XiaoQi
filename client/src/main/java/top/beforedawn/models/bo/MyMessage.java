@@ -63,6 +63,36 @@ public class MyMessage {
     }
 
     /**
+     * 判断文字是否等于（大小写不敏感）
+     *
+     * @param str 文字
+     * @return boolean
+     */
+    public boolean plainEqualIgnoreCase(String str) {
+        return getPlainString().equalsIgnoreCase(str) && (at.size() == 0);
+    }
+
+    /**
+     * 判断文字是否等于（忽略空格）
+     *
+     * @param str 文字
+     * @return boolean
+     */
+    public boolean plainEqualIgnoreSpace(String str) {
+        return getPlainString().replace(" ", "").equals(str.replace(" ", "")) && (at.size() == 0);
+    }
+
+    /**
+     * 判断文字是否等于（忽略空格大小写）
+     *
+     * @param str 文字
+     * @return boolean
+     */
+    public boolean plainEqualIgnoreSpaceCase(String str) {
+        return getPlainString().replace(" ", "").equalsIgnoreCase(str.replace(" ", "")) && (at.size() == 0);
+    }
+
+    /**
      * 判断文字是否以str开头
      *
      * @param str 文本

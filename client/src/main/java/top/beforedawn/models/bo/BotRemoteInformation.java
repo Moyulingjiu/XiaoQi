@@ -36,6 +36,10 @@ public class BotRemoteInformation {
     private LocalDateTime keyValidBeginDate;
     private LocalDateTime keyValidEndDate;
     private String keyType;
+    private Byte allowCoc;
+    private Byte allowRpg;
+    private Byte allowPic;
+    private Byte allowAssistant;
     private LocalDateTime modified;
     private Long modifiedId;
     private LocalDateTime create;

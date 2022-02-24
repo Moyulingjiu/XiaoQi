@@ -21,6 +21,10 @@ public class Authorization {
     private LocalDateTime validBeginDate;
     private LocalDateTime validEndDate;
     private KeyType type;
+    private Byte allowCoc;
+    private Byte allowRpg;
+    private Byte allowPic;
+    private Byte allowAssistant;
     private LocalDateTime modified;
     private Long modifiedId;
     private LocalDateTime create;

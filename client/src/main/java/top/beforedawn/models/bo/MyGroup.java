@@ -3,6 +3,11 @@ package top.beforedawn.models.bo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.beforedawn.config.GroupEntryRule;
+import top.beforedawn.models.reply.BaseAutoReply;
+
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * 群的抽象类
@@ -13,5 +18,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MyGroup {
-    Long id;
+    private Long id = 0L;
+    private String name = "";
+    private ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
+    private LocalDateTime updateTime; // 更新时间
+
+    private boolean mute = false; // 禁言
+    private boolean limit = false; // 处在限制模式的群
+
+    private boolean unlockFlashImage = false; // 解除闪照
+    private boolean recallGuard = false; // 防撤回
+    private boolean memberWatcher = false; // 开启成员监控
+
+    private boolean groupEntry = false; // 自动审核入群
+    private GroupEntryRule groupEntryRule = new GroupEntryRule(); // 审核规则
 }

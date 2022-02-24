@@ -75,6 +75,7 @@ public class UserPool {
         MyUser user = users.getOrDefault(singleEvent.getSenderId(), new MyUser());
         // 如果过期或者不在池子内就自动获取用户
         if (user.getUpdateTime() == null || Duration.between(user.getUpdateTime(), LocalDateTime.now()).toMinutes() > EXPIRATION_TIME) {
+            clearUser();
             user = HttpUtil.getUser(singleEvent);
             user.setUpdateTime(LocalDateTime.now());
             users.put(user.getQq(), user);

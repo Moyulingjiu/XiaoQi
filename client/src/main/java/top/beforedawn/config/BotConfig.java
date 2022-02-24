@@ -2,11 +2,7 @@ package top.beforedawn.config;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
-import top.beforedawn.models.bo.Blacklist;
-import top.beforedawn.models.bo.BotRemoteInformation;
-import top.beforedawn.models.bo.MyUser;
-import top.beforedawn.models.bo.SimpleBlacklist;
-import top.beforedawn.models.bo.SystemRight;
+import top.beforedawn.models.bo.*;
 import top.beforedawn.util.FileUtil;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
@@ -30,11 +26,13 @@ public class BotConfig {
 
     private final String configFilename = "config.json";
     private final String statisticsFilename = "statistics.json";
+    private final String groupFilename = "group/{groupId}.json";
 
     private YamlReader yamlReader;
     private LocalDateTime updateTime; // 上一次更新的时间
     private LocalDateTime saveTime; // 上一保存的时间
 
+    private String globalWorkdir; // 全局工作路径
     private String workdir; // 工作路径
     private String cache; // 缓存路径
 
@@ -49,6 +47,11 @@ public class BotConfig {
     private LocalDateTime keyValidBeginDate;
     private LocalDateTime keyValidEndDate;
     private String keyType;
+    private boolean allowCoc; // 允许使用coc模块（部落冲突）
+    private boolean allowRpg; // 允许使用rpg模块（rpg游戏）
+    private boolean allowTrpg; // 允许使用trpg模块
+    private boolean allowPic; // 允许使用pic模块（搜图）
+    private boolean allowAssistant; // 允许使用个人助理模块
 
     private long master; // 主人
     private ArrayList<Long> administrator = new ArrayList<>(); // 机器人管理员
@@ -67,6 +70,7 @@ public class BotConfig {
      */
     public BotConfig(String workdir, Long botId) {
         setWorkdir(workdir);
+        globalWorkdir = this.workdir;
         this.workdir += botId + "/";
         cache = this.workdir + "cache";
         // 1、加载本地的数据
@@ -97,18 +101,22 @@ public class BotConfig {
         keyValidBeginDate = botRemoteInformation.getKeyValidBeginDate();
         keyValidEndDate = botRemoteInformation.getKeyValidEndDate();
         keyType = botRemoteInformation.getKeyType();
+        allowCoc = botRemoteInformation.getAllowCoc() == 1;
+        allowRpg = botRemoteInformation.getAllowRpg() == 1;
+        allowPic = botRemoteInformation.getAllowPic() == 1;
+        allowAssistant = botRemoteInformation.getAllowAssistant() == 1;
 
         // 读取配置信息
-        botSwitcher.setAllowFriend(botRemoteInformation.getAllowFriend() != 0);
-        botSwitcher.setAllowGroup(botRemoteInformation.getAllowGroup() != 0);
-        botSwitcher.setHeart(botRemoteInformation.getHeart() != 0);
+        botSwitcher.setAllowFriend(botRemoteInformation.getAllowFriend() == 1);
+        botSwitcher.setAllowGroup(botRemoteInformation.getAllowGroup() == 1);
+        botSwitcher.setHeart(botRemoteInformation.getHeart() == 1);
         botSwitcher.setHeartInterval(botRemoteInformation.getHeartInterval());
 
-        botSwitcher.setRemindFriend(botRemoteInformation.getRemindFriend() != 0);
-        botSwitcher.setRemindGroup(botRemoteInformation.getRemindGroup() != 0);
-        botSwitcher.setRemindGroup(botRemoteInformation.getRemindGroup() != 0);
-        botSwitcher.setRemindQuit(botRemoteInformation.getRemindQuit() != 0);
-        botSwitcher.setClearBlacklist(botRemoteInformation.getClearBlacklist() != 0);
+        botSwitcher.setRemindFriend(botRemoteInformation.getRemindFriend() == 1);
+        botSwitcher.setRemindGroup(botRemoteInformation.getRemindGroup() == 1);
+        botSwitcher.setRemindGroup(botRemoteInformation.getRemindGroup() == 1);
+        botSwitcher.setRemindQuit(botRemoteInformation.getRemindQuit() == 1);
+        botSwitcher.setClearBlacklist(botRemoteInformation.getClearBlacklist() == 1);
 
         // 读取黑名单
         Blacklist blacklist = HttpUtil.getBlacklist(singleEvent);
@@ -288,14 +296,19 @@ public class BotConfig {
         return blacklist.getGlobalGroup(id);
     }
 
-    public boolean isMute(Long id, Long groupId) {
-        boolean ans = false;
-        if (id != null && id != 0) {
-            ans = botSwitcher.getMuteFriend().contains(id);
+    public boolean isMute(SingleEvent singleEvent) {
+        MyGroup group = GroupPool.get(singleEvent);
+        if (group != null) {
+            return group.isMute();
         }
-        if (groupId != null && groupId != 0) {
-            ans = ans || botSwitcher.getMuteGroup().contains(groupId);
+        return false;
+    }
+
+    public boolean isLimit(SingleEvent singleEvent) {
+        MyGroup group = GroupPool.get(singleEvent);
+        if (group != null) {
+            return group.isLimit();
         }
-        return ans;
+        return false;
     }
 }

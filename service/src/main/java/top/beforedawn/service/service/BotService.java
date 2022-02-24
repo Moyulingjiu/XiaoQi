@@ -51,6 +51,10 @@ public class BotService {
                 botRetVo.setKeyValidBeginDate(key.getValidBeginDate());
                 botRetVo.setKeyValidEndDate(key.getValidEndDate());
                 botRetVo.setKeyType(key.getType());
+                botRetVo.setAllowCoc(key.getAllowCoc());
+                botRetVo.setAllowRpg(key.getAllowRpg());
+                botRetVo.setAllowPic(key.getAllowPic());
+                botRetVo.setAllowAssistant(key.getAllowAssistant());
             }
         }
         return botRetVo;
