@@ -29,6 +29,7 @@ public class Main {
         plugins.add(new CocFunction());
         plugins.add(new AutoReplyFunction());
         plugins.add(new NudgeFunction());
+        plugins.add(new UnlockFlashFunction());
     }
 
     private static void inBlacklist(SingleEvent singleEvent) {

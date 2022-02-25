@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import net.mamoe.mirai.message.data.*;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +22,8 @@ public class MyMessage {
     boolean beAt = false;
     boolean beNudge = false;
     ArrayList<String> plain = new ArrayList<>();
+    ArrayList<Image> flashImages = new ArrayList<>();
+    ArrayList<Image> images = new ArrayList<>();
     Set<Long> at = new HashSet<>();
 
     public String getPlainString() {

@@ -17,6 +17,9 @@ public class NudgeFunction extends BasePlugin {
 
     @Override
     public boolean before(SingleEvent singleEvent) {
+        if (!singleEvent.isGroupMessage() && !singleEvent.isFriendMessage()) {
+            return false;
+        }
         if (singleEvent.getGroupId() == 0L) {
             return singleEvent.getMessage().isBeNudge() && singleEvent.getMessage().isBeAt();
         } else {

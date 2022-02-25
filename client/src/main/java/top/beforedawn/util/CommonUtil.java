@@ -1,17 +1,12 @@
 package top.beforedawn.util;
 
-import net.mamoe.mirai.message.data.At;
-import net.mamoe.mirai.message.data.MessageChain;
-import net.mamoe.mirai.message.data.PlainText;
-import net.mamoe.mirai.message.data.SingleMessage;
+import net.mamoe.mirai.message.data.*;
 import top.beforedawn.models.bo.MyMessage;
-import top.beforedawn.models.bo.SimpleBlacklist;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -172,6 +167,10 @@ public class CommonUtil {
                 } else {
                     myMessage.getAt().add(((At) message).getTarget());
                 }
+            } else if (message instanceof FlashImage) {
+                myMessage.getFlashImages().add(((FlashImage) message).getImage());
+            } else if (message instanceof Image) {
+                myMessage.getImages().add((Image) message);
             }
         }
         return myMessage;
