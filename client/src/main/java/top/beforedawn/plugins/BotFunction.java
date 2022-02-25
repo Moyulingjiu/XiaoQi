@@ -368,6 +368,26 @@ public class BotFunction extends BasePlugin {
                 group.setNudge(false);
                 GroupPool.save(singleEvent);
             }
+        } else if (singleEvent.getMessage().plainEqual("开启自定义回复")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isAutoReply(), true, "已经开启了自定义回复")) {
+                group.setAutoReply(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭自定义回复")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isAutoReply(), false, "本来就没有开启自定义回复")) {
+                group.setAutoReply(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启加一")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRepeat(), true, "已经开启了加一")) {
+                group.setRepeat(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭加一")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRepeat(), false, "本来就没有开启加一")) {
+                group.setRepeat(false);
+                GroupPool.save(singleEvent);
+            }
         }
     }
 

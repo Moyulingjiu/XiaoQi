@@ -26,7 +26,10 @@ public class Main {
     private static void registerPlugins() {
         plugins.add(new BotFunction());
         plugins.add(new BaseFunction());
+
         plugins.add(new CocFunction());
+
+        plugins.add(new RepeatFunction());
         plugins.add(new AutoReplyFunction());
         plugins.add(new NudgeFunction());
         plugins.add(new UnlockFlashFunction());

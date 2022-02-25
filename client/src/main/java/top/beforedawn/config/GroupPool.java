@@ -114,6 +114,10 @@ public class GroupPool {
         group.setGroupEntry(bool != null && bool);
         group.setGroupEntryRule(jsonObject.getObject("groupEntryRule", GroupEntryRule.class));
 
+        bool = jsonObject.getBoolean("autoReply");
+        group.setAutoReply(bool != null && bool);
+        bool = jsonObject.getBoolean("repeat");
+        group.setRepeat(bool != null && bool);
         ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
         for (Object autoReply : jsonObject.getJSONArray("autoReplies")) {
             if (autoReply instanceof BaseAutoReply) {
@@ -152,7 +156,9 @@ public class GroupPool {
         jsonObject.put("groupEntry", group.isGroupEntry());
         jsonObject.put("groupEntryRule", group.getGroupEntryRule());
 
+        jsonObject.put("autoReply", group.isAutoReply());
         jsonObject.put("autoReplies", group.getAutoReplies());
+        jsonObject.put("repeat", group.isRepeat());
 
         FileUtil.writeFile(filename, jsonObject.toJSONString());
     }

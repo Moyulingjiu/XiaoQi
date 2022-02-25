@@ -2,15 +2,14 @@ package top.beforedawn.plugins;
 
 import top.beforedawn.config.GroupPool;
 import top.beforedawn.models.bo.MyGroup;
-import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.util.SingleEvent;
 
 /**
- * 自动回复的插件
+ * 自动加一的模块
  */
-public class AutoReplyFunction extends BasePlugin {
-    public AutoReplyFunction() {
-        pluginName = "auto_reply";
+public class RepeatFunction extends BasePlugin {
+    public RepeatFunction() {
+        pluginName = "repeat";
     }
 
     @Override
@@ -19,7 +18,7 @@ public class AutoReplyFunction extends BasePlugin {
             return false;
         }
         MyGroup group = GroupPool.get(singleEvent);
-        return group.isAutoReply();
+        return group.isRepeat();
     }
 
     @Override
@@ -34,11 +33,6 @@ public class AutoReplyFunction extends BasePlugin {
 
     @Override
     public void handleGroup(SingleEvent singleEvent) {
-        MyGroup group = GroupPool.get(singleEvent);
-        for (BaseAutoReply autoReply : group.getAutoReplies()) {
-            if (autoReply.check(singleEvent.getMessage())) {
-                singleEvent.send(autoReply.getReply());
-            }
-        }
+
     }
 }

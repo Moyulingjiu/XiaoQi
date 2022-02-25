@@ -10,6 +10,10 @@ import top.beforedawn.util.SingleEvent;
  * 解锁闪照
  */
 public class UnlockFlashFunction extends BasePlugin {
+    public UnlockFlashFunction() {
+        pluginName = "unlock_flash_image";
+    }
+
     @Override
     public boolean before(SingleEvent singleEvent) {
         if (singleEvent.isFriendMessage()) {

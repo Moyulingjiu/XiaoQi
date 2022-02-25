@@ -20,7 +20,6 @@ import java.util.*;
 public class MyGroup {
     private Long id = 0L;
     private String name = "";
-    private ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
     private LocalDateTime updateTime; // 更新时间
 
     private boolean mute = false; // 禁言
@@ -30,6 +29,10 @@ public class MyGroup {
     private boolean unlockFlashImage = false; // 解除闪照
     private boolean recallGuard = false; // 防撤回
     private boolean memberWatcher = false; // 开启成员监控
+
+    private boolean autoReply = false; // 自定义回复（开关）
+    private ArrayList<BaseAutoReply> autoReplies = new ArrayList<>(); // 自定义回复
+    private boolean repeat = false; // 自动加一
 
     private boolean groupEntry = false; // 自动审核入群
     private GroupEntryRule groupEntryRule = new GroupEntryRule(); // 审核规则
