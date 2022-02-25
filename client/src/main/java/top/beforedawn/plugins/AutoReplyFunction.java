@@ -10,6 +10,11 @@ import top.beforedawn.util.SingleEvent;
  */
 public class AutoReplyFunction extends BasePlugin {
     @Override
+    public boolean before(SingleEvent singleEvent) {
+        return singleEvent.getGroupId() > 0L;
+    }
+
+    @Override
     public void handleCommon(SingleEvent singleEvent) {
 
     }
@@ -22,9 +27,6 @@ public class AutoReplyFunction extends BasePlugin {
     @Override
     public void handleGroup(SingleEvent singleEvent) {
         MyGroup group = GroupPool.get(singleEvent);
-        if (group == null) {
-            return;
-        }
         for (BaseAutoReply autoReply : group.getAutoReplies()) {
             if (autoReply.check(singleEvent.getMessage())) {
                 singleEvent.send(autoReply.getReply());
