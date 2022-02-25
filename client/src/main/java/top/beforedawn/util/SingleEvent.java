@@ -4,8 +4,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.Friend;
+import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.event.events.NudgeEvent;
 import net.mamoe.mirai.message.data.*;
 import net.mamoe.mirai.utils.ExternalResource;
 import top.beforedawn.config.BotConfig;
@@ -30,6 +32,7 @@ public class SingleEvent {
     private SimpleCombineBot combineBot;
     private GroupMessageEvent groupMessageEvent;
     private FriendMessageEvent friendMessageEvent;
+    private NudgeEvent nudgeEvent;
 
     public SingleEvent() {
 
@@ -48,6 +51,10 @@ public class SingleEvent {
         setFriendMessageEvent(event);
     }
 
+    public SingleEvent(NudgeEvent event) {
+        setNudgeEvent(event);
+    }
+
     public String getBotName() {
         return combineBot.getConfig().getName();
     }
@@ -60,8 +67,20 @@ public class SingleEvent {
         return combineBot.getBot();
     }
 
-    public void setGroupMessageEvent(GroupMessageEvent event) {
+    public void init() {
+        title = "";
+        botId = 0L;
+        groupId = 0L;
+        senderId = 0L;
+        message = null;
+        combineBot = null;
+        groupMessageEvent = null;
         friendMessageEvent = null;
+        nudgeEvent = null;
+    }
+
+    public void setGroupMessageEvent(GroupMessageEvent event) {
+        init();
         groupMessageEvent = event;
         botId = groupMessageEvent.getBot().getId();
         combineBot = MyBot.getSimpleCombineBot(botId, this);
@@ -71,7 +90,7 @@ public class SingleEvent {
     }
 
     public void setFriendMessageEvent(FriendMessageEvent event) {
-        groupMessageEvent = null;
+        init();
         friendMessageEvent = event;
         botId = friendMessageEvent.getBot().getId();
         combineBot = MyBot.getSimpleCombineBot(botId, this);
@@ -80,11 +99,27 @@ public class SingleEvent {
         groupId = 0L;
     }
 
+    public void setNudgeEvent(NudgeEvent event) {
+        init();
+        nudgeEvent = event;
+        botId = event.getBot().getId();
+        combineBot = MyBot.getSimpleCombineBot(botId, this);
+        message = new MyMessage();
+        message.setBeNudge(true);
+        message.setBeAt(true);
+        senderId = event.getFrom().getId();
+        if (nudgeEvent.getSubject() instanceof Group) {
+            groupId = nudgeEvent.getSubject().getId();
+        } else if (nudgeEvent.getSubject() instanceof Friend) {
+            groupId = 0L;
+        }
+    }
+
     public boolean valid() {
         return botId != null &&
                 message != null &&
                 combineBot != null &&
-                (friendMessageEvent != null || groupMessageEvent != null);
+                (friendMessageEvent != null || groupMessageEvent != null || nudgeEvent != null);
     }
 
     public boolean isGroupMessage() {
@@ -93,6 +128,10 @@ public class SingleEvent {
 
     public boolean isFriendMessage() {
         return friendMessageEvent != null;
+    }
+
+    public boolean isNudge() {
+        return nudgeEvent != null;
     }
 
     public SystemRight getRight() {
@@ -233,6 +272,9 @@ public class SingleEvent {
         } else if (isFriendMessage()) {
             record();
             friendMessageEvent.getSubject().sendMessage(chain);
+        } else if (isNudge()) {
+            record();
+            nudgeEvent.getSubject().sendMessage(chain);
         }
     }
 
@@ -248,6 +290,9 @@ public class SingleEvent {
         } else if (isFriendMessage()) {
             record();
             friendMessageEvent.getSubject().sendMessage(plain);
+        } else if (isNudge()) {
+            record();
+            nudgeEvent.getSubject().sendMessage(plain);
         }
     }
 
@@ -308,6 +353,8 @@ public class SingleEvent {
             return getGroupMessageEvent().getGroup().uploadImage(ExternalResource.create(file));
         } else if (isFriendMessage()) {
             return getFriendMessageEvent().getFriend().uploadImage(ExternalResource.create(file));
+        } else if (isNudge()) {
+            return getNudgeEvent().getSubject().uploadImage(ExternalResource.create(file));
         }
         return null;
     }

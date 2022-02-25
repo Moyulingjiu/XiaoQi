@@ -1,9 +1,11 @@
 package top.beforedawn;
 
 import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.contact.AnonymousMember;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.event.events.NudgeEvent;
 import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
 import top.beforedawn.models.bo.MyGroup;
@@ -26,6 +28,7 @@ public class Main {
         plugins.add(new BaseFunction());
         plugins.add(new CocFunction());
         plugins.add(new AutoReplyFunction());
+        plugins.add(new NudgeFunction());
     }
 
     private static void inBlacklist(SingleEvent singleEvent) {
@@ -106,7 +109,7 @@ public class Main {
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("禁言")) {
             MyGroup group = GroupPool.get(singleEvent);
             if (singleEvent.aboveGroupAdmin()) {
-                if (group != null && !group.isMute()) {
+                if (!group.isMute()) {
                     singleEvent.send("那" + singleEvent.getBotName() + "还是闭嘴吧");
                     group.setMute(true);
                     GroupPool.save(singleEvent);
@@ -129,7 +132,7 @@ public class Main {
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("解除禁言")) {
             if (singleEvent.aboveGroupAdmin()) {
                 MyGroup group = GroupPool.get(singleEvent);
-                if (group != null && group.isMute()) {
+                if (group.isMute()) {
                     singleEvent.send("呜呜呜，憋死我了，终于可以说话了");
                     group.setMute(false);
                     GroupPool.save(singleEvent);
@@ -186,11 +189,19 @@ public class Main {
         registerPlugins();
 
         GlobalEventChannel.INSTANCE.subscribeAlways(GroupMessageEvent.class, event -> {
+            // 匿名用户不响应
+            if (event.getSender() instanceof AnonymousMember) {
+                return;
+            }
             handle(new SingleEvent(event));
         });
 
         GlobalEventChannel.INSTANCE.subscribeAlways(FriendMessageEvent.class, event -> {
             handle(new SingleEvent(event));
+        });
+
+        GlobalEventChannel.INSTANCE.subscribeAlways(NudgeEvent.class, nudgeEvent -> {
+            handle(new SingleEvent(nudgeEvent));
         });
     }
 }

@@ -2,7 +2,6 @@ package top.beforedawn.config;
 
 import com.alibaba.fastjson.JSONObject;
 import top.beforedawn.models.bo.MyGroup;
-import top.beforedawn.models.bo.MyUser;
 import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.util.FileUtil;
 import top.beforedawn.util.SingleEvent;
@@ -99,12 +98,20 @@ public class GroupPool {
         group.setId(jsonObject.getLong("id"));
         group.setName(jsonObject.getString("name"));
 
-        group.setMute(jsonObject.getBoolean("mute"));
-        group.setLimit(jsonObject.getBoolean("limit"));
-        group.setUnlockFlashImage(jsonObject.getBoolean("unlockFlashImage"));
-        group.setRecallGuard(jsonObject.getBoolean("recallGuard"));
-        group.setMemberWatcher(jsonObject.getBoolean("memberWatcher"));
-        group.setGroupEntry(jsonObject.getBoolean("groupEntry"));
+        Boolean bool = jsonObject.getBoolean("mute");
+        group.setMute(bool != null && bool);
+        bool = jsonObject.getBoolean("limit");
+        group.setLimit(bool != null && bool);
+        bool = jsonObject.getBoolean("nudge");
+        group.setNudge(bool != null && bool);
+        bool = jsonObject.getBoolean("unlockFlashImage");
+        group.setUnlockFlashImage(bool != null && bool);
+        bool = jsonObject.getBoolean("recallGuard");
+        group.setRecallGuard(bool != null && bool);
+        bool = jsonObject.getBoolean("memberWatcher");
+        group.setMemberWatcher(bool != null && bool);
+        bool = jsonObject.getBoolean("groupEntry");
+        group.setGroupEntry(bool != null && bool);
         group.setGroupEntryRule(jsonObject.getObject("groupEntryRule", GroupEntryRule.class));
 
         ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
@@ -132,13 +139,13 @@ public class GroupPool {
         }
         String filename = singleEvent.getConfig().getWorkdir() + singleEvent.getConfig().getGroupFilename().replace("{groupId}", "" + groupId);
         MyGroup group = groups.getOrDefault(groupId, new MyGroup());
-        System.out.println(group);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", group.getId());
         jsonObject.put("name", group.getName());
 
         jsonObject.put("mute", group.isMute());
         jsonObject.put("limit", group.isLimit());
+        jsonObject.put("nudge", group.isNudge());
         jsonObject.put("unlockFlashImage", group.isUnlockFlashImage());
         jsonObject.put("recallGuard", group.isRecallGuard());
         jsonObject.put("memberWatcher", group.isMemberWatcher());

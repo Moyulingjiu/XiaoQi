@@ -1,5 +1,6 @@
 package top.beforedawn.plugins;
 
+import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
 import top.beforedawn.config.UserPool;
 import top.beforedawn.models.bo.*;
@@ -32,12 +33,30 @@ public class BotFunction extends BasePlugin {
             } else {
                 builder.append("有效期：无限期");
             }
+            builder.append("\n").append("版本信息：").append(BotConfig.VERSION);
+            builder.append("\n").append("激活的附加功能：");
+            if (singleEvent.getConfig().isAllowCoc()) {
+                builder.append(" coc模块");
+            }
+            if (singleEvent.getConfig().isAllowRpg()) {
+                builder.append(" rpg游戏模块");
+            }
+            if (singleEvent.getConfig().isAllowPic()) {
+                builder.append(" Pixiv搜图模块");
+            }
+            if (singleEvent.getConfig().isAllowTrpg()) {
+                builder.append(" 骰娘模块");
+            }
+            if (singleEvent.getConfig().isAllowAssistant()) {
+                builder.append(" 个人助理模块");
+            }
 
             singleEvent.send(builder.toString());
         } else if (singleEvent.getMessage().plainEqual("统计信息")) {
             StringBuilder builder = new StringBuilder(singleEvent.getConfig().getStatistics().toString());
             builder.append("\n").append("缓存User：").append(UserPool.size()).append("/").append(UserPool.POOL_MAX);
             builder.append("\n").append("缓存Group：").append(GroupPool.size()).append("/").append(GroupPool.POOL_MAX);
+            builder.append("\n").append("版本信息：").append(BotConfig.VERSION);
             singleEvent.send(builder.toString());
         } else if (singleEvent.getMessage().plainEqual("我的权限")) {
             switch (singleEvent.getRight()) {
@@ -60,6 +79,8 @@ public class BotFunction extends BasePlugin {
         } else if (singleEvent.getMessage().plainEqual("我的积分")) {
             MyUser user = UserPool.getUser(singleEvent);
             singleEvent.send("你的积分：" + user.getPoint());
+        } else if (singleEvent.getMessage().plainEqual("版本信息")) {
+            singleEvent.send("版本信息：" + BotConfig.VERSION);
         }
     }
 
@@ -281,11 +302,81 @@ public class BotFunction extends BasePlugin {
         }
     }
 
+    private boolean check(
+            SingleEvent singleEvent,
+            boolean right,
+            boolean origin,
+            boolean target,
+            String unableChange
+    ) {
+        if (right) {
+            if (origin == target) {
+                singleEvent.send(unableChange);
+            } else {
+                if (target) {
+                    singleEvent.send("开启成功");
+                } else {
+                    singleEvent.send("关闭成功");
+                }
+                return true;
+            }
+        } else {
+            singleEvent.send("你无权执行该操作");
+        }
+        return false;
+    }
+
+    private void switcher(SingleEvent singleEvent) {
+        MyGroup group = GroupPool.get(singleEvent);
+        if (singleEvent.getMessage().plainEqual("开启限制模式")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isLimit(), true, "已经在限制模式了")) {
+                group.setLimit(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭限制模式")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isLimit(), false, "没有在限制模式哦")) {
+                group.setLimit(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启成员监控")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isMemberWatcher(), true, "已经开了成员监控了")) {
+                group.setMemberWatcher(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭成员监控")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isMemberWatcher(), false, "本来就没有开启成员监控")) {
+                group.setMemberWatcher(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启解除闪照")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isUnlockFlashImage(), true, "已经开启了解除闪照")) {
+                group.setUnlockFlashImage(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭解除闪照")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isUnlockFlashImage(), false, "本来就没有开启解除闪照")) {
+                group.setUnlockFlashImage(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启戳一戳")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isNudge(), true, "已经开启了戳一戳")) {
+                group.setNudge(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭戳一戳")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isNudge(), false, "本来就没有开启戳一戳")) {
+                group.setNudge(false);
+                GroupPool.save(singleEvent);
+            }
+        }
+    }
+
     @Override
     public void handleCommon(SingleEvent singleEvent) {
         information(singleEvent);
         blacklist(singleEvent);
         admin(singleEvent);
+        switcher(singleEvent);
     }
 
     @Override

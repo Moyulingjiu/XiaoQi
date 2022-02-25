@@ -26,6 +26,7 @@ public class MyGroup {
     private boolean mute = false; // 禁言
     private boolean limit = false; // 处在限制模式的群
 
+    private boolean nudge = false; // 戳一戳
     private boolean unlockFlashImage = false; // 解除闪照
     private boolean recallGuard = false; // 防撤回
     private boolean memberWatcher = false; // 开启成员监控

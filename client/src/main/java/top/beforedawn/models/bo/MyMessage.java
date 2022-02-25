@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class MyMessage {
     boolean beAt = false;
+    boolean beNudge = false;
     ArrayList<String> plain = new ArrayList<>();
     Set<Long> at = new HashSet<>();
 

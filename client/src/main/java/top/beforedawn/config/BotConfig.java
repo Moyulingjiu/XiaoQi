@@ -8,7 +8,6 @@ import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
 import top.beforedawn.util.YamlReader;
 
-import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -23,6 +22,11 @@ public class BotConfig {
      * 过期时间（单位：分钟）
      */
     public static final int EXPIRATION_TIME = 1;
+
+    /**
+     * 版本信息
+     */
+    public static final String VERSION = "1.0.0-alpha";
 
     private final String configFilename = "config.json";
     private final String statisticsFilename = "statistics.json";
@@ -49,7 +53,7 @@ public class BotConfig {
     private String keyType;
     private boolean allowCoc; // 允许使用coc模块（部落冲突）
     private boolean allowRpg; // 允许使用rpg模块（rpg游戏）
-    private boolean allowTrpg; // 允许使用trpg模块
+    private boolean allowTrpg; // 允许使用trpg模块【还未制作】
     private boolean allowPic; // 允许使用pic模块（搜图）
     private boolean allowAssistant; // 允许使用个人助理模块
 
@@ -102,6 +106,7 @@ public class BotConfig {
         keyValidEndDate = botRemoteInformation.getKeyValidEndDate();
         keyType = botRemoteInformation.getKeyType();
         allowCoc = botRemoteInformation.getAllowCoc() == 1;
+        allowTrpg = botRemoteInformation.getAllowTrpg() == 1;
         allowRpg = botRemoteInformation.getAllowRpg() == 1;
         allowPic = botRemoteInformation.getAllowPic() == 1;
         allowAssistant = botRemoteInformation.getAllowAssistant() == 1;
