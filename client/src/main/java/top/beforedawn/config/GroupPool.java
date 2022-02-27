@@ -1,8 +1,12 @@
 package top.beforedawn.config;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.reply.BaseAutoReply;
+import top.beforedawn.models.reply.ComplexReply;
+import top.beforedawn.models.reply.KeyMatchReply;
+import top.beforedawn.models.reply.KeyReply;
 import top.beforedawn.util.FileUtil;
 import top.beforedawn.util.SingleEvent;
 
@@ -118,10 +122,18 @@ public class GroupPool {
         group.setAutoReply(bool != null && bool);
         bool = jsonObject.getBoolean("repeat");
         group.setRepeat(bool != null && bool);
+
         ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
-        for (Object autoReply : jsonObject.getJSONArray("autoReplies")) {
-            if (autoReply instanceof BaseAutoReply) {
-                autoReplies.add((BaseAutoReply) autoReply);
+        JSONArray jsonArray = jsonObject.getJSONArray("autoReplies");
+        for (int i = 0; i < jsonArray.size(); i++) {
+            if (jsonArray.getObject(i, BaseAutoReply.class) != null) {
+                autoReplies.add(jsonArray.getObject(i, BaseAutoReply.class));
+            } else if (jsonArray.getObject(i, KeyReply.class) != null) {
+                autoReplies.add(jsonArray.getObject(i, KeyReply.class));
+            } else if (jsonArray.getObject(i, KeyMatchReply.class) != null) {
+                autoReplies.add(jsonArray.getObject(i, KeyMatchReply.class));
+            } else if (jsonArray.getObject(i, ComplexReply.class) != null) {
+                autoReplies.add(jsonArray.getObject(i, ComplexReply.class));
             }
         }
         group.setAutoReplies(autoReplies);

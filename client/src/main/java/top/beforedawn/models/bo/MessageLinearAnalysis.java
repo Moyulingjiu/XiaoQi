@@ -24,6 +24,9 @@ public class MessageLinearAnalysis {
     }
 
     public ArrayList<String> split() {
+        if (text.equals("")) {
+            return new ArrayList<>();
+        }
         String[] s = text.split(" ");
         return new ArrayList<>(Arrays.asList(s));
     }

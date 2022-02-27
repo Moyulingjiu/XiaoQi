@@ -17,14 +17,14 @@ import java.util.ArrayList;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KeyMatchReply extends BaseAutoReply {
+public class KeyReply extends BaseAutoReply {
     private String key;
     private ArrayList<String> reply = new ArrayList<>();
     private ArrayList<Long> atId = new ArrayList<>();
 
     @Override
     public boolean check(MyMessage message) {
-        return message.getPlainString().contains(key);
+        return message.getPlainString().equals(key);
     }
 
     @Override

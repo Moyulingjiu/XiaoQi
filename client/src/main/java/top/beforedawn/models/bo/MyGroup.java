@@ -36,4 +36,8 @@ public class MyGroup {
 
     private boolean groupEntry = false; // 自动审核入群
     private GroupEntryRule groupEntryRule = new GroupEntryRule(); // 审核规则
+
+    public void add(BaseAutoReply autoReply) {
+        autoReplies.add(autoReply);
+    }
 }

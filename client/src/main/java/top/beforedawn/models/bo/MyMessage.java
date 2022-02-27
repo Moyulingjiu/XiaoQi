@@ -24,7 +24,9 @@ public class MyMessage {
     ArrayList<String> plain = new ArrayList<>();
     ArrayList<Image> flashImages = new ArrayList<>();
     ArrayList<Image> images = new ArrayList<>();
+    ArrayList<Face> faces = new ArrayList<>();
     Set<Long> at = new HashSet<>();
+    MessageChain origin;
 
     public String getPlainString() {
         StringBuilder builder = new StringBuilder();
@@ -32,6 +34,10 @@ public class MyMessage {
             builder.append(s);
         }
         return builder.toString().trim();
+    }
+
+    public boolean equals(MyMessage other) {
+        return origin.contentToString().equals(other.origin.contentToString());
     }
 
     /**

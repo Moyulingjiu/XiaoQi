@@ -158,6 +158,7 @@ public class CommonUtil {
      */
     public static MyMessage analysisMessage(MessageChain chain, Long botId) {
         MyMessage myMessage = new MyMessage();
+        myMessage.setOrigin(chain);
         for (SingleMessage message : chain) {
             if (message instanceof PlainText) {
                 myMessage.getPlain().add(message.toString());
@@ -171,6 +172,8 @@ public class CommonUtil {
                 myMessage.getFlashImages().add(((FlashImage) message).getImage());
             } else if (message instanceof Image) {
                 myMessage.getImages().add((Image) message);
+            } else if (message instanceof Face) {
+                myMessage.getFaces().add((Face) message);
             }
         }
         return myMessage;

@@ -5,17 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RepeatFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyReply.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/resources/device.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MessageLinearAnalysis.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MessageLinearAnalysis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/MatchReply.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/UnlockFlashFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/UnlockFlashFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/NudgeFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/NudgeFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RepeatFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RepeatFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,11 +79,15 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\GitHub项目\小柒\1.x\client\src\main\resources" />
       <recent name="E:\GitHub项目\小柒\1.x\service\src\main\resources" />
       <recent name="E:\GitHub项目\小柒\1.x" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="top.beforedawn.service.model.vo" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="top.beforedawn.models.reply" />
     </key>
   </component>
   <component name="RunManager" selected="应用程序.Main">
@@ -222,7 +230,10 @@
       <workItem from="1645669072177" duration="6653000" />
       <workItem from="1645701917969" duration="5848000" />
       <workItem from="1645747764206" duration="105000" />
-      <workItem from="1645747939858" duration="3428000" />
+      <workItem from="1645747939858" duration="5262000" />
+      <workItem from="1645766971472" duration="2532000" />
+      <workItem from="1645871636485" duration="10222000" />
+      <workItem from="1645932433437" duration="1034000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

@@ -54,9 +54,13 @@ public class MyBot {
             return botPool.get(qq).getBot();
         }
         Bot bot = BotFactory.INSTANCE.newBot(config.getQq(), config.getPassword(), new BotConfiguration() {{
-            setHeartbeatStrategy(BotConfiguration.HeartbeatStrategy.REGISTER);
+            // 如果遇到 Bot 闲置一段时间后，发消息返回成功但群内收不到的情况，请切换心跳策略，依次尝试 STAT_HB、REGISTER 和 NONE。
+            setHeartbeatStrategy(BotConfiguration.HeartbeatStrategy.STAT_HB);
+            // 登录协议：ANDROID_PHONE，ANDROID_PAD，ANDROID_WATCH
+            setProtocol(MiraiProtocol.ANDROID_PHONE);
             setWorkingDir(new File(config.getWorkdir()));
             setCacheDir(new File(config.getCache()));
+            fileBasedDeviceInfo("device.json");
         }});
         bot.login();
         botPool.put(qq, new SimpleCombineBot(config, bot));

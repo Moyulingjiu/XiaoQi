@@ -16,5 +16,5 @@ public abstract class BaseAutoReply {
      *
      * @return 消息链
      */
-    public abstract MessageChain getReply();
+    public abstract MessageChain reply();
 }
