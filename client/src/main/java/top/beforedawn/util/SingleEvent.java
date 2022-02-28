@@ -13,6 +13,7 @@ import top.beforedawn.config.BotConfig;
 import top.beforedawn.models.bo.GroupRight;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.bo.SystemRight;
+import top.beforedawn.plugins.RepeatFunction;
 
 import java.io.File;
 
@@ -231,6 +232,10 @@ public class SingleEvent {
             getConfig().getStatistics().record(getSenderId());
         }
         getConfig().getStatistics().save(getConfig().getWorkdir() + getConfig().getStatisticsFilename());
+        if (isGroupMessage()) {
+            RepeatFunction.lastReceived.remove(groupId);
+            RepeatFunction.lastSend.remove(groupId);
+        }
     }
 
     /**

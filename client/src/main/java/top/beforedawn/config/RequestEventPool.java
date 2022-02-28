@@ -77,6 +77,21 @@ public class RequestEventPool {
     }
 
     /**
+     * 拒绝好友请求的事件
+     *
+     * @param id 事件号
+     * @return boolean
+     */
+    public static boolean rejectFriend(long id) {
+        NewFriendRequestEvent event = friendRequestEventMap.get(id);
+        if (event == null)
+            return false;
+        event.reject(false);
+        friendRequestEventMap.remove(id);
+        return true;
+    }
+
+    /**
      * 接受群申请请求的事件
      *
      * @param id 事件号
@@ -88,6 +103,21 @@ public class RequestEventPool {
             return false;
         event.accept();
         friendRequestEventMap.remove(id);
+        return true;
+    }
+
+    /**
+     * 拒绝群申请请求的事件
+     *
+     * @param id 事件号
+     * @return boolean
+     */
+    public static boolean rejectGroup(long id) {
+        BotInvitedJoinGroupRequestEvent event = groupRequestEventMap.get(id);
+        if (event == null)
+            return false;
+        event.ignore();
+        groupRequestEventMap.remove(id);
         return true;
     }
 }

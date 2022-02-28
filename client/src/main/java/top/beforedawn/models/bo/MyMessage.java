@@ -37,6 +37,8 @@ public class MyMessage {
     }
 
     public boolean equals(MyMessage other) {
+        if (images.size() != 0)
+            return false;
         return origin.contentToString().equals(other.origin.contentToString());
     }
 

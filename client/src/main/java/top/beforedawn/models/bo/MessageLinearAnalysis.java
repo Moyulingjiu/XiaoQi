@@ -1,5 +1,7 @@
 package top.beforedawn.models.bo;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -8,6 +10,7 @@ import java.util.Arrays;
  *
  * @author 墨羽翎玖
  */
+@Data
 public class MessageLinearAnalysis {
     private String text;
 

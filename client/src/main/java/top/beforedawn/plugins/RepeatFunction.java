@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public class RepeatFunction extends BasePlugin {
     private static final int MAX_POOL = 200;
-    private Map<Long, MyMessage> lastReceived = new HashMap<>();
-    private Map<Long, MyMessage> lastSend = new HashMap<>();
+    public static Map<Long, MyMessage> lastReceived = new HashMap<>();
+    public static Map<Long, MyMessage> lastSend = new HashMap<>();
 
     public RepeatFunction() {
         pluginName = "repeat";

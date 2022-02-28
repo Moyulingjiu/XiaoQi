@@ -1,7 +1,10 @@
 package top.beforedawn.plugins;
 
+import net.mamoe.mirai.event.events.BotInvitedJoinGroupRequestEvent;
+import net.mamoe.mirai.event.events.NewFriendRequestEvent;
 import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
+import top.beforedawn.config.RequestEventPool;
 import top.beforedawn.config.UserPool;
 import top.beforedawn.models.bo.*;
 import top.beforedawn.util.CommonUtil;
@@ -12,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class BotFunction extends BasePlugin {
+    private static final int REQUEST_PAGE_SIZE = 20;
+
     public BotFunction() {
         pluginName = "bot_function";
     }
@@ -245,7 +250,8 @@ public class BotFunction extends BasePlugin {
                 }
                 if (administrator.size() == 0) {
                     builder.append("（暂无）");
-;                }
+                    ;
+                }
                 singleEvent.send(builder.toString());
             } else {
                 singleEvent.send("权限不足");
@@ -275,7 +281,7 @@ public class BotFunction extends BasePlugin {
             if (!flag) {
                 singleEvent.send("格式错误！");
             }
-        }  else if (singleEvent.getMessage().plainStartWith("删除机器人管理员")) {
+        } else if (singleEvent.getMessage().plainStartWith("删除机器人管理员")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("删除机器人管理员");
             ArrayList<String> split = analysis.split();
@@ -327,9 +333,44 @@ public class BotFunction extends BasePlugin {
         return false;
     }
 
+    private String getSwitcher(boolean switcher) {
+        if (switcher)
+            return "是";
+        return "否";
+    }
+
     private void switcher(SingleEvent singleEvent) {
         MyGroup group = GroupPool.get(singleEvent);
-        if (singleEvent.getMessage().plainEqual("开启限制模式")) {
+        if (singleEvent.getMessage().plainEqual("全局模块列表")) {
+            String message = "版本信息：" + BotConfig.VERSION + "\n" +
+                    "是否允许使用coc模块：" + getSwitcher(singleEvent.getConfig().isAllowCoc()) + "\n" +
+                    "是否允许使用rpg模块：" + getSwitcher(singleEvent.getConfig().isAllowRpg()) + "\n" +
+                    "是否允许使用trpg模块：" + getSwitcher(singleEvent.getConfig().isAllowTrpg()) + "\n" +
+                    "是否允许使用pixiv模块：" + getSwitcher(singleEvent.getConfig().isAllowPic()) + "\n" +
+                    "是否允许使用个人助理模块：" + getSwitcher(singleEvent.getConfig().isAllowAssistant()) + "\n" +
+                    "是否允许添加好友：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isAllowFriend()) + "\n" +
+                    "是否允许添加群：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isAllowGroup()) + "\n" +
+                    "是否订阅新好友提醒：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isRemindFriend()) + "\n" +
+                    "是否订阅群邀请提醒：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isRemindGroup()) + "\n" +
+                    "是否订阅禁言提醒：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isRemindMute()) + "\n" +
+                    "是否订阅退群提醒：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isRemindQuit()) + "\n" +
+                    "是否进行心跳检测：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isHeart()) + "\n" +
+                    "心跳检测间隔：" + singleEvent.getConfig().getBotSwitcher().getHeartInterval();
+            singleEvent.send(message);
+        } else if (singleEvent.getMessage().plainEqual("模块列表")) {
+            String message = "版本信息：" + BotConfig.VERSION + "\n" +
+                    "是否处在限制模式：" + getSwitcher(group.isLimit()) + "\n" +
+                    "是否开启戳一戳：" + getSwitcher(group.isNudge()) + "\n" +
+                    "是否开启解除闪照：" + getSwitcher(group.isUnlockFlashImage()) + "\n" +
+                    "是否开启防撤回：" + getSwitcher(group.isRecallGuard()) + "\n" +
+                    "是否开启成员监控：" + getSwitcher(group.isMemberWatcher()) + "\n" +
+                    "是否开启自定义回复：" + getSwitcher(group.isAutoReply()) + "\n" +
+                    "是否开启自动加一：" + getSwitcher(group.isRepeat()) + "\n" +
+                    "是否开启自动入群审核：" + getSwitcher(group.isGroupEntry());
+            singleEvent.send(message);
+        }
+        // 单独控制每个开关
+        else if (singleEvent.getMessage().plainEqual("开启限制模式")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isLimit(), true, "已经在限制模式了")) {
                 group.setLimit(true);
                 GroupPool.save(singleEvent);
@@ -393,10 +434,106 @@ public class BotFunction extends BasePlugin {
     }
 
     public void request(SingleEvent singleEvent) {
-        if (singleEvent.getMessage().plainStartWith("同意好友")) {
+        if (!singleEvent.aboveBotMaster()) {
+            return;
+        }
 
-        } else if (singleEvent.getMessage().plainStartWith("拒绝好友")) {
-
+        if (singleEvent.getMessage().plainStartWith("同意好友请求")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("同意好友请求");
+            long id = CommonUtil.getLong(analysis.getText());
+            if (RequestEventPool.acceptFriend(id)) {
+                singleEvent.send("已同意该请求");
+            } else {
+                singleEvent.send("请求不存在");
+            }
+        } else if (singleEvent.getMessage().plainStartWith("拒绝好友请求")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("拒绝好友请求");
+            long id = CommonUtil.getLong(analysis.getText());
+            if (RequestEventPool.rejectFriend(id)) {
+                singleEvent.send("已拒绝该请求");
+            } else {
+                singleEvent.send("请求不存在");
+            }
+        } else if (singleEvent.getMessage().plainStartWith("同意群申请")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("同意群申请");
+            long id = CommonUtil.getLong(analysis.getText());
+            if (RequestEventPool.acceptGroup(id)) {
+                singleEvent.send("已同意该请求");
+            } else {
+                singleEvent.send("请求不存在");
+            }
+        } else if (singleEvent.getMessage().plainStartWith("拒绝群申请")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("拒绝群申请");
+            long id = CommonUtil.getLong(analysis.getText());
+            if (RequestEventPool.rejectFriend(id)) {
+                singleEvent.send("已拒绝该请求");
+            } else {
+                singleEvent.send("请求不存在");
+            }
+        } else if (singleEvent.getMessage().plainStartWith("查看好友请求")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("查看好友请求");
+            int page = CommonUtil.getInteger(analysis.getText());
+            if (page <= 0) {
+                page = 0;
+            } else {
+                page--;
+            }
+            int total = RequestEventPool.friendRequestEventMap.keySet().size() / REQUEST_PAGE_SIZE;
+            if (RequestEventPool.friendRequestEventMap.keySet().size() % REQUEST_PAGE_SIZE != 0) {
+                total++;
+            }
+            if (page < 0 || page > total) {
+                singleEvent.send("页码超限，总计：" + total + "页");
+                return;
+            }
+            StringBuilder builder = new StringBuilder();
+            int index = 0;
+            for (Long id : RequestEventPool.friendRequestEventMap.keySet()) {
+                if (index >= page * REQUEST_PAGE_SIZE) {
+                    NewFriendRequestEvent event = RequestEventPool.friendRequestEventMap.get(id);
+                    builder.append(String.format("%d.<好友事件%d>申请人：%s（%d）\n", (index + 1), event.getEventId(), event.getFromNick(), event.getFromId()));
+                } else if (index > (page + 1) * REQUEST_PAGE_SIZE) {
+                    break;
+                }
+                index++;
+            }
+            builder.append("--------\n").append("页码：").append(page + 1).append("/").append(total);
+            singleEvent.send(builder.toString());
+        } else if (singleEvent.getMessage().plainStartWith("查看群申请")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("查看好友请求");
+            int page = CommonUtil.getInteger(analysis.getText());
+            if (page <= 0) {
+                page = 0;
+            } else {
+                page--;
+            }
+            int total = RequestEventPool.groupRequestEventMap.keySet().size() / REQUEST_PAGE_SIZE;
+            if (RequestEventPool.groupRequestEventMap.keySet().size() % REQUEST_PAGE_SIZE != 0) {
+                total++;
+            }
+            if (page < 0 || page > total) {
+                singleEvent.send("页码超限，总计：" + total + "页");
+                return;
+            }
+            StringBuilder builder = new StringBuilder();
+            int index = 0;
+            for (Long id : RequestEventPool.groupRequestEventMap.keySet()) {
+                if (index >= page * REQUEST_PAGE_SIZE) {
+                    BotInvitedJoinGroupRequestEvent event = RequestEventPool.groupRequestEventMap.get(id);
+                    builder.append(String.format("%d.<群申请%d>申请的群：%s（%d）\n", (index + 1), event.getEventId(), event.getGroupName(), event.getGroupId()));
+                } else if (index > (page + 1) * REQUEST_PAGE_SIZE) {
+                    break;
+                }
+                index++;
+            }
+            builder.append("--------\n").append("页码：").append(page + 1).append("/").append(total);
+            singleEvent.send(builder.toString());
         }
     }
 
@@ -405,7 +542,7 @@ public class BotFunction extends BasePlugin {
         information(singleEvent);
         blacklist(singleEvent);
         admin(singleEvent);
-        switcher(singleEvent);
+        request(singleEvent);
 
         if (singleEvent.getMessage().plainEqual("公约")) {
             singleEvent.send(HttpUtil.convention(singleEvent.getBotId()));
@@ -430,6 +567,6 @@ public class BotFunction extends BasePlugin {
 
     @Override
     public void handleGroup(SingleEvent singleEvent) {
-
+        switcher(singleEvent);
     }
 }

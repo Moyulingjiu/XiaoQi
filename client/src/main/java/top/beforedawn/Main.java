@@ -204,6 +204,54 @@ public class Main {
             SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
             event.getGroup().sendMessage("已加入群，若是对机器人疑问可以直接艾特我然后输入退群两个字，我会自动退出的。例如：@" + bot.getConfig() + "退群");
         });
+
+        // 被踢出一个群
+        GlobalEventChannel.INSTANCE.subscribeAlways(BotLeaveEvent.Kick.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), 0L);
+            SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
+            if (bot.getConfig().getBotSwitcher().isRemindQuit()) {
+                singleEvent.sendMaster(String.format(
+                        "[%s]被踢出群<%s>(%d)，操作人：%s（%d）",
+                        LocalDateTime.now(),
+                        event.getGroup().getName(),
+                        event.getGroupId(),
+                        event.getOperator().getNick(),
+                        event.getOperator().getId()
+                ));
+            }
+        });
+
+        // 被禁言
+        GlobalEventChannel.INSTANCE.subscribeAlways(BotMuteEvent.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), 0L);
+            SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
+            if (bot.getConfig().getBotSwitcher().isRemindMute()) {
+                singleEvent.sendMaster(String.format(
+                        "[%s]在群<%s>(%d)通过QQ被禁言，操作人：%s（%d）",
+                        LocalDateTime.now(),
+                        event.getGroup().getName(),
+                        event.getGroupId(),
+                        event.getOperator().getNick(),
+                        event.getOperator().getId()
+                ));
+            }
+        });
+
+        // 解除禁言
+        GlobalEventChannel.INSTANCE.subscribeAlways(BotUnmuteEvent.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), 0L);
+            SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
+            if (bot.getConfig().getBotSwitcher().isRemindMute()) {
+                singleEvent.sendMaster(String.format(
+                        "[%s]在群<%s>(%d)通过QQ被解除禁言，操作人：%s（%d）",
+                        LocalDateTime.now(),
+                        event.getGroup().getName(),
+                        event.getGroupId(),
+                        event.getOperator().getNick(),
+                        event.getOperator().getId()
+                ));
+            }
+        });
     }
 
     private static void inBlacklist(SingleEvent singleEvent) {
@@ -350,10 +398,12 @@ public class Main {
                     singleEvent.quit();
                     if (singleEvent.getConfig().getBotSwitcher().isRemindQuit()) {
                         singleEvent.sendMaster(String.format(
-                                "[%s]退出群<%s>(%d)",
+                                "[%s]退出群<%s>(%d)，操作人：%s（%d）",
                                 LocalDateTime.now(),
                                 singleEvent.getGroupMessageEvent().getGroup().getName(),
-                                singleEvent.getGroupId()
+                                singleEvent.getGroupId(),
+                                singleEvent.getGroupMessageEvent().getSenderName(),
+                                singleEvent.getSenderId()
                         ));
                     }
                     return true;
@@ -363,8 +413,7 @@ public class Main {
             } else {
                 singleEvent.send("你无权执行该操作");
             }
-        }
-        if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("禁言")) {
+        } else if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("禁言")) {
             MyGroup group = GroupPool.get(singleEvent);
             if (singleEvent.aboveGroupAdmin()) {
                 if (!group.isMute()) {
@@ -373,10 +422,12 @@ public class Main {
                     GroupPool.save(singleEvent);
                     if (singleEvent.getConfig().getBotSwitcher().isRemindMute()) {
                         singleEvent.sendMaster(String.format(
-                                "[%s]在群<%s>(%d)禁言",
+                                "[%s]在群<%s>(%d)禁言，操作人：%s（%d）",
                                 LocalDateTime.now(),
                                 singleEvent.getGroupMessageEvent().getGroup().getName(),
-                                singleEvent.getGroupId()
+                                singleEvent.getGroupId(),
+                                singleEvent.getGroupMessageEvent().getSenderName(),
+                                singleEvent.getSenderId()
                         ));
                     }
                     return true;
@@ -386,8 +437,7 @@ public class Main {
             } else {
                 singleEvent.send("你无权执行该操作");
             }
-        }
-        if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("解除禁言")) {
+        } else if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("解除禁言")) {
             if (singleEvent.aboveGroupAdmin()) {
                 MyGroup group = GroupPool.get(singleEvent);
                 if (group.isMute()) {
@@ -396,10 +446,12 @@ public class Main {
                     GroupPool.save(singleEvent);
                     if (singleEvent.getConfig().getBotSwitcher().isRemindMute()) {
                         singleEvent.sendMaster(String.format(
-                                "[%s]在群<%s>(%d)解除禁言",
+                                "[%s]在群<%s>(%d)解除禁言，操作人：%s（%d）",
                                 LocalDateTime.now(),
                                 singleEvent.getGroupMessageEvent().getGroup().getName(),
-                                singleEvent.getGroupId()
+                                singleEvent.getGroupId(),
+                                singleEvent.getGroupMessageEvent().getSenderName(),
+                                singleEvent.getSenderId()
                         ));
                     }
                     return true;

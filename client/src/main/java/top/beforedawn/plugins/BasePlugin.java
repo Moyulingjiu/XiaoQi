@@ -25,13 +25,18 @@ public abstract class BasePlugin {
      */
     public void handle(SingleEvent singleEvent) {
         singleEvent.setTitle(pluginName);
-        if (!before(singleEvent)) {
+        if (!before(singleEvent))
             return;
-        }
+        if (handContextCommon(singleEvent))
+            return;
         handleCommon(singleEvent);
         if (singleEvent.isFriendMessage()) {
+            if (handContextFriend(singleEvent))
+                return;
             handleFriend(singleEvent);
         } else if (singleEvent.isGroupMessage()) {
+            if (handContextGroup(singleEvent))
+                return;
             handleGroup(singleEvent);
         }
         after(singleEvent);
@@ -44,6 +49,18 @@ public abstract class BasePlugin {
 
     public void after(SingleEvent singleEvent) {
 
+    }
+
+    public boolean handContextCommon(SingleEvent singleEvent) {
+        return false;
+    }
+
+    public boolean handContextFriend(SingleEvent singleEvent) {
+        return false;
+    }
+
+    public boolean handContextGroup(SingleEvent singleEvent) {
+        return false;
     }
 
     public abstract void handleCommon(SingleEvent singleEvent);
