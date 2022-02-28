@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 /**
- * 获取机器人
+ * <h1>获取机器人</h1>
+ * <p><b>该类最初的设计是为了实现同时登陆多个机器人，后来的设计考虑摒弃了这一点，转而改为一个jar包对应一个机器人</b></p>
  *
  * @author 墨羽翎玖
  */

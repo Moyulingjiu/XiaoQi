@@ -20,6 +20,14 @@ public class HttpUtil {
         return builder.toString();
     }
 
+    public static String convention(long botId) {
+        HttpResponse response = HttpRequest.sendGet(serverAddress() + "/bot/convention", "botId=" + botId);
+        if (response.getCode() != 0) {
+            return "（似乎与主服务器断开了连接，暂时无法获取公约）";
+        }
+        return response.getData().getString("data");
+    }
+
     public static MyUser getUser(SingleEvent singleEvent) {
         HttpResponse response = HttpRequest.sendGet(serverAddress() + "/user/user/" + singleEvent.getSenderId(), "botId=" + singleEvent.getBotId());
         MyUser user = new MyUser();

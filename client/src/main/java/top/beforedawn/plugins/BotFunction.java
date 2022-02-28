@@ -5,6 +5,7 @@ import top.beforedawn.config.GroupPool;
 import top.beforedawn.config.UserPool;
 import top.beforedawn.models.bo.*;
 import top.beforedawn.util.CommonUtil;
+import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
 
 import java.time.LocalDateTime;
@@ -391,12 +392,33 @@ public class BotFunction extends BasePlugin {
         }
     }
 
+    public void request(SingleEvent singleEvent) {
+        if (singleEvent.getMessage().plainStartWith("同意好友")) {
+
+        } else if (singleEvent.getMessage().plainStartWith("拒绝好友")) {
+
+        }
+    }
+
     @Override
     public void handleCommon(SingleEvent singleEvent) {
         information(singleEvent);
         blacklist(singleEvent);
         admin(singleEvent);
         switcher(singleEvent);
+
+        if (singleEvent.getMessage().plainEqual("公约")) {
+            singleEvent.send(HttpUtil.convention(singleEvent.getBotId()));
+        } else if (singleEvent.getMessage().plainBeAtEqual("关机")) {
+            if (singleEvent.aboveBotMaster()) {
+                singleEvent.send(singleEvent.getConfig().getName() + "正在执行全局关机，请手动后台重启");
+                singleEvent.sendMaster(String.format("%s已关机，操作人%d（权限：%s）", singleEvent.getConfig().getName(), singleEvent.getSenderId(), singleEvent.getRight()));
+                singleEvent.getBot().close();
+                System.exit(0);
+            } else {
+                singleEvent.send("你无权执行此操作");
+            }
+        }
     }
 
     @Override

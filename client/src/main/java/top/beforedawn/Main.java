@@ -3,19 +3,19 @@ package top.beforedawn;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.AnonymousMember;
 import net.mamoe.mirai.event.GlobalEventChannel;
-import net.mamoe.mirai.event.events.FriendMessageEvent;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.event.events.NudgeEvent;
+import net.mamoe.mirai.event.events.*;
 import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
+import top.beforedawn.config.RequestEventPool;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.bo.SimpleBlacklist;
 import top.beforedawn.plugins.*;
-import top.beforedawn.util.MyBot;
-import top.beforedawn.util.SingleEvent;
+import top.beforedawn.util.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     private static final ArrayList<BasePlugin> plugins = new ArrayList<>();
@@ -33,6 +33,177 @@ public class Main {
         plugins.add(new AutoReplyFunction());
         plugins.add(new NudgeFunction());
         plugins.add(new UnlockFlashFunction());
+    }
+
+    /**
+     * 成员监控的事件注册
+     */
+    private static void memberWatcher() {
+        // 踢出群成员
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberLeaveEvent.Kick.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getMember().getId(), event.getGroupId()));
+            if (group.isMemberWatcher()) {
+                StringBuilder builder = new StringBuilder();
+                if (event.getOperator() != null) {
+                    if (event.getOperator().getNameCard().equals("")) {
+                        builder.append(event.getOperator().getNick());
+                    } else {
+                        builder.append(event.getOperator().getNameCard());
+                    }
+                    builder.append("（").append(event.getOperator().getId()).append("）");
+                } else {
+                    builder.append("管理员/群主");
+                }
+                builder.append("踢出成员").append(event.getMember().getNick()).append("（").append(event.getMember().getId()).append("）");
+                event.getGroup().sendMessage(builder.toString());
+            }
+        });
+
+        // 群成员主动退出
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberLeaveEvent.Quit.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getMember().getId(), event.getGroupId()));
+            if (group.isMemberWatcher()) {
+                event.getGroup().sendMessage(String.format("我们此时此刻失去了一位成员%s（%d）",
+                        event.getMember().getNick(),
+                        event.getMember().getId())
+                );
+            }
+        });
+
+        // 群成员的名片改变
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberCardChangeEvent.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getMember().getId(), event.getGroupId()));
+            if (group.isMemberWatcher()) {
+                String origin = event.getOrigin().equals("") ? event.getMember().getNick() + "（QQ昵称）" : event.getOrigin();
+                String newName = event.getNew().equals("") ? event.getMember().getNick() + "（QQ昵称）" : event.getNew();
+                event.getGroup().sendMessage(String.format("有一成员（%d）修改了群名片\n" +
+                                "原始名字：%s\n" +
+                                "新名字：%s\n",
+                        event.getMember().getId(),
+                        origin,
+                        newName)
+                );
+            }
+        });
+
+        // 群成员的头衔改变
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberSpecialTitleChangeEvent.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getMember().getId(), event.getGroupId()));
+            if (group.isMemberWatcher()) {
+                event.getGroup().sendMessage(String.format("群主授予成员%s（%d）新头衔\n" +
+                                "原始头衔：%s\n" +
+                                "新头衔：%s\n",
+                        event.getMember().getNameCard(),
+                        event.getMember().getId(),
+                        event.getOrigin(),
+                        event.getNew())
+                );
+            }
+        });
+
+        // 群成员的权限改变
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberPermissionChangeEvent.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getMember().getId(), event.getGroupId()));
+            if (group.isMemberWatcher()) {
+                event.getGroup().sendMessage(String.format("成员%s（%d）权限变动\n" +
+                                "原始权限：%s\n" +
+                                "新权限：%s\n",
+                        event.getMember().getNameCard(),
+                        event.getMember().getId(),
+                        event.getOrigin(),
+                        event.getNew())
+                );
+            }
+        });
+
+        // 群成员申请入群
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberJoinRequestEvent.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getFromId(), event.getGroupId()));
+            if (group.isMemberWatcher()) {
+                StringBuilder builder = new StringBuilder();
+                builder.append(String.format("有新的群申请：%s（%d）\n",
+                        event.getFromNick(),
+                        event.getFromId()));
+                if (event.getInvitor() != null) {
+                    builder.append("邀请人：");
+                    if (event.getInvitor().getNameCard().equals("")) {
+                        builder.append(event.getInvitor().getNick());
+                    } else {
+                        builder.append(event.getInvitor().getNameCard());
+                    }
+                    builder.append("（").append(event.getInvitorId()).append("）\n");
+                }
+                builder.append("申请信息：\n").append(event.getMessage());
+                if (event.getGroup() != null) {
+                    event.getGroup().sendMessage(builder.toString());
+                }
+            }
+        });
+    }
+
+    /**
+     * 机器人监控的事件注册
+     */
+    private static void botWatcher() {
+        // 新的好友申请
+        GlobalEventChannel.INSTANCE.subscribeAlways(NewFriendRequestEvent.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), event.getFromId());
+            SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
+            if (bot.getConfig().getBotSwitcher().isRemindFriend()) {
+                singleEvent.setCombineBot(bot);
+                StringBuilder builder = new StringBuilder();
+                builder.append("<好友事件").append(event.getEventId()).append(">");
+                builder.append("有新的好友申请：").append(event.getFromNick()).append("（").append(event.getFromId()).append("）\n");
+                builder.append("申请消息：").append(event.getMessage()).append("\n");
+                if (event.getFromGroup() != null) {
+                    builder.append("来自群：").append(event.getFromGroup().getName()).append("（").append(event.getFromGroupId()).append("）");
+                }
+                singleEvent.sendMaster(builder.toString());
+            }
+            if (bot.getConfig().getBotSwitcher().isAllowFriend()) {
+                event.accept();
+            } else {
+                RequestEventPool.put(event);
+            }
+        });
+
+        // 新的群邀请
+        GlobalEventChannel.INSTANCE.subscribeAlways(BotInvitedJoinGroupRequestEvent.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), event.getInvitorId());
+            SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
+            if (bot.getConfig().getBotSwitcher().isRemindGroup()) {
+                singleEvent.setCombineBot(bot);
+                singleEvent.sendMaster(String.format("<群事件%d>有新的群申请：%s（%d）\n" +
+                                "邀请人：%s（%d）",
+                        event.getEventId(),
+                        event.getGroupName(),
+                        event.getGroupId(),
+                        event.getInvitorNick(),
+                        event.getInvitorId()));
+            }
+            if (bot.getConfig().getBotSwitcher().isAllowGroup()) {
+                event.accept();
+                if (event.getInvitor() != null)
+                    event.getInvitor().sendMessage("已同意请求");
+            } else {
+                RequestEventPool.put(event);
+                if (event.getInvitor() != null)
+                    event.getInvitor().sendMessage("当前设置不会自动机群，请前往官方群（" + bot.getConfig().getOfficialGroup() + "）寻找主人");
+            }
+        });
+
+        // 成功添加了一个新的好友
+        GlobalEventChannel.INSTANCE.subscribeAlways(FriendAddEvent.class, event -> {
+            event.getFriend().sendMessage("已添加好友");
+            event.getFriend().sendMessage(HttpUtil.convention(event.getBot().getId()));
+        });
+
+        // 成功进入一个群
+        GlobalEventChannel.INSTANCE.subscribeAlways(BotJoinGroupEvent.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), 0L);
+            SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
+            event.getGroup().sendMessage("已加入群，若是对机器人疑问可以直接艾特我然后输入退群两个字，我会自动退出的。例如：@" + bot.getConfig() + "退群");
+        });
     }
 
     private static void inBlacklist(SingleEvent singleEvent) {
@@ -66,7 +237,90 @@ public class Main {
     private static void awaken(SingleEvent singleEvent) {
         // 如果不在黑名单中就可以被唤醒，如果在黑名单中，就执行黑名单提醒
         if (!singleEvent.getConfig().isBlacklist(singleEvent.getSenderId(), singleEvent.getGroupId())) {
-            singleEvent.send("我在~");
+            LocalDateTime now = LocalDateTime.now();
+            if (now.getHour() == 13 && now.getMinute() == 14) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "13:14真是个特别的时间",
+                        "13点14分这是不是你们人类说的一生一世"
+                ))));
+            } else if (now.getHour() == now.getMinute()) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(List.of(
+                        "悄悄告诉你，这一条消息发送的时候，小时与分钟是相等的呢"
+                ))));
+            } else if (now.getHour() < 6) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "好困~",
+                        "困死了，大坏蛋就知道打扰" + singleEvent.getBotName() + "睡觉",
+                        "呜呜~能不能明天再找" + singleEvent.getBotName(),
+                        "还不睡觉，坏孩子",
+                        "该睡觉啦！（双手叉腰.jpg）",
+                        singleEvent.getBotName() + "讨厌你，打扰人睡觉",
+                        singleEvent.getBotName() + "正在呼呼大睡"
+                ))));
+            } else if (now.getHour() < 9) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "早上好哦~" + singleEvent.getBotName() + "一直都在",
+                        "我在~",
+                        "你也这么早起来陪" + singleEvent.getBotName() + "了吗",
+                        "又是元气满满的一天呢",
+                        singleEvent.getBotName() + "会陪着你每个早晨的",
+                        "大懒猪才起床，",
+                        singleEvent.getBotName() + "会陪着你每个早晨的"
+                ))));
+            } else if (now.getHour() >= 11 && now.getHour() < 14) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "中午好~",
+                        "中午好呀",
+                        "是不是该去吃午饭了呢",
+                        singleEvent.getBotName() + "一直都在陪着你呢",
+                        "今天中午吃点什么好呢",
+                        "我在~",
+                        "该午睡咯"
+                ))));
+            } else if (now.getHour() >= 17 && now.getHour() < 20) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "晚上好~",
+                        "晚上好哦~",
+                        "是不是该去吃晚饭了呢",
+                        singleEvent.getBotName() + "一直都在陪着你呢",
+                        "今天晚上吃点什么好呢",
+                        "我在~",
+                        "吃得好饱鸭~"
+                ))));
+            } else if (now.getHour() > 22) {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "好困~",
+                        "晚上好哦~",
+                        "晚上好哦",
+                        "晚上好",
+                        singleEvent.getBotName() + "一直都在陪着你呢",
+                        "都已经这么晚了呢",
+                        singleEvent.getBotName() + "困了",
+                        "该睡觉觉啦~",
+                        "你要睡觉了吗"
+                ))));
+            } else {
+                singleEvent.send(CommonUtil.randomString(new ArrayList<>(Arrays.asList(
+                        "我在~",
+                        "我在！",
+                        "我在(*^▽^*)",
+                        "我在∑(っ°Д°;)っ",
+                        "我在ヾ(*>∀＜*)(ﾉ∀｀●)⊃",
+                        "我在(*´ﾟ∀ﾟ｀)ﾉ ",
+                        "我在ヾ(@^▽^@)ノ",
+                        "我在(◕ᴗ◕✿)",
+                        "我在(｡◕ˇ∀ˇ◕)",
+                        "我在✧*｡٩(ˊᗜˋ*)و✧*｡",
+                        "我在(=´▽｀)ゞ",
+                        "我在ヾ(*>∀＜*)",
+                        "‧★,:*:‧\\(￣▽￣)/‧:*‧°★*",
+                        "我在",
+                        "我一直都在呢",
+                        singleEvent.getBotName() + "一直都在陪着你呢",
+                        "我会陪着你的",
+                        singleEvent.getBotName() + "勉为其难地理你一下"
+                ))));
+            }
         } else {
             inBlacklist(singleEvent);
         }
@@ -172,7 +426,7 @@ public class Main {
         if (singleEvent.getConfig().isBlacklist(singleEvent.getSenderId(), singleEvent.getGroupId())) {
             return;
         }
-        // 限制模式判断
+        // 限制模式判断（如果没有被艾特，并且还开启了限制模式就不会往下传播消息了）
         if (!singleEvent.getMessage().isBeAt() && singleEvent.getConfig().isLimit(singleEvent)) {
             return;
         }
@@ -190,6 +444,7 @@ public class Main {
         Long botId = 1812322920L;
 
         Bot bot = MyBot.getBot(new BotConfig(workdir, botId));
+        System.out.println(bot.getNick() + "登陆成功");
         registerPlugins();
 
         GlobalEventChannel.INSTANCE.subscribeAlways(GroupMessageEvent.class, event -> {
@@ -200,12 +455,11 @@ public class Main {
             handle(new SingleEvent(event));
         });
 
-        GlobalEventChannel.INSTANCE.subscribeAlways(FriendMessageEvent.class, event -> {
-            handle(new SingleEvent(event));
-        });
+        GlobalEventChannel.INSTANCE.subscribeAlways(FriendMessageEvent.class, event -> handle(new SingleEvent(event)));
 
-        GlobalEventChannel.INSTANCE.subscribeAlways(NudgeEvent.class, nudgeEvent -> {
-            handle(new SingleEvent(nudgeEvent));
-        });
+        GlobalEventChannel.INSTANCE.subscribeAlways(NudgeEvent.class, event -> handle(new SingleEvent(event)));
+
+        botWatcher();
+        memberWatcher();
     }
 }

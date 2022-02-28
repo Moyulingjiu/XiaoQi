@@ -1,7 +1,6 @@
 package top.beforedawn.util;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.contact.Group;
@@ -35,12 +34,18 @@ public class SingleEvent {
     private NudgeEvent nudgeEvent;
 
     public SingleEvent() {
-
+        init();
     }
 
     public SingleEvent(Long botId, Long userId) {
         this.botId = botId;
         senderId = userId;
+    }
+
+    public SingleEvent(Long botId, Long userId, Long groupId) {
+        this.botId = botId;
+        senderId = userId;
+        this.groupId = groupId;
     }
 
     public SingleEvent(GroupMessageEvent event) {

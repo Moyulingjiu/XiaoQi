@@ -248,4 +248,21 @@ public class CommonUtil {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
+
+    /**
+     * 生成一个随机的字符串
+     *
+     * @param strings 字符串数组
+     * @return 数组中随机的一个字符串
+     */
+    public static String randomString(ArrayList<String> strings) {
+        if (strings == null || strings.size() == 0) {
+            return "";
+        }
+        int index = randomInteger(strings.size());
+        if (strings.get(index) == null) {
+            return "";
+        }
+        return strings.get(index);
+    }
 }
