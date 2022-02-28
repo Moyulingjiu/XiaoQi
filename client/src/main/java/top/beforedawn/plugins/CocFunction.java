@@ -34,55 +34,169 @@ public class CocFunction extends BasePlugin {
     @Override
     public void handleGroup(SingleEvent singleEvent) {
         String message = singleEvent.getMessage().getPlainString().toLowerCase().replace(" ", "");
-        // 主世界生物
-        if (message.equals("coc野蛮人")) {
-            // todo: 填充图片
-        } else if (message.equals("coc弓箭手")) {
-            // todo: 填充图片
-        } else if (message.equals("coc巨人") || message.equals("coc胖子")) {
-            sendCocImage(singleEvent, "巨人.jpg");
-        } else if (message.equals("coc哥布林")) {
-            // todo: 填充图片
-        } else if (message.equals("coc炸弹人")) {
-            // todo: 填充图片
-        } else if (message.equals("coc气球兵") || message.equals("coc气球")) {
-            sendCocImage(singleEvent, "气球兵.jpg");
-        } else if (message.equals("coc法师")) {
-            sendCocImage(singleEvent, "法师.jpg");
-        } else if (message.equals("coc天使")) {
-            sendCocImage(singleEvent, "天使.jpg");
-        } else if (message.equals("coc飞龙") || message.equals("coc火龙")) {
-            sendCocImage(singleEvent, "飞龙.jpg");
-        } else if (message.equals("coc皮卡超人") || message.equals("coc皮卡")) {
-            sendCocImage(singleEvent, "皮卡超人.jpg");
-        } else if (message.equals("coc飞龙宝宝") || message.equals("coc龙宝宝") || message.equals("coc龙宝")) {
-            sendCocImage(singleEvent, "飞龙宝宝.jpg");
-        } else if (message.equals("coc掘地矿工") || message.equals("coc矿工")) {
-            sendCocImage(singleEvent, "掘地矿工.jpg");
-        } else if (message.equals("coc雷电飞龙") || message.equals("coc雷龙")) {
-            sendCocImage(singleEvent, "雷电飞龙.jpg");
-        } else if (message.equals("coc大雪怪")) {
-            // todo: 填充图片
+        if (!message.startsWith("coc")) {
+            return;
         }
-        // 主世界黑油生物
-        else if (message.equals("coc亡灵")) {
-            sendCocImage(singleEvent, "亡灵.jpg");
-        } else if (message.equals("coc野猪骑士") || message.equals("coc野猪")) {
-            sendCocImage(singleEvent, "野猪骑士.jpg");
-        } else if (message.equals("coc瓦基丽武神") || message.equals("coc女武神")) {
-            sendCocImage(singleEvent, "瓦基丽武神.jpg");
-        } else if (message.equals("coc戈仑石人") || message.equals("coc石人")) {
-            // todo: 填充图片
-        } else if (message.equals("coc女巫")) {
-            sendCocImage(singleEvent, "女巫.jpg");
-        } else if (message.equals("coc熔岩猎犬") || message.equals("coc狗")) {
-            sendCocImage(singleEvent, "熔岩猎犬.jpg");
-        } else if (message.equals("coc巨石投手") || message.equals("coc蓝胖")) {
-            sendCocImage(singleEvent, "巨石投手.jpg");
-        } else if (message.equals("coc戈仑冰人") || message.equals("coc冰人")) {
-            // todo: 填充图片
-        } else if (message.equals("coc英雄猎手")) {
-            sendCocImage(singleEvent, "英雄猎手.jpg");
+        switch (message) {
+            /*
+                主世界兵种
+             */
+            case "coc野蛮人":
+                sendCocImage(singleEvent, "兵种介绍-野蛮人.jpg");
+                break;
+            case "coc弓箭手":
+                sendCocImage(singleEvent, "兵种介绍-弓箭手.jpg");
+                break;
+            case "coc巨人":
+            case "coc胖子":
+                sendCocImage(singleEvent, "兵种介绍-巨人.jpg");
+                break;
+            case "coc哥布林":
+                sendCocImage(singleEvent, "兵种介绍-哥布林.jpg");
+                break;
+            case "coc炸弹人":
+                sendCocImage(singleEvent, "兵种介绍-炸弹人.jpg");
+                break;
+            case "coc气球兵":
+            case "coc气球":
+                sendCocImage(singleEvent, "兵种介绍-气球.jpg");
+                break;
+            case "coc法师":
+                sendCocImage(singleEvent, "兵种介绍-法师.jpg");
+                break;
+            case "coc天使":
+                sendCocImage(singleEvent, "兵种介绍-天使.jpg");
+                break;
+            case "coc飞龙":
+            case "coc火龙":
+                sendCocImage(singleEvent, "兵种介绍-火龙.jpg");
+                break;
+            case "coc皮卡超人":
+            case "coc皮卡":
+                sendCocImage(singleEvent, "兵种介绍-皮卡超人.jpg");
+                break;
+            case "coc飞龙宝宝":
+            case "coc龙宝宝":
+            case "coc龙宝":
+                sendCocImage(singleEvent, "兵种介绍-火龙宝宝.jpg");
+                break;
+            case "coc掘地矿工":
+            case "coc矿工":
+                sendCocImage(singleEvent, "兵种介绍-矿工.jpg");
+                break;
+            case "coc雷电飞龙":
+            case "coc雷龙":
+                sendCocImage(singleEvent, "兵种介绍-雷龙.jpg");
+                break;
+            case "coc大雪怪":
+                sendCocImage(singleEvent, "兵种介绍-大雪怪.jpg");
+                break;
+
+            /*
+                主世界黑油生物
+            */
+            case "coc亡灵":
+                sendCocImage(singleEvent, "兵种介绍-亡灵.jpg");
+                break;
+            case "coc野猪骑士":
+            case "coc野猪":
+                sendCocImage(singleEvent, "兵种介绍-野猪骑士.jpg");
+                break;
+            case "coc瓦基丽武神":
+            case "coc女武神":
+                sendCocImage(singleEvent, "兵种介绍-武神.jpg");
+                break;
+            case "coc戈仑石人":
+            case "coc石人":
+                sendCocImage(singleEvent, "兵种介绍-石头人.jpg");
+                break;
+            case "coc女巫":
+                sendCocImage(singleEvent, "兵种介绍-女巫.jpg");
+                break;
+            case "coc熔岩猎犬":
+            case "coc狗":
+                sendCocImage(singleEvent, "兵种介绍-熔岩猎犬.jpg");
+                break;
+            case "coc巨石投手":
+            case "coc蓝胖":
+                sendCocImage(singleEvent, "兵种介绍-蓝胖.jpg");
+                break;
+            case "coc戈仑冰人":
+            case "coc冰石头人":
+            case "coc冰人":
+                sendCocImage(singleEvent, "兵种介绍-冰石头.jpg");
+                break;
+            case "coc英雄猎手":
+                sendCocImage(singleEvent, "兵种介绍-英雄猎手.jpg");
+                break;
+
+            /*
+                法术
+             */
+            case "coc雷电法术":
+            case "coc闪电法术":
+            case "coc雷电":
+            case "coc闪电":
+                sendCocImage(singleEvent, "兵种介绍-雷电法术.jpg");
+                break;
+            case "coc治疗法术":
+            case "coc治疗":
+                sendCocImage(singleEvent, "兵种介绍-疗伤法术.jpg");
+                break;
+            case "coc狂暴法术":
+            case "coc狂暴":
+                sendCocImage(singleEvent, "兵种介绍-狂暴法术.jpg");
+                break;
+            case "coc弹跳法术":
+            case "coc弹跳":
+                sendCocImage(singleEvent, "兵种介绍-弹跳法术.jpg");
+                break;
+            case "coc冰冻法术":
+            case "coc冰冻":
+                sendCocImage(singleEvent, "兵种介绍-冰冻法术.jpg");
+                break;
+            case "coc镜像法术":
+            case "coc镜像":
+                sendCocImage(singleEvent, "兵种介绍-镜像法术.jpg");
+                break;
+            case "coc隐形法术":
+            case "coc隐形":
+                sendCocImage(singleEvent, "兵种介绍-隐形法术.jpg");
+                break;
+            case "coc毒药法术":
+            case "coc毒药":
+                sendCocImage(singleEvent, "兵种介绍-毒药法术.jpg");
+                break;
+            case "coc地震法术":
+            case "coc地震":
+                sendCocImage(singleEvent, "兵种介绍-地震法术.jpg");
+                break;
+            case "coc急速法术":
+            case "coc急速":
+                sendCocImage(singleEvent, "兵种介绍-急速法术.jpg");
+                break;
+            case "coc骷髅法术":
+                sendCocImage(singleEvent, "兵种介绍-骷髅法术.jpg");
+                break;
+            case "coc蝙蝠法术":
+                sendCocImage(singleEvent, "兵种介绍-蝙蝠法术.jpg");
+                break;
+
+            /*
+                超级兵种
+             */
+            case "coc超级野蛮人":
+            case "coc小黄毛":
+                sendCocImage(singleEvent, "兵种介绍-超级野蛮人.jpg");
+                break;
+            case "coc超级弓箭手":
+            case "coc超弓":
+                sendCocImage(singleEvent, "兵种介绍-超级弓箭手.jpg");
+                break;
+
+            /*
+                英雄
+             */
         }
     }
 }
