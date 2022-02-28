@@ -2,6 +2,7 @@ package top.beforedawn.service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import top.beforedawn.service.model.vo.BotVo;
 import top.beforedawn.service.model.vo.ret.BotRetVo;
 import top.beforedawn.service.service.BotService;
 import top.beforedawn.service.util.Common;
@@ -39,5 +40,16 @@ public class BotController {
             return Common.decorate(ReturnNo.RESOURCE_ID_NOT_EXIST);
         }
         return Common.decorate(botRetVo);
+    }
+
+    @PostMapping("/bot/{qq}")
+    public Object updateBotByQq(
+            @PathVariable Long qq,
+            @RequestBody BotVo botVo
+    ) {
+        if (botService.invalidBot(qq) || botVo.getOperator() == null) {
+            return Common.decorate(ReturnNo.FORBIDDEN);
+        }
+        return Common.decorate(botService.updateBotByQq(qq, botVo));
     }
 }

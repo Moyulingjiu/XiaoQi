@@ -7,10 +7,15 @@ import top.beforedawn.service.dao.AuthorizationDao;
 import top.beforedawn.service.model.bo.Bot;
 import top.beforedawn.service.model.bo.Authorization;
 import top.beforedawn.service.model.bo.KeyType;
+import top.beforedawn.service.model.bo.UserRight;
+import top.beforedawn.service.model.vo.BotVo;
 import top.beforedawn.service.model.vo.ret.BotRetVo;
+import top.beforedawn.service.model.vo.ret.UserRetVo;
 import top.beforedawn.service.util.Common;
+import top.beforedawn.service.util.ReturnNo;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * BotService
@@ -23,6 +28,8 @@ public class BotService {
     private BotDao botDao;
     @Autowired
     private AuthorizationDao authorizationDao;
+    @Autowired
+    private UserService userService;
 
     public boolean invalidBot(Long qq) {
         Bot bot = botDao.selectByQq(qq);
@@ -58,5 +65,39 @@ public class BotService {
             }
         }
         return botRetVo;
+    }
+
+    public ReturnNo updateBotByQq(long qq, BotVo botVo) {
+        Bot bot = botDao.selectByQq(qq);
+        if (bot == null)
+            return ReturnNo.INTERNAL_SERVER_ERR;
+        if (!Objects.equals(botVo.getOperator(), bot.getMasterQq())) {
+            if (userService.getRight(botVo.getOperator()) == UserRight.NORMAL) {
+                return ReturnNo.FORBIDDEN;
+            }
+        }
+        if (botVo.getName() != null)
+            bot.setName(botVo.getName());
+        if (botVo.getAllowFriend() != null)
+            bot.setAllowFriend(botVo.getAllowFriend());
+        if (botVo.getAllowGroup() != null)
+            bot.setAllowGroup(botVo.getAllowGroup());
+        if (botVo.getHeart() != null)
+            bot.setHeart(botVo.getHeart());
+        if (botVo.getHeartInterval() != null)
+            bot.setHeartInterval(botVo.getHeartInterval());
+        if (botVo.getRemindFriend() != null)
+            bot.setRemindFriend(botVo.getRemindFriend());
+        if (botVo.getRemindGroup() != null)
+            bot.setRemindGroup(botVo.getRemindGroup());
+        if (botVo.getRemindMute() != null)
+            bot.setRemindMute(botVo.getRemindMute());
+        if (botVo.getRemindQuit() != null)
+            bot.setRemindQuit(botVo.getRemindQuit());
+        if (botVo.getClearBlacklist() != null)
+            bot.setClearBlacklist(botVo.getClearBlacklist());
+        bot.setModifiedId(botVo.getOperator());
+        bot.setModified(LocalDateTime.now());
+        return ReturnNo.OK;
     }
 }

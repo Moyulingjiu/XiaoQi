@@ -16,13 +16,13 @@ public class DriftingBottleService {
     @Autowired
     private DriftingBottleDao driftingBottleDao;
 
-    public boolean insert(Long userId, DriftingBottleVo driftingBottleVo) {
+    public boolean insert(DriftingBottleVo driftingBottleVo) {
         DriftingBottle driftingBottle = Common.cloneVo(driftingBottleVo, DriftingBottle.class);
         driftingBottle.setValid((byte) 1);
         driftingBottle.setCreate(LocalDateTime.now());
-        driftingBottle.setCreateId(userId);
+        driftingBottle.setCreateId(driftingBottleVo.getUserId());
         driftingBottle.setModified(LocalDateTime.now());
-        driftingBottle.setModifiedId(userId);
+        driftingBottle.setModifiedId(driftingBottleVo.getUserId());
         int insert = driftingBottleDao.insert(driftingBottle);
         return insert != 0;
     }

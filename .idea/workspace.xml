@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/ComplexReplyContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/DriftingBottleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/BotVo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/RequestEventPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/RequestEventPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MessageLinearAnalysis.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MessageLinearAnalysis.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BasePlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RepeatFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RepeatFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/BotController.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/BotController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/BotDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/BotDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/DriftingBottleVo.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/DriftingBottleVo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/BotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/BotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/DriftingBottleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/DriftingBottleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +71,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="jdk.selected.JAVA_MODULE" value="11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../BearLibrary/back" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../OOAD项目/选做模块/OOAD" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
   </component>
@@ -85,7 +88,7 @@
       <recent name="top.beforedawn.models.reply" />
     </key>
   </component>
-  <component name="RunManager" selected="应用程序.Main">
+  <component name="RunManager" selected="Spring Boot.ServiceApplication">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="top.beforedawn.Main" />
       <module name="client" />
@@ -231,7 +234,8 @@
       <workItem from="1645932433437" duration="10196000" />
       <workItem from="1645969356686" duration="1204000" />
       <workItem from="1646013407244" duration="6616000" />
-      <workItem from="1646023255486" duration="8612000" />
+      <workItem from="1646023255486" duration="9183000" />
+      <workItem from="1646047922079" duration="4395000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

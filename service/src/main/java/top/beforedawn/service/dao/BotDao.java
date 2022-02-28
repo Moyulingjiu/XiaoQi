@@ -21,6 +21,10 @@ public class BotDao {
     @Autowired
     private BotPoMapper botPoMapper;
 
+    public int update(Bot bot) {
+        return botPoMapper.updateByPrimaryKey(Common.cloneVo(bot, BotPo.class));
+    }
+
     public Bot selectById(Long id) {
         BotPo botPo = botPoMapper.selectByPrimaryKey(id);
         return Common.cloneVo(botPo, Bot.class);

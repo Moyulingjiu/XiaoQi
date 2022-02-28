@@ -17,6 +17,13 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    public UserRight getRight(Long qq) {
+        User user = userDao.selectByQq(qq);
+        if (user == null || user.getRight() == null)
+            return UserRight.NORMAL;
+        return user.getRight();
+    }
+
     public void insertUser(User user, Long botId) {
         user.setCreate(LocalDateTime.now());
         user.setCreateId(botId);

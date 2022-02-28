@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DriftingBottleVo {
-    private Long id;
+    private Long botId;
+    private Long userId;
     private String text;
     private Byte permanent;
 }
