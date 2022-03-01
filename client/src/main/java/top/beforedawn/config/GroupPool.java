@@ -122,6 +122,17 @@ public class GroupPool {
         group.setAutoReply(bool != null && bool);
         bool = jsonObject.getBoolean("repeat");
         group.setRepeat(bool != null && bool);
+        bool = jsonObject.getBoolean("coc");
+        group.setCoc(bool != null && bool);
+        bool = jsonObject.getBoolean("driftingBottle");
+        group.setDriftingBottle(bool != null && bool);
+
+        JSONArray muteWordsJson = jsonObject.getJSONArray("muteWords");
+        if (muteWordsJson != null) {
+            for (int i = 0; i < muteWordsJson.size(); i++) {
+                group.getMuteWords().add(muteWordsJson.getString(i));
+            }
+        }
 
         ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("autoReplies");
@@ -171,6 +182,9 @@ public class GroupPool {
         jsonObject.put("autoReply", group.isAutoReply());
         jsonObject.put("autoReplies", group.getAutoReplies());
         jsonObject.put("repeat", group.isRepeat());
+        jsonObject.put("coc", group.isCoc());
+        jsonObject.put("driftingBottle", group.isDriftingBottle());
+        jsonObject.put("muteWords", group.getMuteWords());
 
         FileUtil.writeFile(filename, jsonObject.toJSONString());
     }

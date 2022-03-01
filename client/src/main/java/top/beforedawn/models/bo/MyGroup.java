@@ -24,15 +24,18 @@ public class MyGroup {
 
     private boolean mute = false; // 禁言
     private boolean limit = false; // 处在限制模式的群
+    private ArrayList<String> muteWords = new ArrayList<>(); // 屏蔽词
 
+    // 插件相关的开关
     private boolean nudge = false; // 戳一戳
     private boolean unlockFlashImage = false; // 解除闪照
     private boolean recallGuard = false; // 防撤回
     private boolean memberWatcher = false; // 开启成员监控
-
-    private boolean autoReply = false; // 自定义回复（开关）
+    private boolean autoReply = true; // 自定义回复（开关）
     private ArrayList<BaseAutoReply> autoReplies = new ArrayList<>(); // 自定义回复
     private boolean repeat = false; // 自动加一
+    private boolean coc = false; // 部落冲突查询
+    private boolean driftingBottle = true; // 漂流瓶
 
     private boolean groupEntry = false; // 自动审核入群
     private GroupEntryRule groupEntryRule = new GroupEntryRule(); // 审核规则

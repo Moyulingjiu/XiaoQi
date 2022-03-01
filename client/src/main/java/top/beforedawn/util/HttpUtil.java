@@ -2,10 +2,7 @@ package top.beforedawn.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import top.beforedawn.models.bo.Blacklist;
-import top.beforedawn.models.bo.BotRemoteInformation;
-import top.beforedawn.models.bo.MyUser;
-import top.beforedawn.models.bo.SimpleBlacklist;
+import top.beforedawn.models.bo.*;
 
 public class HttpUtil {
     private static final String serviceIp = "localhost";
@@ -136,5 +133,37 @@ public class HttpUtil {
         simpleBlacklist.setCreate(CommonUtil.getLocalDateTime(object.getString("create")));
         simpleBlacklist.setCreateId(object.getLong("createId"));
         return simpleBlacklist;
+    }
+
+    public static HttpResponse sendDriftingBottle(SingleEvent singleEvent, String text) {
+        String url = serverAddress() + "/drifting_bottle/drifting_bottle";
+        String json = "{\n" +
+                "    \"botId\": " + singleEvent.getBotId() + ",\n" +
+                "    \"userId\": " + singleEvent.getSenderId() + ",\n" +
+                "    \"text\": \"" + text + "\",\n" +
+                "    \"permanent\": 0\n" +
+                "}";
+        HttpResponse response = HttpRequest.sendPost(url, json);
+        if (response.getCode() != 0) {
+            singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
+            return null;
+        }
+        return response;
+    }
+
+    public static DriftingBottle getDriftingBottle(SingleEvent singleEvent) {
+        String url = serverAddress() + "/drifting_bottle/drifting_bottle";
+        HttpResponse response = HttpRequest.sendGet(url, "botId=" + singleEvent.getBotId() + "&userId=" + singleEvent.getSenderId());
+        if (response.getCode() == 404) {
+            singleEvent.send("没有漂流瓶了呢~不妨扔一个");
+            return null;
+        } else if (response.getCode() != 0) {
+            singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
+            return null;
+        }
+        DriftingBottle driftingBottle = new DriftingBottle();
+        driftingBottle.setText(response.getData().getString("text"));
+        driftingBottle.setCreate(CommonUtil.getLocalDateTime(response.getData().getString("create")));
+        return driftingBottle;
     }
 }

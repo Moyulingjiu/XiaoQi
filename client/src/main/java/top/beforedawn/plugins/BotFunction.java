@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class BotFunction extends BasePlugin {
     private static final int REQUEST_PAGE_SIZE = 20;
+    private static final int MUTE_WORDS_PAGE_SIZE = 20;
 
     public BotFunction() {
         pluginName = "bot_function";
@@ -59,11 +60,11 @@ public class BotFunction extends BasePlugin {
 
             singleEvent.send(builder.toString());
         } else if (singleEvent.getMessage().plainEqual("统计信息")) {
-            StringBuilder builder = new StringBuilder(singleEvent.getConfig().getStatistics().toString());
-            builder.append("\n").append("缓存User：").append(UserPool.size()).append("/").append(UserPool.POOL_MAX);
-            builder.append("\n").append("缓存Group：").append(GroupPool.size()).append("/").append(GroupPool.POOL_MAX);
-            builder.append("\n").append("版本信息：").append(BotConfig.VERSION);
-            singleEvent.send(builder.toString());
+            String builder = singleEvent.getConfig().getStatistics().toString() +
+                    "\n" + "缓存User：" + UserPool.size() + "/" + UserPool.POOL_MAX +
+                    "\n" + "缓存Group：" + GroupPool.size() + "/" + GroupPool.POOL_MAX +
+                    "\n" + "版本信息：" + BotConfig.VERSION;
+            singleEvent.send(builder);
         } else if (singleEvent.getMessage().plainEqual("我的权限")) {
             switch (singleEvent.getRight()) {
                 case SYSTEM_SUPER_ADMIN:
@@ -250,7 +251,6 @@ public class BotFunction extends BasePlugin {
                 }
                 if (administrator.size() == 0) {
                     builder.append("（暂无）");
-                    ;
                 }
                 singleEvent.send(builder.toString());
             } else {
@@ -339,8 +339,12 @@ public class BotFunction extends BasePlugin {
         return "否";
     }
 
-    private void switcher(SingleEvent singleEvent) {
-        MyGroup group = GroupPool.get(singleEvent);
+    /**
+     * 机器人的开关
+     *
+     * @param singleEvent 事件
+     */
+    private void botSwitcher(SingleEvent singleEvent) {
         if (singleEvent.getMessage().plainEqual("全局模块列表")) {
             String message = "版本信息：" + BotConfig.VERSION + "\n" +
                     "是否允许使用coc模块：" + getSwitcher(singleEvent.getConfig().isAllowCoc()) + "\n" +
@@ -357,7 +361,17 @@ public class BotFunction extends BasePlugin {
                     "是否进行心跳检测：" + getSwitcher(singleEvent.getConfig().getBotSwitcher().isHeart()) + "\n" +
                     "心跳检测间隔：" + singleEvent.getConfig().getBotSwitcher().getHeartInterval();
             singleEvent.send(message);
-        } else if (singleEvent.getMessage().plainEqual("模块列表")) {
+        }
+    }
+
+    /**
+     * 单个群的开关控制
+     *
+     * @param singleEvent 事件
+     */
+    private void groupSwitcher(SingleEvent singleEvent) {
+        MyGroup group = GroupPool.get(singleEvent);
+        if (singleEvent.getMessage().plainEqual("模块列表")) {
             String message = "版本信息：" + BotConfig.VERSION + "\n" +
                     "是否处在限制模式：" + getSwitcher(group.isLimit()) + "\n" +
                     "是否开启戳一戳：" + getSwitcher(group.isNudge()) + "\n" +
@@ -366,6 +380,8 @@ public class BotFunction extends BasePlugin {
                     "是否开启成员监控：" + getSwitcher(group.isMemberWatcher()) + "\n" +
                     "是否开启自定义回复：" + getSwitcher(group.isAutoReply()) + "\n" +
                     "是否开启自动加一：" + getSwitcher(group.isRepeat()) + "\n" +
+                    "是否开启部落冲突查询：" + getSwitcher(group.isCoc()) + "\n" +
+                    "是否开启漂流瓶：" + getSwitcher(group.isDriftingBottle()) + "\n" +
                     "是否开启自动入群审核：" + getSwitcher(group.isGroupEntry());
             singleEvent.send(message);
         }
@@ -420,16 +436,92 @@ public class BotFunction extends BasePlugin {
                 group.setAutoReply(false);
                 GroupPool.save(singleEvent);
             }
-        } else if (singleEvent.getMessage().plainEqual("开启加一")) {
+        } else if (singleEvent.getMessage().plainEqual("开启自动加一")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRepeat(), true, "已经开启了加一")) {
                 group.setRepeat(true);
                 GroupPool.save(singleEvent);
             }
-        } else if (singleEvent.getMessage().plainEqual("关闭加一")) {
+        } else if (singleEvent.getMessage().plainEqual("关闭自动加一")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRepeat(), false, "本来就没有开启加一")) {
                 group.setRepeat(false);
                 GroupPool.save(singleEvent);
             }
+        } else if (singleEvent.getMessage().plainEqual("开启部落冲突查询")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isCoc(), true, "已经开启了部落冲突查询")) {
+                group.setCoc(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭部落冲突查询")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isCoc(), false, "本来就没有开启部落冲突查询")) {
+                group.setCoc(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启漂流瓶")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isDriftingBottle(), true, "已经开启了漂流瓶")) {
+                group.setDriftingBottle(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭部落冲突查询")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isDriftingBottle(), false, "本来就没有开启漂流瓶")) {
+                group.setDriftingBottle(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainStartWith("添加屏蔽词")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("权限不足");
+                return;
+            }
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("添加屏蔽词");
+            if (group.getMuteWords().contains(analysis.getText())) {
+                singleEvent.send("屏蔽词“" + analysis.getText() + "”已存在");
+                return;
+            } else if (analysis.getText().startsWith("删除屏蔽词")) {
+                singleEvent.send("不可以把“删除屏蔽词”开头的句子添加为屏蔽词");
+                return;
+            }
+            group.getMuteWords().add(analysis.getText());
+            GroupPool.save(singleEvent);
+            singleEvent.send("添加成功");
+        } else if (singleEvent.getMessage().plainStartWith("删除屏蔽词")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("权限不足");
+                return;
+            }
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("删除屏蔽词");
+            if (!group.getMuteWords().contains(analysis.getText())) {
+                singleEvent.send("屏蔽词“" + analysis.getText() + "”不存在");
+                return;
+            }
+            group.getMuteWords().remove(analysis.getText());
+            GroupPool.save(singleEvent);
+            singleEvent.send("删除成功");
+        } else if (singleEvent.getMessage().plainStartWith("查看屏蔽词")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("权限不足");
+                return;
+            }
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("查看屏蔽词");
+            int page = CommonUtil.getInteger(analysis.getText());
+            if (page > 0) page--;
+            if (group.getMuteWords().size() == 0) {
+                singleEvent.send("（暂无）");
+                return;
+            }
+            int total = group.getMuteWords().size() / MUTE_WORDS_PAGE_SIZE;
+            if (group.getMuteWords().size() % MUTE_WORDS_PAGE_SIZE != 0) total++;
+            if (page > total) {
+                singleEvent.send("页码超限，总计：" + total + "页");
+                return;
+            }
+            StringBuilder builder = new StringBuilder();
+            for (int i = page * MUTE_WORDS_PAGE_SIZE; i < group.getMuteWords().size() && i < (page + 1) * MUTE_WORDS_PAGE_SIZE; i++) {
+                builder.append(i + 1).append(".").append(group.getMuteWords().get(i)).append("\n");
+            }
+            builder.append("--------\n页码：").append(page + 1).append("/").append(total);
+            singleEvent.send(builder.toString());
         }
     }
 
@@ -487,7 +579,7 @@ public class BotFunction extends BasePlugin {
             if (RequestEventPool.friendRequestEventMap.keySet().size() % REQUEST_PAGE_SIZE != 0) {
                 total++;
             }
-            if (page < 0 || page > total) {
+            if (page > total) {
                 singleEvent.send("页码超限，总计：" + total + "页");
                 return;
             }
@@ -517,7 +609,7 @@ public class BotFunction extends BasePlugin {
             if (RequestEventPool.groupRequestEventMap.keySet().size() % REQUEST_PAGE_SIZE != 0) {
                 total++;
             }
-            if (page < 0 || page > total) {
+            if (page > total) {
                 singleEvent.send("页码超限，总计：" + total + "页");
                 return;
             }
@@ -543,6 +635,7 @@ public class BotFunction extends BasePlugin {
         blacklist(singleEvent);
         admin(singleEvent);
         request(singleEvent);
+        botSwitcher(singleEvent);
 
         if (singleEvent.getMessage().plainEqual("公约")) {
             singleEvent.send(HttpUtil.convention(singleEvent.getBotId()));
@@ -567,6 +660,6 @@ public class BotFunction extends BasePlugin {
 
     @Override
     public void handleGroup(SingleEvent singleEvent) {
-        switcher(singleEvent);
+        groupSwitcher(singleEvent);
     }
 }

@@ -1,13 +1,5 @@
 package top.beforedawn.util;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -66,7 +58,7 @@ public class HttpRequest {
      * 向指定 URL 发送POST方法的请求
      *
      * @param url   发送请求的 URL
-     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @param param 请求参数，json的形式。
      * @return 所代表远程资源的响应结果
      */
     public static HttpResponse sendPost(String url, String param) {
@@ -82,6 +74,7 @@ public class HttpRequest {
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            conn.setRequestProperty("Content-Type", "application/json");
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
@@ -117,20 +110,4 @@ public class HttpRequest {
         }
         return new HttpResponse(result.toString());
     }
-
-    public static String sendHttpPost(String url, String JSONBody) throws Exception {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(url);
-        httpPost.addHeader("Content-Type", "application/json");
-        httpPost.setEntity(new StringEntity(JSONBody));
-        CloseableHttpResponse response = httpClient.execute(httpPost);
-//		System.out.println(response.getStatusLine().getStatusCode() + "\n");
-        HttpEntity entity = response.getEntity();
-        String responseContent = EntityUtils.toString(entity, "UTF-8");
-//		System.out.println(responseContent);
-        response.close();
-        httpClient.close();
-        return responseContent;
-    }
-
 }

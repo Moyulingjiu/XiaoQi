@@ -2,8 +2,10 @@ package top.beforedawn;
 
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.AnonymousMember;
+import net.mamoe.mirai.contact.MemberPermission;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.*;
+import net.mamoe.mirai.message.data.MessageSource;
 import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
 import top.beforedawn.config.RequestEventPool;
@@ -33,6 +35,7 @@ public class Main {
         plugins.add(new AutoReplyFunction());
         plugins.add(new NudgeFunction());
         plugins.add(new UnlockFlashFunction());
+        plugins.add(new DriftingBottleFunction());
     }
 
     /**
@@ -504,7 +507,27 @@ public class Main {
             if (event.getSender() instanceof AnonymousMember) {
                 return;
             }
-            handle(new SingleEvent(event));
+            SingleEvent singleEvent = new SingleEvent(event);
+            MyGroup group = GroupPool.get(singleEvent);
+            String message = singleEvent.getMessage().getPlainString();
+            boolean permission = true;
+            for (String muteWord : group.getMuteWords()) {
+                if (message.contains(muteWord)) {
+                    MemberPermission botPermission = event.getGroup().getBotPermission();
+                    if (botPermission == MemberPermission.MEMBER) {
+                        singleEvent.send("发现屏蔽词“" + muteWord + "”但" + singleEvent.getBotName() + "无权撤回");
+                    } else if (botPermission == MemberPermission.ADMINISTRATOR && event.getPermission() != MemberPermission.MEMBER) {
+                        singleEvent.send("发现屏蔽词“" + muteWord + "”但对方是管理员/群主" + singleEvent.getBotName() + "无权撤回");
+                    } else {
+                        MessageSource.recall(event.getMessage());
+                        singleEvent.send("发现屏蔽词“" + muteWord + "”予以撤回");
+                    }
+                    permission = false;
+                    break;
+                }
+            }
+            if (permission)
+                handle(new SingleEvent(event));
         });
 
         GlobalEventChannel.INSTANCE.subscribeAlways(FriendMessageEvent.class, event -> handle(new SingleEvent(event)));

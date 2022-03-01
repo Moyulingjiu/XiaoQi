@@ -1,6 +1,8 @@
 package top.beforedawn.plugins;
 
 import net.mamoe.mirai.message.data.MessageChainBuilder;
+import top.beforedawn.config.GroupPool;
+import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.util.SingleEvent;
 
 /**
@@ -19,7 +21,8 @@ public class CocFunction extends BasePlugin {
 
     @Override
     public boolean before(SingleEvent singleEvent) {
-        return singleEvent.getConfig().isAllowCoc();
+        MyGroup group = GroupPool.get(singleEvent);
+        return singleEvent.getConfig().isAllowCoc() && group.isCoc();
     }
 
     @Override
