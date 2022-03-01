@@ -1,9 +1,7 @@
 package top.beforedawn.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -109,5 +107,34 @@ public class HttpRequest {
             }
         }
         return new HttpResponse(result.toString());
+    }
+
+    /**
+     * 下载图片
+     *
+     * @param urlList URL
+     * @param path 存储图片的路径
+     */
+    public static boolean downloadPicture(String urlList,String path) {
+        try {
+            URL url = new URL(urlList);
+            DataInputStream dataInputStream = new DataInputStream(url.openStream());
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = dataInputStream.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            fileOutputStream.write(output.toByteArray());
+            dataInputStream.close();
+            fileOutputStream.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

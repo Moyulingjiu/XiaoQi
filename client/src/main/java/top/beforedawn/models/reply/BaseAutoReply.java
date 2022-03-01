@@ -2,6 +2,7 @@ package top.beforedawn.models.reply;
 
 import net.mamoe.mirai.message.data.MessageChain;
 import top.beforedawn.models.bo.MyMessage;
+import top.beforedawn.util.SingleEvent;
 
 public abstract class BaseAutoReply {
     /**
@@ -16,5 +17,5 @@ public abstract class BaseAutoReply {
      *
      * @return 消息链
      */
-    public abstract MessageChain reply();
+    public abstract MessageChain reply(SingleEvent singleEvent);
 }

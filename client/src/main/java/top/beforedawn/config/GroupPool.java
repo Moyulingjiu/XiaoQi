@@ -143,12 +143,12 @@ public class GroupPool {
         for (int i = 0; i < jsonArray.size(); i++) {
             if (jsonArray.getObject(i, BaseAutoReply.class) != null) {
                 autoReplies.add(jsonArray.getObject(i, BaseAutoReply.class));
+            } else if (jsonArray.getObject(i, ComplexReply.class) != null) {
+                autoReplies.add(jsonArray.getObject(i, ComplexReply.class));
             } else if (jsonArray.getObject(i, KeyReply.class) != null) {
                 autoReplies.add(jsonArray.getObject(i, KeyReply.class));
             } else if (jsonArray.getObject(i, KeyMatchReply.class) != null) {
                 autoReplies.add(jsonArray.getObject(i, KeyMatchReply.class));
-            } else if (jsonArray.getObject(i, ComplexReply.class) != null) {
-                autoReplies.add(jsonArray.getObject(i, ComplexReply.class));
             }
         }
         group.setAutoReplies(autoReplies);

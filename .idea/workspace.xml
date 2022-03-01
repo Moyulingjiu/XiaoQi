@@ -5,17 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RpgFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/ContextPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/Context.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/SerializeMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/WelcomeContext.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG_Server/data/RPG/system/rank.data" beforeDir="false" afterPath="$PROJECT_DIR$/RPG_Server/data/RPG/system/rank.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG_Server/data/RPG/user/information.data" beforeDir="false" afterPath="$PROJECT_DIR$/RPG_Server/data/RPG/user/information.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG_Server/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPG_Server/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG_Server/plugins/rpg.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPG_Server/plugins/rpg.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/ComplexReplyContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/ComplexReplyContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RpgFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RpgFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/Context.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/test/java/top/beforedawn/util/TestRequest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +55,9 @@
         <option name="userSettingsFile" value="E:\_environment\Maven\apache-maven-3.8.2\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
   </component>
   <component name="ProjectId" id="242vuLscT4Zj1L7dyBOJkW8MqmZ" />
   <component name="ProjectLevelVcsManager">
@@ -117,22 +127,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestDate.test1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="top.beforedawn.util.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="top.beforedawn.util" />
-      <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestDate" />
-      <option name="METHOD_NAME" value="test1" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestRequest.testConvention" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="client" />
       <extension name="coverage">
@@ -144,6 +138,22 @@
       <option name="PACKAGE_NAME" value="top.beforedawn.util" />
       <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestRequest" />
       <option name="METHOD_NAME" value="testConvention" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestRequest.testPic" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="client" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="top.beforedawn.util.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="top.beforedawn.util" />
+      <option name="MAIN_CLASS_NAME" value="top.beforedawn.util.TestRequest" />
+      <option name="METHOD_NAME" value="testPic" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -174,19 +184,19 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.TestClone.test1" />
-      <item itemvalue="JUnit.TestDate.test1" />
       <item itemvalue="JUnit.TestRequest.testConvention" />
       <item itemvalue="JUnit.TestRequest.testPost" />
+      <item itemvalue="JUnit.TestRequest.testPic" />
       <item itemvalue="Spring Boot.ServiceApplication" />
       <item itemvalue="应用程序.Main" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.Main" />
+        <item itemvalue="JUnit.TestRequest.testPic" />
         <item itemvalue="JUnit.TestRequest.testPost" />
         <item itemvalue="JUnit.TestRequest.testConvention" />
         <item itemvalue="JUnit.TestClone.test1" />
-        <item itemvalue="JUnit.TestDate.test1" />
       </list>
     </recent_temporary>
   </component>
@@ -236,7 +246,8 @@
       <workItem from="1646023255486" duration="9183000" />
       <workItem from="1646047922079" duration="5476000" />
       <workItem from="1646057024800" duration="5111000" />
-      <workItem from="1646092991233" duration="5105000" />
+      <workItem from="1646092991233" duration="12542000" />
+      <workItem from="1646115774121" duration="3952000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

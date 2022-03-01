@@ -52,8 +52,8 @@ public class RpgFunction extends BasePlugin {
                     "    \"limit\": " + limit + "\n" +
                     "}";
             HttpResponse response = HttpRequest.sendPost(url, json);
-            boolean reply = response.getData().getBoolean("need_reply");
-            if (reply) {
+            Boolean reply = response.getData().getBoolean("need_reply");
+            if (reply != null && reply) {
                 String replyMessage = response.getData().getString("reply_text");
                 if (replyMessage.length() != 0) {
                     singleEvent.send(replyMessage);

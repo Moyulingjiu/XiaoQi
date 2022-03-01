@@ -10,6 +10,7 @@ import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.util.CommonUtil;
+import top.beforedawn.util.SingleEvent;
 
 import java.util.ArrayList;
 
@@ -18,17 +19,17 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @AllArgsConstructor
 public class KeyMatchReply extends BaseAutoReply {
-    private String key;
+    private String keyMatch;
     private ArrayList<String> reply = new ArrayList<>();
     private ArrayList<Long> atId = new ArrayList<>();
 
     @Override
     public boolean check(MyMessage message) {
-        return message.getPlainString().contains(key);
+        return message.getPlainString().contains(keyMatch);
     }
 
     @Override
-    public MessageChain reply() {
+    public MessageChain reply(SingleEvent singleEvent) {
         MessageChainBuilder messages = new MessageChainBuilder();
         int index = CommonUtil.randomInteger(reply.size());
         messages.append(new PlainText(reply.get(index)));

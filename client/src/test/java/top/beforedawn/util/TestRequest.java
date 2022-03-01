@@ -27,4 +27,13 @@ public class TestRequest {
         HttpResponse response = HttpRequest.sendPost(url, json);
         System.out.println(response);
     }
+
+    @Test
+    public void testPic() {
+        String url = "https://th.bing.com/th/id/R.c591a55b54ffe1734ef9ecf834db6a2e?rik=ZcfVlW64BEjexw&pid=ImgRaw&r=0";
+        String path = "C:\\mirai\\1.jpg";
+        boolean b = HttpRequest.downloadPicture(url, path);
+        if (b) System.out.println("成功");
+        else System.out.println("失败");
+    }
 }

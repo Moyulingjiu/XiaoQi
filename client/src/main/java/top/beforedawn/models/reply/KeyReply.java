@@ -10,6 +10,7 @@ import net.mamoe.mirai.message.data.MessageChainBuilder;
 import net.mamoe.mirai.message.data.PlainText;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.util.CommonUtil;
+import top.beforedawn.util.SingleEvent;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,7 @@ public class KeyReply extends BaseAutoReply {
     }
 
     @Override
-    public MessageChain reply() {
+    public MessageChain reply(SingleEvent singleEvent) {
         MessageChainBuilder messages = new MessageChainBuilder();
         int index = CommonUtil.randomInteger(reply.size());
         messages.append(new PlainText(reply.get(index)));

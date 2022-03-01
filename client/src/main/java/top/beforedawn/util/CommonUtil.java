@@ -1,7 +1,9 @@
 package top.beforedawn.util;
 
+import net.mamoe.mirai.IMirai;
 import net.mamoe.mirai.message.data.*;
 import top.beforedawn.models.bo.MyMessage;
+import top.beforedawn.models.context.SerializeMessage;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,6 +12,7 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * 通用工具类
@@ -264,5 +267,46 @@ public class CommonUtil {
             return "";
         }
         return strings.get(index);
+    }
+
+    public static ArrayList<SerializeMessage> getSerializeMessage(String basePath ,MessageChain chain) {
+        ArrayList<SerializeMessage> serializeMessages = new ArrayList<>();
+        for (SingleMessage singleMessage : chain) {
+            if (singleMessage instanceof PlainText) {
+                serializeMessages.add(new SerializeMessage(SerializeMessage.MessageType.PLAIN, ((PlainText) singleMessage).getContent()));
+            } else if (singleMessage instanceof Face) {
+                serializeMessages.add(new SerializeMessage(SerializeMessage.MessageType.EMOJI, ((Face) singleMessage).getId() + ""));
+            } else if (singleMessage instanceof At) {
+                serializeMessages.add(new SerializeMessage(SerializeMessage.MessageType.EMOJI, ((At) singleMessage).getTarget() + ""));
+            } else if (singleMessage instanceof Image) {
+                String url = Image.queryUrl((Image) singleMessage);
+                String path = UUID.randomUUID() + ".png";
+                if (HttpRequest.downloadPicture(url, basePath + path)) {
+                    serializeMessages.add(new SerializeMessage(SerializeMessage.MessageType.IMAGE, basePath + path));
+                }
+            }
+        }
+        return serializeMessages;
+    }
+
+    public static MessageChainBuilder getMessageChain(SingleEvent singleEvent, ArrayList<SerializeMessage> serializeMessages) {
+        MessageChainBuilder builder = new MessageChainBuilder();
+        for (SerializeMessage serializeMessage : serializeMessages) {
+            switch (serializeMessage.getType()) {
+                case PLAIN:
+                    builder.append(new PlainText(serializeMessage.getContext()));
+                    break;
+                case IMAGE:
+                    builder.append(singleEvent.uploadImage(serializeMessage.getContext()));
+                    break;
+                case AT:
+                    builder.append(new At(getLong(serializeMessage.getContext())));
+                    break;
+                case EMOJI:
+                    builder.append(new Face(getInteger(serializeMessage.getContext())));
+                    break;
+            }
+        }
+        return builder;
     }
 }

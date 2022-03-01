@@ -417,7 +417,7 @@ public class Main {
             } else {
                 singleEvent.send("你无权执行该操作");
             }
-        } else if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("禁言")) {
+        } else if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("休眠")) {
             MyGroup group = GroupPool.get(singleEvent);
             if (singleEvent.aboveGroupAdmin()) {
                 if (!group.isMute()) {
@@ -436,12 +436,12 @@ public class Main {
                     }
                     return true;
                 } else {
-                    singleEvent.send(singleEvent.getBotName() + "正在禁言呢");
+                    singleEvent.send(singleEvent.getBotName() + "正在休眠呢");
                 }
             } else {
                 singleEvent.send("你无权执行该操作");
             }
-        } else if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("解除禁言")) {
+        } else if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("解除休眠")) {
             if (singleEvent.aboveGroupAdmin()) {
                 MyGroup group = GroupPool.get(singleEvent);
                 if (group.isMute()) {
@@ -460,7 +460,7 @@ public class Main {
                     }
                     return true;
                 } else {
-                    singleEvent.send(singleEvent.getBotName() + "好像没有禁言呢");
+                    singleEvent.send(singleEvent.getBotName() + "好像没有休眠呢");
                 }
             } else {
                 singleEvent.send("你无权执行该操作");
@@ -513,7 +513,7 @@ public class Main {
             String message = singleEvent.getMessage().getPlainString();
             boolean permission = true;
             for (String muteWord : group.getMuteWords()) {
-                if (message.contains(muteWord)) {
+                if (message.contains(muteWord) && !message.startsWith("删除屏蔽词")) {
                     MemberPermission botPermission = event.getGroup().getBotPermission();
                     if (botPermission == MemberPermission.MEMBER) {
                         singleEvent.send("发现屏蔽词“" + muteWord + "”但" + singleEvent.getBotName() + "无权撤回");
