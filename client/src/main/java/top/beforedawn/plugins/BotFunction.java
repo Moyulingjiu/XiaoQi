@@ -2,11 +2,11 @@ package top.beforedawn.plugins;
 
 import net.mamoe.mirai.event.events.BotInvitedJoinGroupRequestEvent;
 import net.mamoe.mirai.event.events.NewFriendRequestEvent;
-import top.beforedawn.config.BotConfig;
-import top.beforedawn.config.GroupPool;
-import top.beforedawn.config.RequestEventPool;
-import top.beforedawn.config.UserPool;
+import top.beforedawn.config.*;
 import top.beforedawn.models.bo.*;
+import top.beforedawn.models.context.Context;
+import top.beforedawn.models.context.WelcomeContext;
+import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
@@ -386,6 +386,7 @@ public class BotFunction extends BasePlugin {
                     "是否开启漂流瓶：" + getSwitcher(group.isDriftingBottle()) + "\n" +
                     "是否开启RPG游戏：" + getSwitcher(group.isRpg()) + "\n" +
                     "是否开启RPG游戏限制模式：" + getSwitcher(group.isRpgLimit()) + "\n" +
+                    "是否开启入群欢迎：" + getSwitcher(group.isWelcome()) + "\n" +
                     "是否开启自动入群审核：" + getSwitcher(group.isGroupEntry());
             singleEvent.send(message);
         }
@@ -418,6 +419,16 @@ public class BotFunction extends BasePlugin {
         } else if (singleEvent.getMessage().plainEqual("关闭解除闪照")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isUnlockFlashImage(), false, "本来就没有开启解除闪照")) {
                 group.setUnlockFlashImage(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启防撤回")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRecallGuard(), true, "已经开启了防撤回")) {
+                group.setRecallGuard(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭防撤回")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRecallGuard(), false, "本来就没有防撤回")) {
+                group.setRecallGuard(false);
                 GroupPool.save(singleEvent);
             }
         } else if (singleEvent.getMessage().plainEqual("开启戳一戳")) {
@@ -549,6 +560,30 @@ public class BotFunction extends BasePlugin {
             builder.append("--------\n页码：").append(page + 1).append("/").append(total);
             singleEvent.send(builder.toString());
         }
+        // 入群欢迎
+        if (singleEvent.getMessage().plainEqual("开启入群欢迎")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权操作");
+                return;
+            }
+            if (ContextPool.contains(singleEvent.getSenderId())) return;
+            singleEvent.send(singleEvent.getBotName() + "将为您开启/修改入群欢迎，请问你的入群欢迎是什么，下一条消息将会被记录作为欢迎语（可包含图片，可在其他群或私聊告诉我）");
+            WelcomeContext welcomeContext = new WelcomeContext();
+            welcomeContext.setGroupId(singleEvent.getGroupId());
+            ContextPool.put(singleEvent.getSenderId(), welcomeContext);
+        } else if (singleEvent.getMessage().plainEqual("关闭入群欢迎")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权操作");
+                return;
+            }
+            if (group.isWelcome()) {
+                group.setWelcome(false);
+                GroupPool.save(singleEvent);
+                singleEvent.send("关闭成功~");
+            } else {
+                singleEvent.send("本群本来就没有开启入群欢迎哦~");
+            }
+        }
     }
 
     public void request(SingleEvent singleEvent) {
@@ -653,6 +688,28 @@ public class BotFunction extends BasePlugin {
             builder.append("--------\n").append("页码：").append(page + 1).append("/").append(total);
             singleEvent.send(builder.toString());
         }
+    }
+
+    @Override
+    public boolean handContextCommon(SingleEvent singleEvent) {
+        Context context = ContextPool.get(singleEvent.getSenderId());
+        if (context instanceof WelcomeContext) {
+            ((WelcomeContext) context).setWelcome(CommonUtil.getSerializeMessage(singleEvent.getConfig().getWorkdir() + "image/", singleEvent.getMessage().getOrigin()));
+            Long groupId = singleEvent.getGroupId();
+            singleEvent.setGroupId(((WelcomeContext) context).getGroupId());
+            MyGroup group = GroupPool.get(singleEvent);
+            group.setWelcome(true);
+            // 删除原来的图片文件
+            if (!CommonUtil.removeImageFile(group.getWelcomeMessage())) {
+                singleEvent.sendMaster("在删除复杂入群欢迎的时候，遇见了一个未知错误，无法删除文件");
+            }
+            group.setWelcomeMessage(((WelcomeContext) context).getWelcome());
+            GroupPool.save(singleEvent);
+            ContextPool.remove(singleEvent.getSenderId());
+            singleEvent.setGroupId(groupId);
+            singleEvent.send("添加成功~");
+        }
+        return false;
     }
 
     @Override

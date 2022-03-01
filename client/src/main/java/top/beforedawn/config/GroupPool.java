@@ -3,6 +3,7 @@ package top.beforedawn.config;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import top.beforedawn.models.bo.MyGroup;
+import top.beforedawn.models.context.SerializeMessage;
 import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.models.reply.KeyMatchReply;
@@ -130,6 +131,14 @@ public class GroupPool {
         group.setRpg(bool != null && bool);
         bool = jsonObject.getBoolean("rpgLimit");
         group.setRpgLimit(bool != null && bool);
+        bool = jsonObject.getBoolean("welcome");
+        group.setWelcome(bool != null && bool);
+        JSONArray welcomeMessage = jsonObject.getJSONArray("welcomeMessage");
+        if (welcomeMessage != null) {
+            for (int i = 0; i < welcomeMessage.size(); i++) {
+                group.getWelcomeMessage().add(welcomeMessage.getObject(i, SerializeMessage.class));
+            }
+        }
 
         JSONArray muteWordsJson = jsonObject.getJSONArray("muteWords");
         if (muteWordsJson != null) {
@@ -191,6 +200,9 @@ public class GroupPool {
         jsonObject.put("rpg", group.isRpg());
         jsonObject.put("rpgLimit", group.isRpgLimit());
         jsonObject.put("muteWords", group.getMuteWords());
+
+        jsonObject.put("welcome", group.isWelcome());
+        jsonObject.put("welcomeMessage", group.getWelcomeMessage());
 
         FileUtil.writeFile(filename, jsonObject.toJSONString());
     }

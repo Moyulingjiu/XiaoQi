@@ -26,6 +26,28 @@ public class MessageStatistics {
     private long totalMessage = 0;
     private Map<String, Long> plugins = new HashMap<>();
     private Map<Long, ArrayList<LocalDateTime>> userRecord = new HashMap<>();
+    private static Map<Long, LocalDateTime> remindTime = new HashMap<>();
+
+    public static boolean getRemindTime(long qq) {
+        clearRemindTime();
+        return remindTime.containsKey(qq);
+    }
+
+    public static void putRemindTime(long qq) {
+        clearRemindTime();
+        remindTime.put(qq, LocalDateTime.now());
+    }
+
+    public static void clearRemindTime() {
+        LocalDateTime now = LocalDateTime.now();
+        Map<Long, LocalDateTime> newRemindTime = new HashMap<>();
+        for (Long key : remindTime.keySet()) {
+            if (Duration.between(remindTime.get(key), now).toMinutes() <= 1) {
+                newRemindTime.put(key, remindTime.get(key));
+            }
+        }
+        remindTime = newRemindTime;
+    }
 
     public void load(String filename) {
         String content = FileUtil.readFile(filename);

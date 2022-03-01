@@ -5,6 +5,8 @@ import net.mamoe.mirai.message.data.*;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.context.SerializeMessage;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -269,7 +271,14 @@ public class CommonUtil {
         return strings.get(index);
     }
 
-    public static ArrayList<SerializeMessage> getSerializeMessage(String basePath ,MessageChain chain) {
+    /**
+     * 将消息序列化
+     *
+     * @param basePath 工作路径
+     * @param chain    消息链
+     * @return 序列化之后的消息
+     */
+    public static ArrayList<SerializeMessage> getSerializeMessage(String basePath, MessageChain chain) {
         ArrayList<SerializeMessage> serializeMessages = new ArrayList<>();
         for (SingleMessage singleMessage : chain) {
             if (singleMessage instanceof PlainText) {
@@ -289,6 +298,13 @@ public class CommonUtil {
         return serializeMessages;
     }
 
+    /**
+     * 反序列化消息
+     *
+     * @param singleEvent       事件
+     * @param serializeMessages 序列化的消息
+     * @return 消息链
+     */
     public static MessageChainBuilder getMessageChain(SingleEvent singleEvent, ArrayList<SerializeMessage> serializeMessages) {
         MessageChainBuilder builder = new MessageChainBuilder();
         for (SerializeMessage serializeMessage : serializeMessages) {
@@ -297,7 +313,8 @@ public class CommonUtil {
                     builder.append(new PlainText(serializeMessage.getContext()));
                     break;
                 case IMAGE:
-                    builder.append(singleEvent.uploadImage(serializeMessage.getContext()));
+                    if (exists(serializeMessage.getContext()))
+                        builder.append(singleEvent.uploadImage(serializeMessage.getContext()));
                     break;
                 case AT:
                     builder.append(new At(getLong(serializeMessage.getContext())));
@@ -308,5 +325,44 @@ public class CommonUtil {
             }
         }
         return builder;
+    }
+
+    /**
+     * 删除序列中保存在本地的图片文件
+     *
+     * @param serializeMessages 消息序列
+     * @return 是否删除成功
+     */
+    public static boolean removeImageFile(ArrayList<SerializeMessage> serializeMessages) {
+        boolean ans = true;
+        for (SerializeMessage serializeMessage : serializeMessages) {
+            if (serializeMessage.getType() == SerializeMessage.MessageType.IMAGE) {
+                ans = ans && deleteFile(serializeMessage.getContext());
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param path 路径
+     * @return 删除成功与否
+     */
+    public static boolean deleteFile(String path) {
+        File file = new File(path);
+        return file.delete();
+    }
+
+    /**
+     * 文件是否存在
+     *
+     * @param path 路径
+     * @return 是否存在
+     */
+    public static boolean exists(String path) {
+        if (path == null) return false;
+        File file = new File(path);
+        return file.exists();
     }
 }

@@ -6,10 +6,12 @@ import net.mamoe.mirai.contact.Friend;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.event.events.MemberJoinEvent;
 import net.mamoe.mirai.event.events.NudgeEvent;
 import net.mamoe.mirai.message.data.*;
 import net.mamoe.mirai.utils.ExternalResource;
 import top.beforedawn.config.BotConfig;
+import top.beforedawn.config.MessageStatistics;
 import top.beforedawn.models.bo.GroupRight;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.bo.SystemRight;
@@ -34,6 +36,7 @@ public class SingleEvent {
     private GroupMessageEvent groupMessageEvent;
     private FriendMessageEvent friendMessageEvent;
     private NudgeEvent nudgeEvent;
+    private MemberJoinEvent memberJoinEvent;
 
     public SingleEvent() {
         init();
@@ -62,11 +65,19 @@ public class SingleEvent {
         setNudgeEvent(event);
     }
 
+    public SingleEvent(MemberJoinEvent event) {
+        setMemberJoinEvent(event);
+    }
+
     public String getBotName() {
         return combineBot.getConfig().getName();
     }
 
     public BotConfig getConfig() {
+        if (combineBot == null) {
+            if (botId == null) return null;
+            combineBot = MyBot.getSimpleCombineBot(botId, this);
+        }
         return combineBot.getConfig();
     }
 
@@ -85,6 +96,7 @@ public class SingleEvent {
         groupMessageEvent = null;
         friendMessageEvent = null;
         nudgeEvent = null;
+        memberJoinEvent = null;
     }
 
     public void setGroupMessageEvent(GroupMessageEvent event) {
@@ -125,6 +137,15 @@ public class SingleEvent {
         }
     }
 
+    public void setMemberJoinEvent(MemberJoinEvent event) {
+        init();
+        memberJoinEvent = event;
+        botId = event.getBot().getId();
+        combineBot = MyBot.getSimpleCombineBot(botId, this);
+        senderId = event.getMember().getId();
+        groupId = event.getGroup().getId();
+    }
+
     public boolean valid() {
         return botId != null &&
                 message != null &&
@@ -142,6 +163,10 @@ public class SingleEvent {
 
     public boolean isNudge() {
         return nudgeEvent != null;
+    }
+
+    public boolean isMemberJoinEvent() {
+        return memberJoinEvent != null;
     }
 
     public SystemRight getRight() {
@@ -236,6 +261,15 @@ public class SingleEvent {
             getConfig().getStatistics().record(getSenderId());
         }
         getConfig().getStatistics().save(getConfig().getWorkdir() + getConfig().getStatisticsFilename());
+        if (getConfig().getStatistics().check(senderId, 40)) {
+            if (!MessageStatistics.getRemindTime(senderId)) {
+                MessageStatistics.putRemindTime(senderId);
+                if (isFriendMessage())
+                    send("你发送的消息太过频繁，接下来" + getBotName() + "一分钟内将不会回复你的消息");
+                else if (isGroupMessage())
+                    sendAt("你发送的消息太过频繁，接下来" + getBotName() + "一分钟内将不会回复你的消息");
+            }
+        }
         if (isGroupMessage()) {
             RepeatFunction.lastReceived.remove(groupId);
             RepeatFunction.lastSend.remove(groupId);
@@ -289,6 +323,9 @@ public class SingleEvent {
         } else if (isNudge()) {
             record();
             nudgeEvent.getSubject().sendMessage(chain);
+        } else if (isMemberJoinEvent()) {
+            record();
+            memberJoinEvent.getGroup().sendMessage(chain);
         }
     }
 
@@ -298,16 +335,9 @@ public class SingleEvent {
      * @param plain 文本信息
      */
     public void send(String plain) {
-        if (isGroupMessage()) {
-            record();
-            groupMessageEvent.getSubject().sendMessage(plain);
-        } else if (isFriendMessage()) {
-            record();
-            friendMessageEvent.getSubject().sendMessage(plain);
-        } else if (isNudge()) {
-            record();
-            nudgeEvent.getSubject().sendMessage(plain);
-        }
+        MessageChainBuilder chainBuilder = new MessageChainBuilder();
+        chainBuilder.append(new PlainText(plain));
+        send(chainBuilder.asMessageChain());
     }
 
     /**
@@ -369,6 +399,8 @@ public class SingleEvent {
             return getFriendMessageEvent().getFriend().uploadImage(ExternalResource.create(file));
         } else if (isNudge()) {
             return getNudgeEvent().getSubject().uploadImage(ExternalResource.create(file));
+        } else if (isMemberJoinEvent()) {
+            return getMemberJoinEvent().getGroup().uploadImage(ExternalResource.create(file));
         }
         return null;
     }

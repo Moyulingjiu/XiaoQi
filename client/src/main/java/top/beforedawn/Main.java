@@ -1,14 +1,13 @@
 package top.beforedawn;
 
 import net.mamoe.mirai.Bot;
+import net.mamoe.mirai.IMirai;
 import net.mamoe.mirai.contact.AnonymousMember;
 import net.mamoe.mirai.contact.MemberPermission;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.*;
-import net.mamoe.mirai.message.data.MessageSource;
-import top.beforedawn.config.BotConfig;
-import top.beforedawn.config.GroupPool;
-import top.beforedawn.config.RequestEventPool;
+import net.mamoe.mirai.message.data.*;
+import top.beforedawn.config.*;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.bo.SimpleBlacklist;
 import top.beforedawn.plugins.*;
@@ -143,6 +142,17 @@ public class Main {
                 }
             }
         });
+
+        // 新成员进群
+        GlobalEventChannel.INSTANCE.subscribeAlways(MemberJoinEvent.class, event -> {
+            SingleEvent singleEvent = new SingleEvent(event);
+            MyGroup group = GroupPool.get(singleEvent);
+            if (group.isWelcome()) {
+                MessageChainBuilder messageChain = CommonUtil.getMessageChain(singleEvent, group.getWelcomeMessage());
+                messageChain.add(0, new At(event.getMember().getId()));
+                singleEvent.send(messageChain.asMessageChain());
+            }
+        });
     }
 
     /**
@@ -198,15 +208,21 @@ public class Main {
 
         // 成功添加了一个新的好友
         GlobalEventChannel.INSTANCE.subscribeAlways(FriendAddEvent.class, event -> {
-            event.getFriend().sendMessage("已添加好友");
-            event.getFriend().sendMessage(HttpUtil.convention(event.getBot().getId()));
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                event.getFriend().sendMessage("已添加好友");
+                event.getFriend().sendMessage(HttpUtil.convention(event.getBot().getId()));
+            }
         });
 
         // 成功进入一个群
         GlobalEventChannel.INSTANCE.subscribeAlways(BotJoinGroupEvent.class, event -> {
             SingleEvent singleEvent = new SingleEvent(event.getBot().getId(), 0L);
             SimpleCombineBot bot = MyBot.getSimpleCombineBot(event.getBot().getId(), singleEvent);
-            event.getGroup().sendMessage("已加入群，若是对机器人疑问可以直接艾特我然后输入退群两个字，我会自动退出的。例如：@" + bot.getConfig() + "退群");
+            event.getGroup().sendMessage("已加入群，若是对机器人疑问可以直接艾特我然后输入退群两个字，我会自动退出的。例如：@" + bot.getConfig().getName() + "退群");
         });
 
         // 被踢出一个群
@@ -254,6 +270,30 @@ public class Main {
                         event.getOperator().getNick(),
                         event.getOperator().getId()
                 ));
+            }
+        });
+
+        // 群消息撤回
+        GlobalEventChannel.INSTANCE.subscribeAlways(MessageRecallEvent.GroupRecall.class, event -> {
+            MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getAuthorId(), event.getGroup().getId()));
+            if (group.isRecallGuard()) {
+                // 不是机器人撤回，并且还是自己撤回的，那么就进行防撤回处理
+                if (event.getOperator() != null && event.getOperator().getId() == event.getAuthorId()) {
+                    int[] ids = event.getMessageIds();
+                    if (ids.length != 0) {
+                        LocalDateTime time = MessagePool.getTime(ids[0]);
+                        MessageChain chain = MessagePool.get(ids[0]);
+                        if (time == null || chain == null) return;
+                        String authorName = event.getAuthor().getNick();
+                        String message = "成员<" + authorName + ">（" + event.getAuthorId() + "）试图撤回" +
+                                CommonUtil.LocalDateTime2String(time) + "的消息\n" +
+                                "--------\n";
+                        MessageChainBuilder builder = new MessageChainBuilder();
+                        builder.add(new PlainText(message));
+                        builder.addAll(chain);
+                        event.getGroup().sendMessage(builder.asMessageChain());
+                    }
+                }
             }
         });
     }
@@ -472,6 +512,7 @@ public class Main {
     public static void handle(SingleEvent singleEvent) {
         if (
                 !singleEvent.valid() ||
+                        MessageStatistics.getRemindTime(singleEvent.getSenderId()) ||
                         globalSwitcher(singleEvent) ||
                         singleEvent.getConfig().isMute(singleEvent)
         ) {
@@ -497,13 +538,19 @@ public class Main {
         // 统一配置路径
         // todo: 这两个参数应该由args获取而非写死
         String workdir = "C:/mirai";
-        Long botId = 1812322920L;
+        Long botId = 2034794240L;
 
         Bot bot = MyBot.getBot(new BotConfig(workdir, botId));
         System.out.println(bot.getNick() + "登陆成功");
         registerPlugins();
 
         GlobalEventChannel.INSTANCE.subscribeAlways(GroupMessageEvent.class, event -> {
+            // 缓存消息到缓存池。并且同步清空过期的缓存
+            OnlineMessageSource.Incoming.FromGroup source = event.getSource();
+            int[] ids = source.getIds();
+            if (ids.length != 0) {
+                MessagePool.put(ids[0], event.getMessage());
+            }
             // 匿名用户不响应
             if (event.getSender() instanceof AnonymousMember) {
                 return;

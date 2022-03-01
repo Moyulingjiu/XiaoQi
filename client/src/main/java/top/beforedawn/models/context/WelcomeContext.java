@@ -9,8 +9,12 @@ import java.util.ArrayList;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class WelcomeContext extends Context {
+    public WelcomeContext() {
+        maxStep = 1;
+    }
+
+    private Long groupId;
     private ArrayList<SerializeMessage> welcome;
 }

@@ -6,6 +6,7 @@ import top.beforedawn.models.bo.MessageLinearAnalysis;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.context.ComplexReplyContext;
 import top.beforedawn.models.context.Context;
+import top.beforedawn.models.context.SerializeMessage;
 import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.models.reply.KeyMatchReply;
@@ -45,7 +46,6 @@ public class AutoReplyFunction extends BasePlugin {
 
     @Override
     public boolean handContextGroup(SingleEvent singleEvent) {
-
         Context context = ContextPool.get(singleEvent.getSenderId());
         // 复杂回复
         if (context instanceof ComplexReplyContext) {
@@ -112,10 +112,14 @@ public class AutoReplyFunction extends BasePlugin {
                     for (BaseAutoReply autoReply : group.getAutoReplies())
                         if (autoReply instanceof ComplexReply)
                             if (((ComplexReply) autoReply).getKey().equals(complexReply.getKey())) {
-                                flag = false;
+                                // 删除原来的图片文件
+                                if (!CommonUtil.removeImageFile(((ComplexReply) autoReply).getReply())) {
+                                    singleEvent.sendMaster("在删除复杂回复的时候，遇见了一个未知错误，无法删除文件");
+                                }
                                 group.getAutoReplies().remove(autoReply);
                                 group.add(complexReply);
                                 singleEvent.send("覆盖成功！");
+                                flag = false;
                                 break;
                             }
 
@@ -429,6 +433,9 @@ public class AutoReplyFunction extends BasePlugin {
             for (BaseAutoReply autoReply : group.getAutoReplies()) {
                 if (autoReply instanceof ComplexReply) {
                     if (((ComplexReply) autoReply).getKey().equals(message)) {
+                        if (!CommonUtil.removeImageFile(((ComplexReply) autoReply).getReply())) {
+                            singleEvent.sendMaster("在删除复杂回复的时候，遇见了一个未知错误，无法删除文件");
+                        }
                         group.getAutoReplies().remove(autoReply);
                         singleEvent.send("删除成功~");
                         isDelete = true;

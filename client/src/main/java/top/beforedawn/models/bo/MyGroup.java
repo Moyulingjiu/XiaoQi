@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import top.beforedawn.config.GroupEntryRule;
+import top.beforedawn.models.context.SerializeMessage;
 import top.beforedawn.models.reply.BaseAutoReply;
 
 import java.time.LocalDateTime;
@@ -41,6 +42,9 @@ public class MyGroup {
 
     private boolean groupEntry = false; // 自动审核入群
     private GroupEntryRule groupEntryRule = new GroupEntryRule(); // 审核规则
+
+    private boolean welcome = false; // 入群欢迎
+    private ArrayList<SerializeMessage> welcomeMessage = new ArrayList<>(); // 欢迎词
 
     public void add(BaseAutoReply autoReply) {
         autoReplies.add(autoReply);

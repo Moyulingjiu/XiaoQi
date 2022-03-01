@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@AllArgsConstructor
 public class ComplexReplyContext extends Context {
     public enum AtType {
         NONE,

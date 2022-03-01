@@ -42,7 +42,7 @@ public class RpgFunction extends BasePlugin {
                 limit = group.isRpgLimit();
             }
 
-            String url = "http://127.0.0.1:8000/rpg";
+            String url = "http://175.178.4.128:9000/rpg";
             String json = "{\n" +
                     "    \"text\": \"" + (atMessage + message).strip() + "\",\n" +
                     "    \"qq\": " + singleEvent.getSenderId() + ",\n" +

@@ -64,6 +64,7 @@ public class MyBot {
             fileBasedDeviceInfo("device.json");
         }});
         bot.login();
+        config.update(new SingleEvent(config.getQq(), config.getQq()));
         botPool.put(qq, new SimpleCombineBot(config, bot));
         return bot;
     }
