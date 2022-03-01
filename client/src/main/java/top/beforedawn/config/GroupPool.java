@@ -126,6 +126,10 @@ public class GroupPool {
         group.setCoc(bool != null && bool);
         bool = jsonObject.getBoolean("driftingBottle");
         group.setDriftingBottle(bool != null && bool);
+        bool = jsonObject.getBoolean("rpg");
+        group.setRpg(bool != null && bool);
+        bool = jsonObject.getBoolean("rpgLimit");
+        group.setRpgLimit(bool != null && bool);
 
         JSONArray muteWordsJson = jsonObject.getJSONArray("muteWords");
         if (muteWordsJson != null) {
@@ -184,6 +188,8 @@ public class GroupPool {
         jsonObject.put("repeat", group.isRepeat());
         jsonObject.put("coc", group.isCoc());
         jsonObject.put("driftingBottle", group.isDriftingBottle());
+        jsonObject.put("rpg", group.isRpg());
+        jsonObject.put("rpgLimit", group.isRpgLimit());
         jsonObject.put("muteWords", group.getMuteWords());
 
         FileUtil.writeFile(filename, jsonObject.toJSONString());

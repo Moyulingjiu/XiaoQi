@@ -32,4 +32,4 @@ async def rpg(message: Message):
     need_reply, reply_text, reply_image = my_rpg.handle(message.text, message.qq, message.member_name, message.bot_name,
                                                         message.be_at, message.limit)
     reply: Reply = Reply(need_reply=need_reply, reply_text=reply_text)
-    return reply
+    return {"code": 0, "message": "成功", "data": reply}

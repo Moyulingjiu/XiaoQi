@@ -85,7 +85,7 @@ public class BotFunction extends BasePlugin {
             }
         } else if (singleEvent.getMessage().plainEqual("我的积分")) {
             MyUser user = UserPool.getUser(singleEvent);
-            singleEvent.send("你的积分：" + user.getPoint());
+            singleEvent.send(singleEvent.getSenderName() + "你的系统积分：" + user.getPoint());
         } else if (singleEvent.getMessage().plainEqual("版本信息")) {
             singleEvent.send("版本信息：" + BotConfig.VERSION);
         }
@@ -345,6 +345,7 @@ public class BotFunction extends BasePlugin {
      * @param singleEvent 事件
      */
     private void botSwitcher(SingleEvent singleEvent) {
+        // 查看全局模块列表
         if (singleEvent.getMessage().plainEqual("全局模块列表")) {
             String message = "版本信息：" + BotConfig.VERSION + "\n" +
                     "是否允许使用coc模块：" + getSwitcher(singleEvent.getConfig().isAllowCoc()) + "\n" +
@@ -362,6 +363,7 @@ public class BotFunction extends BasePlugin {
                     "心跳检测间隔：" + singleEvent.getConfig().getBotSwitcher().getHeartInterval();
             singleEvent.send(message);
         }
+        //todo: 广播消息
     }
 
     /**
@@ -382,6 +384,8 @@ public class BotFunction extends BasePlugin {
                     "是否开启自动加一：" + getSwitcher(group.isRepeat()) + "\n" +
                     "是否开启部落冲突查询：" + getSwitcher(group.isCoc()) + "\n" +
                     "是否开启漂流瓶：" + getSwitcher(group.isDriftingBottle()) + "\n" +
+                    "是否开启RPG游戏：" + getSwitcher(group.isRpg()) + "\n" +
+                    "是否开启RPG游戏限制模式：" + getSwitcher(group.isRpgLimit()) + "\n" +
                     "是否开启自动入群审核：" + getSwitcher(group.isGroupEntry());
             singleEvent.send(message);
         }
@@ -466,7 +470,29 @@ public class BotFunction extends BasePlugin {
                 group.setDriftingBottle(false);
                 GroupPool.save(singleEvent);
             }
-        } else if (singleEvent.getMessage().plainStartWith("添加屏蔽词")) {
+        } else if (singleEvent.getMessage().plainEqual("开启游戏")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRpg(), true, "已经开启了RPG游戏")) {
+                group.setRpg(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭游戏")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRpg(), false, "本来就没有开启RPG游戏")) {
+                group.setRpg(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启游戏限制模式")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRpgLimit(), true, "已经开启了RPG游戏限制模式")) {
+                group.setRpgLimit(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭游戏限制模式")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isRpgLimit(), false, "本来就没有开启RPG游戏限制模式")) {
+                group.setRpgLimit(false);
+                GroupPool.save(singleEvent);
+            }
+        }
+        // 屏蔽词
+        else if (singleEvent.getMessage().plainStartWith("添加屏蔽词")) {
             if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("权限不足");
                 return;

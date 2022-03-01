@@ -36,6 +36,8 @@ public class MyGroup {
     private boolean repeat = false; // 自动加一
     private boolean coc = false; // 部落冲突查询
     private boolean driftingBottle = true; // 漂流瓶
+    private boolean rpg = true; // RPG游戏
+    private boolean rpgLimit = false; // RPG游戏限制模式
 
     private boolean groupEntry = false; // 自动审核入群
     private GroupEntryRule groupEntryRule = new GroupEntryRule(); // 审核规则

@@ -36,6 +36,7 @@ public class Main {
         plugins.add(new NudgeFunction());
         plugins.add(new UnlockFlashFunction());
         plugins.add(new DriftingBottleFunction());
+        plugins.add(new RpgFunction());
     }
 
     /**

@@ -28,6 +28,7 @@ public class SingleEvent {
     private Long botId;
     private Long groupId;
     private Long senderId;
+    private String senderName;
     private MyMessage message;
     private SimpleCombineBot combineBot;
     private GroupMessageEvent groupMessageEvent;
@@ -78,6 +79,7 @@ public class SingleEvent {
         botId = 0L;
         groupId = 0L;
         senderId = 0L;
+        senderName = null;
         message = null;
         combineBot = null;
         groupMessageEvent = null;
@@ -92,6 +94,7 @@ public class SingleEvent {
         combineBot = MyBot.getSimpleCombineBot(botId, this);
         message = CommonUtil.analysisMessage(event.getMessage(), botId);
         senderId = groupMessageEvent.getSender().getId();
+        senderName = event.getSenderName();
         groupId = groupMessageEvent.getGroup().getId();
     }
 
@@ -102,6 +105,7 @@ public class SingleEvent {
         combineBot = MyBot.getSimpleCombineBot(botId, this);
         message = CommonUtil.analysisMessage(event.getMessage(), botId);
         senderId = friendMessageEvent.getSender().getId();
+        senderName = event.getSenderName();
         groupId = 0L;
     }
 

@@ -8349,17 +8349,17 @@ class RPG:
                         result = self.core.PVP(qq, int(temp_message[1:]), False)
                         reply_text = result.show()
                         need_reply = True
-            # elif '袭击' in message:
-            #     if be_at:
-            #         reply_text = bot_name + random.choice(replylist)
-            #         need_reply = True
-            #     elif '@' in message:
-            #         temp_message = message.replace('袭击', '')
-            #         temp_message = temp_message.strip()
-            #         if temp_message[0] == '@' and temp_message[1:].isdigit():
-            #             result = self.core.PVP2(qq, int(temp_message[1:]))
-            #             reply_text = result.show()
-            #             need_reply = True
+            elif '袭击' in message:
+                if be_at:
+                    reply_text = bot_name + random.choice(replylist)
+                    need_reply = True
+                elif '@' in message:
+                    temp_message = message.replace('袭击', '')
+                    temp_message = temp_message.strip()
+                    if temp_message[0] == '@' and temp_message[1:].isdigit():
+                        result = self.core.PVP2(qq, int(temp_message[1:]))
+                        reply_text = result.show()
+                        need_reply = True
             elif '赠送' in message:
                 if be_at:
                     reply_text = random.choice(give_replylist).replace('*bot*', bot_name)
