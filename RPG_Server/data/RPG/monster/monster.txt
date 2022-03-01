@@ -1,0 +1,184 @@
+# 怪物表
+
+# 维度
+# level 评级
+# armor 护甲
+# attack 攻击力
+# speed 速度
+# hp 血量
+# element 元素
+# comments 介绍
+# spoils 掉落物
+# 掉落物的特殊说明：
+#    多个掉落物以 掉落物x数量，掉落物x数量分割
+#    
+
+南挽 level=0 armor=1 attack=1 speed=1 hp=1 comments=欸嘿嘿 spoils=无x1 element=传说
+察察 level=0 armor=1 attack=1 speed=1 hp=1 comments=测试人员 spoils=无x1 element=传说
+墨羽 level=0 armor=1 attack=1 speed=1 hp=1 comments=你遇见了传说 spoils=无x1 element=传说
+六芒 level=0 armor=10000 attack=10000 speed=10000 hp=10000 comments=你真幸运，能遇到六芒。 spoils=无x1 element=传说
+
+哥布林 level=1 armor=0 attack=5 speed=60 hp=18 comments=长着尖尖的耳朵的绿皮小矮子 spoils=木板x2
+哥布林弓箭手 level=2 armor=0 attack=19 speed=100 hp=20 comments=哈哈！没想到哥布林也能学会远程攻击吧！ spoils=碎石x80
+哥布林战士 level=2 armor=1 attack=20 speed=75 hp=23 comments=强壮的肌肉！让你还小瞧哥布林 spoils=石头x5
+哥布林狼骑士 level=3 armor=3 attack=19 speed=140 hp=50 comments=与狼达成契约，当哥布林战士骑上野狼会发生什么？ spoils=铁锭x2
+哥布林法师 level=3 armor=0 attack=30 speed=100 hp=80 comments=哥布林也是可以学会魔法的！ spoils=钛矿石x1
+哥布林祭祀 level=3 armor=1 attack=20 speed=80 hp=100 comments=鼓舞与治疗是任何一个军队都必不可少的 spoils=铝合金x1
+哥布林领主 level=4 armor=2 attack=41 speed=120 hp=300 comments=肥胖的哥布林领主看起来可真奇怪 spoils=金锭x2
+巨型哥布林 level=5 armor=8 attack=45 speed=50 hp=200 comments=这，这是什么？哥布林的秘密武器么？! spoils=铁锭x5，木板x5，铝锭x1
+哥布林王 level=6 armor=29 attack=120 speed=100 hp=60 comments=哥布林的王 spoils=寒铁x5
+
+民兵 level=1 armor=0 attack=5 speed=45 hp=24 comments=征召而来的民兵 spoils=石头x2
+士兵 level=2 armor=2 attack=19 speed=40 hp=35 comments=受到严格训练的士兵 spoils=木板x4
+弓箭手 level=2 armor=2 attack=20 speed=75 hp=18 comments=经过训练的弓箭手 spoils=石头x5
+剑士 level=3 armor=4 attack=20 speed=60 hp=80 comments=精湛的剑术，擅长双手剑 spoils=铁锭x2
+骑士 level=3 armor=4 attack=35 speed=60 hp=100 comments=当他们冲锋的时候应该没有什么能够阻挡 spoils=铝合金x2
+火枪手 level=3 armor=3 attack=38 speed=70 hp=70 comments=大人，时代变了！ spoils=铝合金x1
+法师 level=4 armor=5 attack=42 speed=50 hp=100 comments=人类也是一种亲近自然元素的种族，这是人族法师 spoils=金锭x2
+军队统领 level=5 armor=2 attack=45 speed=50 hp=300 comments=一将功成万骨枯！ spoils=铁锭x5，木板x5，铝锭x1
+御前侍卫 level=6 armor=29 attack=100 speed=150 hp=60 comments=真正的精锐之徒 spoils=寒铁x5，金锭x2
+
+骷髅 level=1 armor=0 attack=6 speed=50 hp=17 comments=骨头也可以站起来！ spoils=木板x2
+骷髅战士 level=2 armor=0 attack=19 speed=80 hp=25 comments=当骷髅拿起剑与盾 spoils=石头x3
+骷髅弓箭手 level=2 armor=0 attack=21 speed=120 hp=15 comments=这是小白吗？ spoils=石头x5
+骷髅法师 level=3 armor=2 attack=22 speed=70 hp=70 comments=灵魂如此强大，生前一定是个大法师 spoils=铁锭x2
+腐化骷髅 level=3 armor=4 attack=40 speed=50 hp=70 comments=他们虽然腐朽但是行动极其迅速，他们力求给予你最强一击 spoils=石头x7
+骷髅炸弹人 level=3 armor=0 attack=80 speed=60 hp=20 comments=他们只会与你同归于尽！ spoils=铝合金x1
+骷髅骑士 level=4 armor=5 attack=45 speed=80 hp=50 comments=骷髅+骷髅马，这是什么东西？ spoils=金锭x2
+骨龙 level=5 armor=5 attack=46 speed=90 hp=120 comments=龙族？！不，这是骷髅族从龙墓中挖出的骷髅！ spoils=铁锭x5，木板x5，铝锭x1
+骨刺 level=6 armor=29 attack=100 speed=150 hp=60 comments=骨头！延绵不断的骨头 spoils=精神药水x1，布x1
+
+精灵 level=1 armor=0 attack=4 speed=80 hp=20 comments=精灵的颜值与箭术让人望尘莫及 spoils=石头x2
+精灵战士 level=2 armor=1 attack=19 speed=120 hp=15 comments=银色铠甲如此耀眼 spoils=木板x4
+黑暗精灵 level=2 armor=0 attack=19 speed=130 hp=18 comments=献祭自己堕入黑暗的精灵 spoils=石头x5
+精灵剑士 level=3 armor=3 attack=20 speed=150 hp=35 comments=他们的剑相比于人类可美多了，纤细而又迅速 spoils=铁锭x2
+精灵法师 level=3 armor=2 attack=38 speed=100 hp=50 comments=与自然的亲和让他们的魔法更加强大 spoils=石头x7
+精灵弓箭手 level=4 armor=2 attack=41 speed=140 hp=50 comments=这可是她们极其擅长的领域 spoils=铝锭x2
+精灵灵剑士 level=4 armor=5 attack=40 speed=100 hp=70 comments=将魔法与剑术融合，这是其他种族难以想象的 spoils=金锭x2
+精灵精锐弓箭手 level=5 armor=4 attack=46 speed=160 hp=80 comments=这是精灵弓箭手中的精锐，她们速度更快，百发百中 spoils=铁锭x5，木板x5，铝锭x1
+黑暗精灵法师 level=5 armor=2 attack=54 speed=170 hp=70 comments=献祭自己堕入黑暗的精灵 spoils=铁锭x3，木板x5，铝锭x2
+德鲁伊 level=5 armor=2 attack=54 speed=170 hp=70 comments=献祭自己于自然，换来变成动物的能力 spoils=钛矿石x7
+火元素精灵法师 level=6 armor=4 attack=80 speed=300 hp=40 comments=准备防御，这是雷暴！ spoils=棉花x4 element=火
+水元素精灵法师 level=6 armor=4 attack=80 speed=300 hp=40 comments=准备防御，这是雷暴！ spoils=布x2 element=水
+木元素精灵法师 level=6 armor=4 attack=80 speed=300 hp=40 comments=准备防御，这是雷暴！ spoils=寒铁x2 element=木
+雷元素精灵法师 level=6 armor=4 attack=80 speed=300 hp=40 comments=准备防御，这是雷暴！ spoils=钨矿石x1 element=雷
+精灵领主 level=6 armor=29 attack=100 speed=150 hp=60 comments=精灵的领主 spoils=棉花x3
+
+
+# ========================================
+# 第二次更新
+# ========================================
+
+天灾军团 level=0 armor=60 attack=80 speed=60 hp=200 comments=什么东西在席卷而来？这是天灾？ spoils=天灾之心x1 element=暗
+
+
+小火苗 level=5 armor=10 attack=65 speed=80 hp=80 comments=星星之火 spoils=灵木x2 element=火
+火焰精灵 level=6 armor=12 attack=70 speed=80 hp=120 comments=自然形成的一点意识 spoils=寒铁x2 element=火
+火焰守卫 level=6 armor=25 attack=82 speed=60 hp=80 comments=这些意识自发的守卫家园 spoils=寒铁x2，沙子x1 element=火
+烈焰 level=7 armor=25 attack=80 speed=100 hp=80 comments=快跑，烈焰就在身后翻滚 spoils=棉花x4 element=火
+焚尽法师 level=8 armor=29 attack=120 speed=100 hp=60 comments=在这里修炼的法师，却被环境同化了 spoils=寒铁x5 element=火
+烈焰之焚 level=8 armor=10 attack=123 speed=120 hp=40 comments=这是什么？？为什么会有这么庞大的火焰力量！ spoils=板蓝根x2，棉花x6 element=火
+炎尽 level=9 armor=30 attack=500 speed=40 hp=22 comments=灾难平息了么？不！还没结束！！ spoils=钨矿石x6 element=火
+烈焰之焚天炎龙 level=10 armor=60 attack=160 speed=150 hp=100 comments=它曾是龙族最为骄傲的幼龙，是炎龙一族无比闪耀的天才，却在龙族对抗天灾的时候为保护族人而陨落至一处峡谷 spoils=秘银x4，布x8 element=火
+
+小水滩 level=5 armor=24 attack=74 speed=60 hp=50 comments=一洼水滩 spoils=灵木x2 element=水
+水之精灵 level=6 armor=28 attack=82 speed=80 hp=50 comments=水的意志么？ spoils=寒铁x2 element=水
+大海守卫 level=6 armor=32 attack=80 speed=80 hp=50 comments=大海不容侵犯，与之相比我们更像侵略者 spoils=寒铁x2，沙子x1 element=水
+水波 level=7 armor=38 attack=86 speed=80 hp=40 comments=波浪来袭！快闪开 spoils=棉花x4 element=水
+浪涛战士 level=8 armor=42 attack=120 speed=80 hp=40 comments=在这里修炼的战士，却被环境同化了 spoils=寒铁x5 element=水
+深海之浪 level=8 armor=50 attack=119 speed=70 hp=40 comments=我们潜入深海，却被莫名的力量袭击了！ spoils=冰粉x2，棉花x6 element=水
+冰叹 level=9 armor=70 attack=130 speed=70 hp=30 comments=这就是源头了么？好冷~ spoils=铬矿石x2，精神药水x15 element=水
+寒冰之永霜冰鲨 level=10 armor=80 attack=150 speed=100 hp=200 comments=它恶名昭彰，曾是海洋上为祸一方的大鲨鱼，天灾到来之时助纣为虐，在天灾被抑制后，吸收了部分天灾的力量潜入深海 spoils=秘银x2，九天玄铁x4，布x6 element=水
+
+小闪电 level=5 armor=6 attack=75 speed=180 hp=30 comments=一道闪电 spoils=灵木x2 element=雷
+闪电精灵 level=6 armor=7 attack=79 speed=180 hp=50 comments=发着亮光，向你冲来 spoils=寒铁x2 element=雷
+雷霆守卫 level=6 armor=10 attack=74 speed=200 hp=48 comments=守卫着无尽雷霆的天空 spoils=寒铁x2，沙子x2 element=雷
+雷暴 level=7 armor=4 attack=80 speed=300 hp=40 comments=准备防御，这是雷暴！ spoils=棉花x4 element=雷
+闪电刺客 level=7 armor=20 attack=81 speed=240 hp=40 comments=在这里修炼的刺客，却被环境同化了 spoils=布x4 element=雷
+雷霆之威 level=8 armor=28 attack=126 speed=160 hp=36 comments=雷从九天临！ spoils=姜汤x2，棉花x6 element=雷
+雷隐 level=9 armor=30 attack=135 speed=500 hp=30 comments=这点电光就是雷霆的力量么？ spoils=灵石x2，精神药水x7 element=雷
+闪电之怒雷闪凤 level=10 armor=45 attack=140 speed=480 hp=55 comments=凤凰一族在抑制天灾的时候，曾经几度溃败，后来在各方力量下稳住阵脚，但是发现它们中有些人已经在天灾的力量下动摇了 spoils=九天玄铁x5，布x8，空间兽x2 element=雷
+
+小树苗 level=5 armor=20 attack=80 speed=50 hp=80 comments=这树苗真的是敌人么？ spoils=灵木x4，棉花x1 element=木
+木之精灵 level=6 armor=22 attack=87 speed=60 hp=100 comments=我们才是侵略者对吧？ spoils=棉花x6 element=木
+森林守卫 level=6 armor=32 attack=86 speed=32 hp=100 comments=森林之息，我们真的要打败它么？ spoils=铬矿石x2，寒铁x1 element=木
+食人花 level=7 armor=30 attack=110 speed=40 hp=100 comments=好险，差点被咬到 spoils=茶水x3 element=木
+不知名的木遁忍者 level=8 armor=40 attack=133 speed=70 hp=60 comments=在这里修炼的忍者，把环境同化了 spoils=石头x15 element=木
+森林之怒 level=8 armor=46 attack=98 speed=50 hp=80 comments=我们似乎做错了 spoils=星钢岩x3 element=木
+木息 level=9 armor=40 attack=133 speed=40 hp=500 comments=或许我们真的不该入侵森林 spoils=灵木x5，棉花x6，沙子x5 element=木
+幽森之地脉古树 level=10 armor=60 attack=160 speed=60 hp=300 comments=古树在等着你的净化呢，原本的天灾最强大的力量是大地动摇，这位最年长的古树亲自镇压的这股力量。虽然没有失去意志，但是也阻止不了这股力量逐渐散发了。 spoils=太古岩石x1，秘银x5，布x10 element=木
+
+
+# ========================================
+# 第三次更新
+# ========================================
+
+小光球（月夜） level=8 armor=36 attack=190 speed=180  hp=80  comments=月夜里的点点光芒 spoils=棉花x1，灵木x1 element=光
+光之精灵（月夜） level=8 armor=35 attack=200 speed=180  hp=80  comments=光的精灵在夜晚显得格外瞩目 spoils=灵石x1 element=光
+柔光（月夜） level=9 armor=40 attack=210 speed=200  hp=100  comments=夜晚的微光 spoils=铁锭x2 element=光
+幻光（月夜） level=9 armor=39 attack=220 speed=300  hp=100  comments=柔弱的光，让人陷入其中 spoils=肉x1，苹果x1 element=光
+光之巨人（月夜） level=9 armor=49 attack=220 speed=240  hp=100  comments=巨人族，被光芒缠身 spoils=空间碎片x1 element=光
+光耀（月夜） level=10 armor=28 attack=230 speed=200  hp=100  comments=闪耀的光芒，在夜晚让人目眩 spoils=金锭x5 element=光
+光蚀（月夜） level=10 armor=29 attack=210 speed=450  hp=100  comments=光集中于一点的力量 spoils=钻石x3 element=光
+光之天使（月夜） level=11 armor=160 attack=240 speed=400  hp=110  comments=天使？？这种生物的力量好强大 spoils=龙晶 element=光
+
+小光球（晨昏） level=8 armor=36 attack=190 speed=180  hp=80  comments=黄昏里的点点光芒 spoils=棉花x2 element=光
+光之精灵（晨昏） level=8 armor=35 attack=200 speed=180  hp=80  comments=光的精灵在黄昏中显得格外瞩目 spoils=金锭x1 element=光
+柔光（晨昏） level=9 armor=40 attack=210 speed=200  hp=100  comments=早晨的微光 spoils=魔法石x1，福袋x1 element=光
+幻光（晨昏） level=9 armor=39 attack=220 speed=300  hp=100  comments=柔弱的光，让人陷入其中 spoils=土豆块x1 element=光
+光之巨人（晨昏） level=9 armor=49 attack=220 speed=240  hp=100  comments=巨人族，被光芒缠身 spoils=一级进攻卷轴x1 element=光
+光耀（晨昏） level=10 armor=28 attack=230 speed=200  hp=100  comments=闪耀的光芒，在朝霞中让人目眩 spoils=蚕x1，福袋x2 element=光
+光蚀（晨昏） level=10 armor=29 attack=210 speed=450  hp=100  comments=光集中于一点的力量 spoils=蚕丝x1，福袋x2 element=光
+光之天使（晨昏） level=11 armor=160 attack=240 speed=400  hp=110  comments=天使？？这种生物的力量好强大 spoils=龙血 element=光
+
+小光球（午阳） level=8 armor=36 attack=190 speed=180  hp=80  comments=正午里的点点光芒 spoils=金锭x1 element=光
+光之精灵（午阳） level=8 armor=35 attack=200 speed=180  hp=80  comments=光的精灵在太阳显得格外强大 spoils=铁锭x2，福袋x1 element=光
+柔光（午阳） level=9 armor=40 attack=210 speed=200  hp=100  comments=太阳下的柔光，容易让人忽略 spoils=蚕丝x1 element=光
+幻光（午阳） level=9 armor=39 attack=220 speed=300  hp=100  comments=柔弱的光，让人陷入其中 spoils=秘银x1，福袋x2 element=光
+光之巨人（午阳） level=9 armor=49 attack=220 speed=240  hp=100  comments=巨人族，被光芒缠身 spoils=三级进攻卷轴x1 element=光
+光耀（午阳） level=10 armor=28 attack=230 speed=200  hp=100  comments=闪耀的光芒，在太阳的加成下让人目眩 spoils=龙晶x1，福袋x3 element=光
+光蚀（午阳） level=10 armor=29 attack=210 speed=450  hp=100  comments=光集中于一点的力量 spoils=龙血x1，福袋x3 element=光
+光之天使（午阳） level=11 armor=160 attack=240 speed=400  hp=110  comments=天使？？这种生物的力量好强大 spoils=龙鳞 element=光
+
+小暗点（晚霞） level=8 armor=26 attack=210 speed=160  hp=70  comments=晚霞中的一丝黑暗 spoils=棉花x1，灵木x1 element=暗
+暗之精灵（晚霞） level=8 armor=25 attack=220 speed=160  hp=70  comments=晚霞下的夜精灵 spoils=灵石x1 element=暗
+夜纱（晚霞） level=9 armor=30 attack=230 speed=170  hp=80  comments=夜晚像一袭轻纱，准备笼罩大地 spoils=铁锭x2 element=暗
+夜幕（晚霞） level=9 armor=29 attack=240 speed=220  hp=80  comments=夜幕马上就要降临啦 spoils=肉x1，苹果x1 element=暗
+暗之巨人（晚霞） level=9 armor=39 attack=240 speed=200  hp=80  comments=巨人族，沉浸于黑暗中 spoils=空间碎片x1 element=暗
+暗爪（晚霞） level=10 armor=18 attack=260 speed=170  hp=80  comments=晚霞的微光中，依稀能看到一个怪物 spoils=金锭x5 element=暗
+幽眼（晚霞） level=10 armor=19 attack=260 speed=300  hp=60  comments=似乎有什么在看着我们 spoils=钻石x3 element=暗
+暗之天使（晚霞） level=11 armor=160 attack=400 speed=300  hp=90  comments=天使？？这种是生物我们无法战胜 spoils=龙晶 element=暗
+黑洞 level=12 armor=350 attack=900 speed=180  hp=300  comments=看到这个的时候，我们应该是已经死了 spoils=无x1 element=暗
+
+小暗点（烛光） level=8 armor=26 attack=210 speed=160  hp=70  comments=烛光中的一丝黑暗 spoils=棉花x2 element=暗
+暗之精灵（烛光） level=8 armor=25 attack=220 speed=160  hp=70  comments=烛光中的夜精灵 spoils=金锭x1 element=暗
+夜纱（烛光） level=9 armor=30 attack=230 speed=170  hp=80  comments=夜晚像一袭轻纱，已经笼罩大地 spoils=魔法石x1 element=暗
+夜幕（烛光） level=9 armor=29 attack=240 speed=220  hp=80  comments=夜幕已经降临啦 spoils=土豆块x1，福袋x1 element=暗
+暗之巨人（烛光） level=9 armor=39 attack=240 speed=200  hp=80  comments=巨人族，沉浸于黑暗中 spoils=一级进攻卷轴x1 element=暗
+暗爪（烛光） level=10 armor=18 attack=260 speed=170  hp=80  comments=烛光中，依稀能看到一个怪物 spoils=蚕x1，福袋x2 element=暗
+幽眼（烛光） level=10 armor=19 attack=260 speed=300  hp=60  comments=似乎有什么在看着我们 spoils=蚕丝x1，福袋x2 element=暗
+暗之天使（烛光） level=11 armor=160 attack=400 speed=300  hp=90  comments=天使？？这种是生物我们无法战胜 spoils=龙血 element=暗
+
+小暗点（深夜） level=8 armor=26 attack=210 speed=160  hp=70  comments=我们无法看到任何东西 spoils=金锭x1，福袋x1 element=暗
+暗之精灵（深夜） level=8 armor=25 attack=220 speed=160  hp=70  comments=深夜的夜精灵 spoils=铁锭x2 element=暗
+夜纱（深夜） level=9 armor=30 attack=230 speed=170  hp=80  comments=夜晚像一袭轻纱，正在吞噬大地 spoils=蚕丝x1，福袋x1 element=暗
+夜幕（深夜） level=9 armor=29 attack=240 speed=220  hp=80  comments=夜幕降临 spoils=秘银x1，福袋x1 element=暗
+暗之巨人（深夜） level=9 armor=39 attack=240 speed=200  hp=80  comments=巨人族，沉浸于黑暗中 spoils=三级进攻卷轴x1 element=暗
+暗爪（深夜） level=10 armor=18 attack=260 speed=170  hp=80  comments=什么怪物在袭击我们？ spoils=龙晶x1，福袋x3 element=暗
+幽眼（深夜） level=10 armor=19 attack=260 speed=300  hp=60  comments=似乎有什么在看着我们 spoils=龙血x1，福袋x3 element=暗
+暗之天使（深夜） level=11 armor=160 attack=400 speed=300  hp=90  comments=天使？？这种是生物我们无法战胜 spoils=龙鳞 element=暗
+
+
+小石头 level=8 armor=26 attack=210 speed=160  hp=70  comments=一个石头怪物 spoils=石头x20，沙子x5
+磐岩 level=8 armor=30 attack=190 speed=160  hp=80  comments=一个超大的石头怪物 spoils=石头x30
+岩鼠 level=9 armor=29 attack=240 speed=220  hp=80  comments=岩石变得老鼠？ spoils=石头x50
+石刺 level=10 armor=19 attack=260 speed=300  hp=60  comments=岩石活了？ spoils=铁锭x8，石头x10
+岩石商人 level=10 armor=22 attack=280 speed=310  hp=60  comments=他们可不好抓 spoils=金锭x10
+大地之灵 level=11 armor=160 attack=400 speed=300  hp=90  comments=不可战胜之物 spoils=石头x400，金锭x40，铁锭x40
+
+铁精 level=8 armor=36 attack=190 speed=180  hp=80  comments=铁成精了！ spoils=铁锭x5，沙子x2
+地精（晚霞） level=9 armor=39 attack=240 speed=200  hp=80  comments=小小的侏儒 spoils=铁锭x8，空间兽x1
+地精（烛光） level=9 armor=39 attack=240 speed=200  hp=80  comments=小小的侏儒 spoils=蚕丝x8，土豆x5
+地精（深夜） level=9 armor=39 attack=240 speed=200  hp=80  comments=小小的侏儒 spoils=金锭x8，胡萝卜x5
+吞石兽 level=10 armor=28 attack=230 speed=200  hp=100  comments=一种生活在地底的生物 spoils=精神药水x12，石头x30
+贪婪矿工 level=11 armor=160 attack=240 speed=400  hp=110  comments=天使？？这种生物的力量好强大 spoils=木板x400，铁锭x80
