@@ -1,12 +1,11 @@
 package top.beforedawn.util;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import top.beforedawn.models.bo.*;
 
 public class HttpUtil {
-    private static final String serviceIp = "localhost";
-    private static final int servicePort = 8080;
+    private static final String serviceIp = "175.178.4.128";
+    private static final int servicePort = 9001;
 
     private static String serverAddress() {
         StringBuilder builder = new StringBuilder();
@@ -29,7 +28,7 @@ public class HttpUtil {
         HttpResponse response = HttpRequest.sendGet(serverAddress() + "/user/user/" + singleEvent.getSenderId(), "botId=" + singleEvent.getBotId());
         MyUser user = new MyUser();
         user.setId(singleEvent.getSenderId());
-        if (response.getCode()!= 0) {
+        if (response.getCode() != 0) {
             singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
             user.setLuck(50);
             return user;
@@ -52,7 +51,7 @@ public class HttpUtil {
         HttpResponse response = HttpRequest.sendGet(serverAddress() + "/user/luck/" + singleEvent.getSenderId(), "botId=" + singleEvent.getBotId());
         MyUser user = new MyUser();
         user.setId(singleEvent.getSenderId());
-        if (response.getCode()!= 0) {
+        if (response.getCode() != 0) {
             singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
             user.setLuck(50);
             return user;
@@ -64,7 +63,7 @@ public class HttpUtil {
     public static BotRemoteInformation getBot(SingleEvent singleEvent) {
         HttpResponse response = HttpRequest.sendGet(serverAddress() + "/bot/bot/" + singleEvent.getBotId(), "");
         BotRemoteInformation bot = new BotRemoteInformation();
-        if (response.getCode()!= 0) {
+        if (response.getCode() != 0) {
             singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
             return null;
         }
@@ -103,19 +102,23 @@ public class HttpUtil {
     }
 
     public static Blacklist getBlacklist(SingleEvent singleEvent) {
-        HttpResponse response = HttpRequest.sendGet(serverAddress() + "/blacklist/blacklists" , "botId=" + singleEvent.getBotId());
+        HttpResponse response = HttpRequest.sendGet(serverAddress() + "/blacklist/blacklists", "botId=" + singleEvent.getBotId());
         Blacklist blacklist = new Blacklist();
-        if (response.getCode()!= 0) {
+        if (response.getCode() != 0) {
             singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
             return null;
         }
-        for (Object user : response.getData().getJSONArray("user")) {
-            SimpleBlacklist simpleBlacklist = analysisBlacklist((JSONObject) user);
-            blacklist.appendGlobalUser(simpleBlacklist);
+        if (response.getData().getJSONArray("user") != null) {
+            for (Object user : response.getData().getJSONArray("user")) {
+                SimpleBlacklist simpleBlacklist = analysisBlacklist((JSONObject) user);
+                blacklist.appendGlobalUser(simpleBlacklist);
+            }
         }
-        for (Object group : response.getData().getJSONArray("group")) {
-            SimpleBlacklist simpleBlacklist = analysisBlacklist((JSONObject) group);
-            blacklist.appendGlobalGroup(simpleBlacklist);
+        if (response.getData().getJSONArray("group") != null) {
+            for (Object group : response.getData().getJSONArray("group")) {
+                SimpleBlacklist simpleBlacklist = analysisBlacklist((JSONObject) group);
+                blacklist.appendGlobalGroup(simpleBlacklist);
+            }
         }
         return blacklist;
     }
@@ -165,5 +168,20 @@ public class HttpUtil {
         driftingBottle.setText(response.getData().getString("text"));
         driftingBottle.setCreate(CommonUtil.getLocalDateTime(response.getData().getString("create")));
         return driftingBottle;
+    }
+
+    public static String getTalk(SingleEvent singleEvent, byte type) {
+        HttpResponse response = HttpRequest.sendGet(serverAddress() + "/abstract/abstract", "botId=" + singleEvent.getBotId() + "&type=" + type);
+        if (response.getCode() == 404) return "暂无";
+        else if (response.getCode() != 0) {
+            singleEvent.send("服务器出现错误，无法连接远程服务器\n代码：" + response.getCode());
+            return null;
+        }
+        return response.getData().getString("text");
+    }
+
+    public static String getQingYunKe(String message) {
+        HttpResponse response = HttpRequest.sendGet("http://api.qingyunke.com/api.php", "key=free&appid=0&msg=" + message);
+        return response.getData().getString("content");
     }
 }

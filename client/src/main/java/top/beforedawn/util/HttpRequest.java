@@ -1,11 +1,21 @@
 package top.beforedawn.util;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 public class HttpRequest {
+    public static String codeChange(String origin) {
+        String sys = System.getProperty("os.name").toLowerCase(Locale.US);
+        if (sys.startsWith("windows server")) {
+            //utf-8转gbk
+            return new String(origin.getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        }
+        return origin;
+    }
+
     /**
      * 向指定URL发送GET方法的请求
      *
@@ -49,7 +59,8 @@ public class HttpRequest {
                 e2.printStackTrace();
             }
         }
-        return new HttpResponse(result.toString());
+        String resuleString = codeChange(result.toString());
+        return new HttpResponse(resuleString);
     }
 
     /**
@@ -60,7 +71,7 @@ public class HttpRequest {
      * @return 所代表远程资源的响应结果
      */
     public static HttpResponse sendPost(String url, String param) {
-        PrintWriter out = null;
+        OutputStreamWriter out = null;
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
         try {
@@ -72,14 +83,14 @@ public class HttpRequest {
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
             // 发送POST请求必须设置如下两行
             conn.setDoOutput(true);
             conn.setDoInput(true);
             // 获取URLConnection对象对应的输出流
-            out = new PrintWriter(conn.getOutputStream());
+            out = new OutputStreamWriter(conn.getOutputStream(), StandardCharsets.UTF_8);
             // 发送请求参数
-            out.print(param);
+            out.write(param);
             // flush输出流的缓冲
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
@@ -106,16 +117,17 @@ public class HttpRequest {
                 ex.printStackTrace();
             }
         }
-        return new HttpResponse(result.toString());
+        String resuleString = codeChange(result.toString());
+        return new HttpResponse(resuleString);
     }
 
     /**
      * 下载图片
      *
      * @param urlList URL
-     * @param path 存储图片的路径
+     * @param path    存储图片的路径
      */
-    public static boolean downloadPicture(String urlList,String path) {
+    public static boolean downloadPicture(String urlList, String path) {
         try {
             URL url = new URL(urlList);
             DataInputStream dataInputStream = new DataInputStream(url.openStream());

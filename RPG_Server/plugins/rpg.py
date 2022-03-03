@@ -8324,9 +8324,13 @@ class RPG:
             ]
 
             if message == '签到':
-                result = self.core.sign(qq)
-                reply_text = result.show()
-                need_reply = True
+                print(message)
+                try:
+                    result = self.core.sign(qq)
+                    reply_text = result.show()
+                    need_reply = True
+                except Exception as e:
+                    print(e)
             elif '击剑' in message:
                 if be_at:
                     reply_text = bot_name + random.choice(replylist)

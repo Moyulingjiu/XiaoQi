@@ -32,6 +32,10 @@ public class MyGroup {
     private boolean unlockFlashImage = false; // 解除闪照
     private boolean recallGuard = false; // 防撤回
     private boolean memberWatcher = false; // 开启成员监控
+    private boolean allowCopyAutoReply = false; // 允许复制自定义回复
+    private boolean selfReply = true; // 智能回复
+    private boolean talk = true; // 文摘、情话、笑话、恐怖故事
+    private boolean swear = false; // 脏话
     private boolean autoReply = true; // 自定义回复（开关）
     private ArrayList<BaseAutoReply> autoReplies = new ArrayList<>(); // 自定义回复
     private boolean repeat = false; // 自动加一
@@ -45,6 +49,8 @@ public class MyGroup {
 
     private boolean welcome = false; // 入群欢迎
     private ArrayList<SerializeMessage> welcomeMessage = new ArrayList<>(); // 欢迎词
+
+    private Map<String, String> tunnel = new HashMap<>(); // 指令隧穿
 
     public void add(BaseAutoReply autoReply) {
         autoReplies.add(autoReply);

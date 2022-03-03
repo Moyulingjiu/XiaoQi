@@ -6,7 +6,6 @@ import top.beforedawn.config.*;
 import top.beforedawn.models.bo.*;
 import top.beforedawn.models.context.Context;
 import top.beforedawn.models.context.WelcomeContext;
-import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 public class BotFunction extends BasePlugin {
     private static final int REQUEST_PAGE_SIZE = 20;
     private static final int MUTE_WORDS_PAGE_SIZE = 20;
+    private static final int MAX_TUNNEL = 30;
 
     public BotFunction() {
         pluginName = "bot_function";
@@ -381,16 +381,21 @@ public class BotFunction extends BasePlugin {
                     "是否开启防撤回：" + getSwitcher(group.isRecallGuard()) + "\n" +
                     "是否开启成员监控：" + getSwitcher(group.isMemberWatcher()) + "\n" +
                     "是否开启自定义回复：" + getSwitcher(group.isAutoReply()) + "\n" +
+                    "是否开启群回复共享：" + getSwitcher(group.isAllowCopyAutoReply()) + "\n" +
                     "是否开启自动加一：" + getSwitcher(group.isRepeat()) + "\n" +
                     "是否开启部落冲突查询：" + getSwitcher(group.isCoc()) + "\n" +
                     "是否开启漂流瓶：" + getSwitcher(group.isDriftingBottle()) + "\n" +
                     "是否开启RPG游戏：" + getSwitcher(group.isRpg()) + "\n" +
                     "是否开启RPG游戏限制模式：" + getSwitcher(group.isRpgLimit()) + "\n" +
+                    "是否开启智能回复：" + getSwitcher(group.isSelfReply()) + "\n" +
+                    "是否开启文摘：" + getSwitcher(group.isTalk()) + "\n" +
+                    "是否开启脏话：" + getSwitcher(group.isSwear()) + "\n" +
                     "是否开启入群欢迎：" + getSwitcher(group.isWelcome()) + "\n" +
                     "是否开启自动入群审核：" + getSwitcher(group.isGroupEntry());
             singleEvent.send(message);
         }
         // 单独控制每个开关
+        // 限制模式
         else if (singleEvent.getMessage().plainEqual("开启限制模式")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isLimit(), true, "已经在限制模式了")) {
                 group.setLimit(true);
@@ -401,7 +406,9 @@ public class BotFunction extends BasePlugin {
                 group.setLimit(false);
                 GroupPool.save(singleEvent);
             }
-        } else if (singleEvent.getMessage().plainEqual("开启成员监控")) {
+        }
+        // 成员监控
+        else if (singleEvent.getMessage().plainEqual("开启成员监控")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isMemberWatcher(), true, "已经开了成员监控了")) {
                 group.setMemberWatcher(true);
                 GroupPool.save(singleEvent);
@@ -501,6 +508,46 @@ public class BotFunction extends BasePlugin {
                 group.setRpgLimit(false);
                 GroupPool.save(singleEvent);
             }
+        } else if (singleEvent.getMessage().plainEqual("开启智能回复")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isSelfReply(), true, "已经开启了智能回复")) {
+                group.setSelfReply(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭智能回复")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isSelfReply(), false, "本来就没有开启智能回复")) {
+                group.setSelfReply(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启文摘")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isTalk(), true, "已经开启了文摘")) {
+                group.setTalk(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭文摘")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isTalk(), false, "本来就没有开启文摘")) {
+                group.setTalk(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启脏话")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isSwear(), true, "已经开启了脏话")) {
+                group.setSwear(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭脏话")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isSwear(), false, "本来就没有开启脏话")) {
+                group.setSwear(false);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("开启群回复共享")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isAllowCopyAutoReply(), true, "已经开启了群回复共享")) {
+                group.setAllowCopyAutoReply(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭群回复共享")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isAllowCopyAutoReply(), false, "本来就没有开启群回复共享")) {
+                group.setAllowCopyAutoReply(false);
+                GroupPool.save(singleEvent);
+            }
         }
         // 屏蔽词
         else if (singleEvent.getMessage().plainStartWith("添加屏蔽词")) {
@@ -561,7 +608,7 @@ public class BotFunction extends BasePlugin {
             singleEvent.send(builder.toString());
         }
         // 入群欢迎
-        if (singleEvent.getMessage().plainEqual("开启入群欢迎")) {
+        else if (singleEvent.getMessage().plainEqual("开启入群欢迎")) {
             if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权操作");
                 return;
@@ -583,6 +630,60 @@ public class BotFunction extends BasePlugin {
             } else {
                 singleEvent.send("本群本来就没有开启入群欢迎哦~");
             }
+        }
+        // 指令隧穿
+        else if (singleEvent.getMessage().plainStartWith("添加指令隧穿")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("添加指令隧穿");
+            ArrayList<String> split = analysis.split();
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权操作");
+                return;
+            }
+            if (split.size() != 2) {
+                singleEvent.send("格式错误！");
+                return;
+            }
+            String origin = split.get(0);
+            String target = split.get(1);
+            if (group.getTunnel().containsKey(origin)) {
+                singleEvent.send("已经存在指令隧穿：" + origin + " - " + group.getTunnel().get(origin));
+                return;
+            }
+            if (group.getTunnel().keySet().size() > MAX_TUNNEL) {
+                singleEvent.send("指令隧穿已达到上限：" + MAX_TUNNEL);
+                return;
+            }
+            group.getTunnel().put(origin, target);
+            GroupPool.save(singleEvent);
+            singleEvent.send("添加成功~");
+        } else if (singleEvent.getMessage().plainStartWith("删除指令隧穿")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("删除指令隧穿");
+            String origin = analysis.getText();
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权操作");
+                return;
+            }
+            if (!group.getTunnel().containsKey(origin)) {
+                singleEvent.send("不存在词组配对：" + origin);
+                return;
+            }
+            singleEvent.send("成功删除指令隧穿：" + origin + " - " + group.getTunnel().get(origin));
+            group.getTunnel().remove(origin);
+            GroupPool.save(singleEvent);
+        } else if (singleEvent.getMessage().plainEqual("查看指令隧穿")) {
+            if (group.getTunnel().keySet().size() == 0) {
+                singleEvent.send("暂无指令隧穿");
+                return;
+            }
+            StringBuilder builder = new StringBuilder();
+            int index = 0;
+            for (String key : group.getTunnel().keySet()) {
+                if (index++ != 0) builder.append("\n");
+                builder.append(index).append(".").append(key).append(" - ").append(group.getTunnel().get(key));
+            }
+            singleEvent.send(builder.toString());
         }
     }
 

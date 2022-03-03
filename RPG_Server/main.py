@@ -29,7 +29,12 @@ async def root():
 
 @app.post("/rpg")
 async def rpg(message: Message):
+    if message.text == '签到':
+        print('收到签到请求')
     need_reply, reply_text, reply_image = my_rpg.handle(message.text, message.qq, message.member_name, message.bot_name,
                                                         message.be_at, message.limit)
+    print(need_reply)
+    print(reply_text)
     reply: Reply = Reply(need_reply=need_reply, reply_text=reply_text)
+    print(reply)
     return {"code": 0, "message": "成功", "data": reply}

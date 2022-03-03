@@ -26,11 +26,11 @@ public class HttpResponse {
 
     public HttpResponse(String json) {
         JSONObject jsonObject = JSONObject.parseObject(json);
-        code = jsonObject.getInteger("code");
-        message = jsonObject.getString("message");
         try {
+            code = jsonObject.getInteger("code");
+            message = jsonObject.getString("message");
             data = jsonObject.getJSONObject("data");
-        } catch (JSONException exception) {
+        } catch (JSONException | NullPointerException exception) {
             // 如果不是一个类的话，那就是一个元数据
             data = jsonObject;
         }

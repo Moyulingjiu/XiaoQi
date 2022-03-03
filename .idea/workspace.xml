@@ -5,20 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="585de44f-71c5-4a94-8395-c2fc155ea74f" name="变更" comment="初始化项目">
-      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/MessagePool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/CopyGroupConfirmContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/HelpFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/SelfReplyFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/TalkFunction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/controller/AbstractController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/dao/AbstractDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/Abstract.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/bo/AbstractType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/AbstractVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/model/vo/ret/AbstractRetVo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/top/beforedawn/service/service/AbstractService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/BotConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/GroupPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/MessageStatistics.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/config/MessageStatistics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyGroup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/ComplexReplyContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/ComplexReplyContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/WelcomeContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/context/WelcomeContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/bo/MyMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/BaseAutoReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/ComplexReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyMatchReply.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyReply.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/models/reply/KeyReply.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/AutoReplyFunction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/BotFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RpgFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/RpgFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/CocFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/plugins/CocFunction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/CommonUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/MyBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/HttpUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/main/java/top/beforedawn/util/SingleEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +261,11 @@
       <workItem from="1646092991233" duration="12542000" />
       <workItem from="1646115774121" duration="12684000" />
       <workItem from="1646133066420" duration="1214000" />
-      <workItem from="1646134359884" duration="3003000" />
+      <workItem from="1646134359884" duration="4790000" />
+      <workItem from="1646179461473" duration="525000" />
+      <workItem from="1646180049257" duration="5678000" />
+      <workItem from="1646191228211" duration="10012000" />
+      <workItem from="1646211257427" duration="4332000" />
     </task>
     <task id="LOCAL-00001" summary="初始化项目">
       <created>1642844007716</created>

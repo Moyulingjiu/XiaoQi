@@ -14,7 +14,7 @@ class Luck:
         if self.cache.__contains__(qq):
             if (datetime.now() - self.cache[qq]['time']).seconds < 600:
                 return self.cache[qq]['data']
-        url: str = "http://localhost:8080/user/luck/" + str(qq) + "?botId=1812322920"
+        url: str = "http://175.178.4.128:9001/user/luck/" + str(qq) + "?botId=1812322920"
         res = requests.get(url)
         if res.status_code != 200:
             return 50

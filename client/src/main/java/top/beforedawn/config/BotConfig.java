@@ -1,5 +1,7 @@
 package top.beforedawn.config;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 import top.beforedawn.models.bo.*;
@@ -26,7 +28,7 @@ public class BotConfig {
     /**
      * 版本信息
      */
-    public static final String VERSION = "1.0.0-alpha";
+    public static final String VERSION = "1.0.0-beta";
 
     private final String configFilename = "config.json";
     private final String statisticsFilename = "statistics.json";
@@ -176,9 +178,13 @@ public class BotConfig {
 
         // 读取主人和管理员
         officialGroup = jsonObject.getLong("officialGroup");
-        master = jsonObject.getLong("master");
-        for (Object admin : jsonObject.getJSONArray("admin")) {
-            administrator.add((Long) admin);
+        JSONArray jsonAdmin = jsonObject.getJSONArray("admin");
+        for (int i = 0; i < jsonAdmin.size(); i++) {
+            try {
+                administrator.add(jsonAdmin.getLong(i));
+            }  catch (JSONException ignored) {
+
+            }
         }
 
 

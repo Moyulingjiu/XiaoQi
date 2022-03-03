@@ -128,7 +128,6 @@ public class SingleEvent {
         combineBot = MyBot.getSimpleCombineBot(botId, this);
         message = new MyMessage();
         message.setBeNudge(true);
-        message.setBeAt(true);
         senderId = event.getFrom().getId();
         if (nudgeEvent.getSubject() instanceof Group) {
             groupId = nudgeEvent.getSubject().getId();
@@ -282,9 +281,8 @@ public class SingleEvent {
      * @param chain 消息链
      */
     public void sendMaster(MessageChain chain) {
-        if (combineBot == null) {
-            return;
-        }
+        if (chain.isEmpty()) return;
+        if (combineBot == null) return;
         Friend friend = combineBot.getBot().getFriend(getConfig().getMaster());
         if (friend != null) {
             record();
@@ -298,9 +296,8 @@ public class SingleEvent {
      * @param plain 文本
      */
     public void sendMaster(String plain) {
-        if (combineBot == null) {
-            return;
-        }
+        if (plain == null || plain.equals("")) return;
+        if (combineBot == null) return;
         Friend friend = combineBot.getBot().getFriend(getConfig().getMaster());
         if (friend != null) {
             record();
@@ -314,6 +311,7 @@ public class SingleEvent {
      * @param chain 消息链
      */
     public void send(MessageChain chain) {
+        if (chain.isEmpty()) return;
         if (isGroupMessage()) {
             record();
             groupMessageEvent.getSubject().sendMessage(chain);
@@ -335,6 +333,7 @@ public class SingleEvent {
      * @param plain 文本信息
      */
     public void send(String plain) {
+        if (plain == null || plain.equals("")) return;
         MessageChainBuilder chainBuilder = new MessageChainBuilder();
         chainBuilder.append(new PlainText(plain));
         send(chainBuilder.asMessageChain());

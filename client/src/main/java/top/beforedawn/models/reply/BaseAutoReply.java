@@ -18,4 +18,11 @@ public abstract class BaseAutoReply {
      * @return 消息链
      */
     public abstract MessageChain reply(SingleEvent singleEvent);
+
+    /**
+     * 是否有效
+     *
+     * @return 有效性
+     */
+    public abstract boolean valid();
 }

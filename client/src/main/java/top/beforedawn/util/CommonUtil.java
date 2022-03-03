@@ -1,12 +1,10 @@
 package top.beforedawn.util;
 
-import net.mamoe.mirai.IMirai;
 import net.mamoe.mirai.message.data.*;
 import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.context.SerializeMessage;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -334,13 +332,15 @@ public class CommonUtil {
      * @return 是否删除成功
      */
     public static boolean removeImageFile(ArrayList<SerializeMessage> serializeMessages) {
-        boolean ans = true;
-        for (SerializeMessage serializeMessage : serializeMessages) {
-            if (serializeMessage.getType() == SerializeMessage.MessageType.IMAGE) {
-                ans = ans && deleteFile(serializeMessage.getContext());
-            }
-        }
-        return ans;
+        return true;
+        // todo: 对于复制回复之后，图片的占用可能不止是一个回复在占用，所以需要重新评估如何实现图片资源的回收
+//        boolean ans = true;
+//        for (SerializeMessage serializeMessage : serializeMessages) {
+//            if (serializeMessage.getType() == SerializeMessage.MessageType.IMAGE) {
+//                ans = ans && deleteFile(serializeMessage.getContext());
+//            }
+//        }
+//        return ans;
     }
 
     /**
@@ -364,5 +364,27 @@ public class CommonUtil {
         if (path == null) return false;
         File file = new File(path);
         return file.exists();
+    }
+
+    /**
+     * 确认信息
+     *
+     * @return 确认信息
+     */
+    public static String confirmMessage() {
+        return "请输入“确认”来确认当前操作。";
+    }
+
+    /**
+     * 是否是确定消息
+     *
+     * @param message 消息
+     * @return boolean
+     */
+    public static boolean isConfirmMessage(String message) {
+        if (message.equals("确认")) return true;
+        if (message.equals("是")) return true;
+        if (message.equals("我确定")) return true;
+        return false;
     }
 }

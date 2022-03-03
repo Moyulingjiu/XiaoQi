@@ -42,6 +42,34 @@ public class CocFunction extends BasePlugin {
         }
         switch (message) {
             /*
+                其他图片
+             */
+            case "coc商人":
+            case "coc商人刷新表":
+            case "coc商店":
+                sendCocImage(singleEvent, "other/商人数据.jpg");
+                break;
+            case "coc联赛":
+            case "coc联赛奖励":
+                sendCocImage(singleEvent, "other/联赛数据.jpg");
+                break;
+            case "coc部落战奖励":
+                sendCocImage(singleEvent, "other/部落战奖励.png");
+                break;
+            case "coc闪电机制":
+                sendCocImage(singleEvent, "other/闪电机制.jpg");
+                break;
+            case "coc闪震计算表":
+                sendCocImage(singleEvent, "other/闪震计算表.png");
+                break;
+            case "coc夜世界奖励":
+                sendCocImage(singleEvent, "other/夜世界奖励.png");
+                break;
+            case "coc援军等级限制":
+                sendCocImage(singleEvent, "other/援军等级限制.png");
+                break;
+
+            /*
                 主世界兵种
              */
             case "coc野蛮人":

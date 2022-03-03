@@ -6,7 +6,7 @@ import top.beforedawn.models.bo.MessageLinearAnalysis;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.context.ComplexReplyContext;
 import top.beforedawn.models.context.Context;
-import top.beforedawn.models.context.SerializeMessage;
+import top.beforedawn.models.context.CopyGroupConfirmContext;
 import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.models.reply.KeyMatchReply;
@@ -135,6 +135,35 @@ public class AutoReplyFunction extends BasePlugin {
             context.next();
             return true;
         }
+        else if (context instanceof CopyGroupConfirmContext) {
+            if (!CommonUtil.isConfirmMessage(singleEvent.getMessage().getPlainString())) {
+                singleEvent.send("已取消复制");
+                ContextPool.remove(singleEvent.getSenderId());
+                return true;
+            }
+            // 获取两个群
+            MyGroup origin = GroupPool.get(singleEvent);
+            System.out.println(origin.getAutoReplies());
+            Long groupId = singleEvent.getGroupId();
+            singleEvent.setGroupId(((CopyGroupConfirmContext) context).getGroupId());
+            MyGroup target = GroupPool.get(singleEvent);
+            singleEvent.setGroupId(groupId);
+            System.out.println(target.getAutoReplies());
+
+            origin.setAutoReplies(target.getAutoReplies());
+            origin.setTunnel(target.getTunnel());
+            origin.setMuteWords(target.getMuteWords());
+            GroupPool.save(singleEvent);
+            // 这里必须移除，让下次重新加载。避免一边修改同步影响到另一边。
+            GroupPool.remove(singleEvent.getGroupId());
+
+            origin = GroupPool.get(singleEvent);
+            System.out.println(origin.getAutoReplies());
+
+            singleEvent.send("已复制目标群的自定义回复、指令隧穿、屏蔽词");
+            ContextPool.remove(singleEvent.getSenderId());
+            return true;
+        }
         return false;
     }
 
@@ -153,7 +182,29 @@ public class AutoReplyFunction extends BasePlugin {
         reply(singleEvent);
 
         MyGroup group = GroupPool.get(singleEvent);
-        if (singleEvent.getMessage().plainStartWith("添加回复")) {
+        if (singleEvent.getMessage().plainStartWith("复制回复")) {
+            if (ContextPool.contains(singleEvent.getSenderId())) {
+                return;
+            }
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("复制回复");
+            long groupId = CommonUtil.getLong(analysis.getText());
+            if (groupId <= 0L) return;
+            Long temp = singleEvent.getGroupId();
+            singleEvent.setGroupId(groupId);
+            MyGroup group1 = GroupPool.get(singleEvent);
+            singleEvent.setGroupId(temp);
+            if (!group1.isAllowCopyAutoReply()) {
+                singleEvent.send("目标群不允许复制回复");
+                return;
+            }
+            CopyGroupConfirmContext context = new CopyGroupConfirmContext();
+            context.setGroupId(groupId);
+            ContextPool.put(singleEvent.getSenderId(), context);
+            singleEvent.send(CommonUtil.confirmMessage());
+        }
+        // 添加回复
+        else if (singleEvent.getMessage().plainStartWith("添加回复")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("添加回复");
             ArrayList<String> split = analysis.split();
@@ -426,8 +477,7 @@ public class AutoReplyFunction extends BasePlugin {
             complexReplyContext.setCreateId(singleEvent.getSenderId());
             ContextPool.put(singleEvent.getSenderId(), complexReplyContext);
             singleEvent.send("请在" + singleEvent.getBotName() + "的指引下完成复杂回复的添加~请问你的触发该回复的触发词是什么呢？（只能包含文本消息，你可以随时输入“*取消创建*”来取消，星号不可以省略哦~）");
-        }
-        else if (singleEvent.getMessage().plainStartWith("删除复杂回复")) {
+        } else if (singleEvent.getMessage().plainStartWith("删除复杂回复")) {
             String message = singleEvent.getMessage().getPlainString().substring(6).strip();
             boolean isDelete = false;
             for (BaseAutoReply autoReply : group.getAutoReplies()) {
@@ -446,8 +496,7 @@ public class AutoReplyFunction extends BasePlugin {
             if (!isDelete) {
                 singleEvent.send("未找到匹配项");
             }
-        }
-        else if (singleEvent.getMessage().plainStartWith("查看复杂回复")) {
+        } else if (singleEvent.getMessage().plainStartWith("查看复杂回复")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("查看复杂回复");
             int page = CommonUtil.getInteger(analysis.getText());
@@ -466,8 +515,11 @@ public class AutoReplyFunction extends BasePlugin {
                 singleEvent.send("暂无复杂回复");
                 return;
             }
+            if (total % COMPLEX_REPLY_PAGE_SIZE != 0) total = total / COMPLEX_REPLY_PAGE_SIZE + 1;
+            else total = total / COMPLEX_REPLY_PAGE_SIZE;
             builder.append("--------").append("\n页码：").append(page + 1).append("/").append(total);
             singleEvent.send(builder.toString());
         }
+
     }
 }

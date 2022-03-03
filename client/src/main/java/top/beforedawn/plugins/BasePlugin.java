@@ -1,10 +1,6 @@
 package top.beforedawn.plugins;
 
-import net.mamoe.mirai.event.events.FriendMessageEvent;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.message.data.MessageChainBuilder;
-import top.beforedawn.models.bo.MyMessage;
-import top.beforedawn.util.SimpleCombineBot;
 import top.beforedawn.util.SingleEvent;
 
 /**

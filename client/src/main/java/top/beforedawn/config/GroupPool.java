@@ -1,6 +1,7 @@
 package top.beforedawn.config;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.context.SerializeMessage;
@@ -119,6 +120,15 @@ public class GroupPool {
         group.setGroupEntry(bool != null && bool);
         group.setGroupEntryRule(jsonObject.getObject("groupEntryRule", GroupEntryRule.class));
 
+
+        bool = jsonObject.getBoolean("allowCopyAutoReply");
+        group.setAllowCopyAutoReply(bool != null && bool);
+        bool = jsonObject.getBoolean("selfReply");
+        group.setSelfReply(bool != null && bool);
+        bool = jsonObject.getBoolean("talk");
+        group.setTalk(bool != null && bool);
+        bool = jsonObject.getBoolean("swear");
+        group.setSwear(bool != null && bool);
         bool = jsonObject.getBoolean("autoReply");
         group.setAutoReply(bool != null && bool);
         bool = jsonObject.getBoolean("repeat");
@@ -150,17 +160,38 @@ public class GroupPool {
         ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("autoReplies");
         for (int i = 0; i < jsonArray.size(); i++) {
-            if (jsonArray.getObject(i, BaseAutoReply.class) != null) {
-                autoReplies.add(jsonArray.getObject(i, BaseAutoReply.class));
-            } else if (jsonArray.getObject(i, ComplexReply.class) != null) {
-                autoReplies.add(jsonArray.getObject(i, ComplexReply.class));
-            } else if (jsonArray.getObject(i, KeyReply.class) != null) {
-                autoReplies.add(jsonArray.getObject(i, KeyReply.class));
-            } else if (jsonArray.getObject(i, KeyMatchReply.class) != null) {
-                autoReplies.add(jsonArray.getObject(i, KeyMatchReply.class));
+            try {
+                KeyReply reply = jsonArray.getObject(i, KeyReply.class);
+                if (reply != null && reply.valid()){
+                    autoReplies.add(reply);
+                    continue;
+                }
+            } catch (JSONException ignored) {
+
+            }
+            try {
+                KeyMatchReply matchReply = jsonArray.getObject(i, KeyMatchReply.class);
+                if (matchReply != null && matchReply.valid()) {
+                    autoReplies.add(matchReply);
+                    continue;
+                }
+            } catch (JSONException ignored) {
+
+            }
+            try {
+                ComplexReply complexReply = jsonArray.getObject(i, ComplexReply.class);
+                if (complexReply != null && complexReply.valid()) {
+                    autoReplies.add(complexReply);
+                }
+            } catch (JSONException ignored) {
+
             }
         }
         group.setAutoReplies(autoReplies);
+
+        Map tunnel = jsonObject.getObject("tunnel", Map.class);
+        if (tunnel != null)
+            group.setTunnel(tunnel);
 
         return group;
     }
@@ -192,6 +223,10 @@ public class GroupPool {
         jsonObject.put("groupEntry", group.isGroupEntry());
         jsonObject.put("groupEntryRule", group.getGroupEntryRule());
 
+        jsonObject.put("allowCopyAutoReply", group.isAllowCopyAutoReply());
+        jsonObject.put("selfReply", group.isSelfReply());
+        jsonObject.put("talk", group.isTalk());
+        jsonObject.put("swear", group.isSwear());
         jsonObject.put("autoReply", group.isAutoReply());
         jsonObject.put("autoReplies", group.getAutoReplies());
         jsonObject.put("repeat", group.isRepeat());
@@ -203,6 +238,8 @@ public class GroupPool {
 
         jsonObject.put("welcome", group.isWelcome());
         jsonObject.put("welcomeMessage", group.getWelcomeMessage());
+
+        jsonObject.put("tunnel", group.getTunnel());
 
         FileUtil.writeFile(filename, jsonObject.toJSONString());
     }

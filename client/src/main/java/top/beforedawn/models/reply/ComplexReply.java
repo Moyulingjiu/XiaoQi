@@ -61,4 +61,12 @@ public class ComplexReply extends BaseAutoReply {
         chainBuilder.addAll(CommonUtil.getMessageChain(singleEvent, reply));
         return chainBuilder.asMessageChain();
     }
+
+    @Override
+    public boolean valid() {
+        if (createId == null) return false;
+        if (key == null) return false;
+        if (reply == null) return false;
+        return type != null;
+    }
 }

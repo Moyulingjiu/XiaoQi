@@ -43,6 +43,7 @@ public class RpgFunction extends BasePlugin {
             }
 
             String url = "http://175.178.4.128:9000/rpg";
+//            String url = "http://127.0.0.1:8000/rpg";
             String json = "{\n" +
                     "    \"text\": \"" + (atMessage + message).strip() + "\",\n" +
                     "    \"qq\": " + singleEvent.getSenderId() + ",\n" +
@@ -52,6 +53,7 @@ public class RpgFunction extends BasePlugin {
                     "    \"limit\": " + limit + "\n" +
                     "}";
             HttpResponse response = HttpRequest.sendPost(url, json);
+            if (response.getCode() == 500) return;
             Boolean reply = response.getData().getBoolean("need_reply");
             if (reply != null && reply) {
                 String replyMessage = response.getData().getString("reply_text");

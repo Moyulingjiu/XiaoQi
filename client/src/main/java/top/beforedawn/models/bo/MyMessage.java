@@ -28,6 +28,17 @@ public class MyMessage {
     Set<Long> at = new HashSet<>();
     MessageChain origin;
 
+    public MyMessage(MyMessage other) {
+        this.beAt = other.beAt;
+        this.beNudge = other.beAt;
+        this.plain = new ArrayList<>(other.plain);
+        this.flashImages = new ArrayList<>(other.flashImages);
+        this.images = new ArrayList<>(other.images);
+        this.faces = new ArrayList<>(other.faces);
+        this.at = new HashSet<>(other.at);
+        this.origin = other.origin;
+    }
+
     public String getPlainString() {
         StringBuilder builder = new StringBuilder();
         for (String s : plain) {
@@ -36,23 +47,15 @@ public class MyMessage {
         return builder.toString().trim();
     }
 
+    public void setPlainString(String plain) {
+        this.plain = new ArrayList<>();
+        this.plain.add(plain);
+    }
+
     public boolean equals(MyMessage other) {
         if (images.size() != 0)
             return false;
         return origin.contentToString().equals(other.origin.contentToString());
-    }
-
-    /**
-     * 克隆消息
-     *
-     * @return 消息
-     */
-    public MyMessage clone() {
-        MyMessage message = new MyMessage();
-        message.setBeAt(beAt);
-        message.setAt(new HashSet<>(at));
-        message.setPlain(new ArrayList<>(plain));
-        return message;
     }
 
     /**

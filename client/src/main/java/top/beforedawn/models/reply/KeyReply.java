@@ -39,6 +39,13 @@ public class KeyReply extends BaseAutoReply {
         return messages.asMessageChain();
     }
 
+    @Override
+    public boolean valid() {
+        if (key == null) return false;
+        if (reply == null) return false;
+        return atId != null;
+    }
+
     public boolean removeReply(String reply) {
         for (int i = 0; i < this.reply.size(); i++) {
             if (this.reply.get(i).equals(reply)) {

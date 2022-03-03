@@ -1,14 +1,15 @@
 package top.beforedawn;
 
 import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.IMirai;
 import net.mamoe.mirai.contact.AnonymousMember;
+import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.MemberPermission;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.*;
 import net.mamoe.mirai.message.data.*;
 import top.beforedawn.config.*;
 import top.beforedawn.models.bo.MyGroup;
+import top.beforedawn.models.bo.MyMessage;
 import top.beforedawn.models.bo.SimpleBlacklist;
 import top.beforedawn.plugins.*;
 import top.beforedawn.util.*;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class Main {
     private static final ArrayList<BasePlugin> plugins = new ArrayList<>();
@@ -36,6 +38,8 @@ public class Main {
         plugins.add(new UnlockFlashFunction());
         plugins.add(new DriftingBottleFunction());
         plugins.add(new RpgFunction());
+        plugins.add(new TalkFunction());
+        plugins.add(new SelfReplyFunction());
     }
 
     /**
@@ -137,8 +141,9 @@ public class Main {
                     builder.append("（").append(event.getInvitorId()).append("）\n");
                 }
                 builder.append("申请信息：\n").append(event.getMessage());
-                if (event.getGroup() != null) {
-                    event.getGroup().sendMessage(builder.toString());
+                Group eventGroup = event.getGroup();
+                if (eventGroup != null) {
+                    eventGroup.sendMessage(builder.toString());
                 }
             }
         });
@@ -419,12 +424,8 @@ public class Main {
     }
 
     private static void checkAwaken(SingleEvent singleEvent) {
-        if (singleEvent.getMessage().getPlain().size() == 0 && singleEvent.getMessage().getAt().size() == 1) {
-            for (Long aLong : singleEvent.getMessage().getAt()) {
-                if (aLong.equals(singleEvent.getBotId())) {
-                    awaken(singleEvent);
-                }
-            }
+        if (singleEvent.getMessage().getPlainString().equals("") && singleEvent.getMessage().isBeAt()) {
+            awaken(singleEvent);
         } else if (singleEvent.getMessage().getAt().size() == 0 && singleEvent.getMessage().plainEqual(singleEvent.getBotName())) {
             awaken(singleEvent);
         }
@@ -537,11 +538,18 @@ public class Main {
     public static void main(String[] args) {
         // 统一配置路径
         // todo: 这两个参数应该由args获取而非写死
-        String workdir = "C:/mirai";
+//        String workdir = "C:/mirai";
+//        Long botId = 477768027L;
+        String workdir = "/home/project/xiaoqi/data";
         Long botId = 2034794240L;
 
+        System.out.println("当前系统环境");
+        System.out.println(System.getProperty("os.name").toLowerCase(Locale.US));
+        System.out.println(System.getProperty("os.arch").toLowerCase(Locale.US));
+        System.out.println(System.getProperty("os.version").toLowerCase(Locale.US));
+        System.out.println("======");
+
         Bot bot = MyBot.getBot(new BotConfig(workdir, botId));
-        System.out.println(bot.getNick() + "登陆成功");
         registerPlugins();
 
         GlobalEventChannel.INSTANCE.subscribeAlways(GroupMessageEvent.class, event -> {
@@ -574,13 +582,26 @@ public class Main {
                     break;
                 }
             }
+            // 指令隧穿（不支持连续隧穿）
+            for (String key : group.getTunnel().keySet()) {
+                String string = singleEvent.getMessage().getPlainString();
+                if (string.startsWith(key)) {
+                    MyMessage myMessage = new MyMessage(singleEvent.getMessage());
+                    myMessage.setPlainString((group.getTunnel().get(key) + string.substring(key.length())).trim());
+                    singleEvent.setMessage(myMessage);
+                    break;
+                }
+            }
             if (permission)
-                handle(new SingleEvent(event));
+                handle(singleEvent);
         });
 
         GlobalEventChannel.INSTANCE.subscribeAlways(FriendMessageEvent.class, event -> handle(new SingleEvent(event)));
 
-        GlobalEventChannel.INSTANCE.subscribeAlways(NudgeEvent.class, event -> handle(new SingleEvent(event)));
+        GlobalEventChannel.INSTANCE.subscribeAlways(NudgeEvent.class, event -> {
+            if (event.getTarget().getId() != event.getBot().getId()) return;
+            handle(new SingleEvent(event));
+        });
 
         botWatcher();
         memberWatcher();
