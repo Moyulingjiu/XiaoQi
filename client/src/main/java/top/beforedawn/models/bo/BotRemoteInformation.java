@@ -20,6 +20,7 @@ public class BotRemoteInformation {
     private String password;
     private String name;
     private Long masterQq;
+    private Long officialGroup;
     private Long keyId;
     private Boolean valid; // 是否还是一个有效的机器人
     private Integer allowFriend;

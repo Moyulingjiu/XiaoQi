@@ -21,10 +21,10 @@ public class NudgeFunction extends BasePlugin {
             return false;
         }
         if (singleEvent.getGroupId() == 0L) {
-            return singleEvent.getMessage().isBeNudge() && singleEvent.getMessage().isBeAt();
+            return singleEvent.getMessage().isBeNudge();
         } else {
             MyGroup group = GroupPool.get(singleEvent);
-            return singleEvent.getMessage().isBeNudge() && singleEvent.getMessage().isBeAt() && group.isNudge();
+            return singleEvent.getMessage().isBeNudge() && group.isNudge();
         }
     }
 

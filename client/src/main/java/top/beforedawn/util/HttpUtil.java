@@ -71,6 +71,7 @@ public class HttpUtil {
         bot.setQq(singleEvent.getBotId());
         bot.setPassword(response.getData().getString("password"));
         bot.setName(response.getData().getString("name"));
+        bot.setOfficialGroup(response.getData().getLong("officialGroup"));
         bot.setMasterQq(response.getData().getLong("masterQq"));
         bot.setKeyId(response.getData().getLong("keyId"));
         bot.setValid(response.getData().getBoolean("valid"));

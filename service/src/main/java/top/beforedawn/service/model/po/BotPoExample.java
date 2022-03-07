@@ -515,6 +515,66 @@ public class BotPoExample {
             return (Criteria) this;
         }
 
+        public Criteria andOfficialGroupIsNull() {
+            addCriterion("`official_group` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupIsNotNull() {
+            addCriterion("`official_group` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupEqualTo(Long value) {
+            addCriterion("`official_group` =", value, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupNotEqualTo(Long value) {
+            addCriterion("`official_group` <>", value, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupGreaterThan(Long value) {
+            addCriterion("`official_group` >", value, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupGreaterThanOrEqualTo(Long value) {
+            addCriterion("`official_group` >=", value, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupLessThan(Long value) {
+            addCriterion("`official_group` <", value, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupLessThanOrEqualTo(Long value) {
+            addCriterion("`official_group` <=", value, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupIn(List<Long> values) {
+            addCriterion("`official_group` in", values, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupNotIn(List<Long> values) {
+            addCriterion("`official_group` not in", values, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupBetween(Long value1, Long value2) {
+            addCriterion("`official_group` between", value1, value2, "officialGroup");
+            return (Criteria) this;
+        }
+
+        public Criteria andOfficialGroupNotBetween(Long value1, Long value2) {
+            addCriterion("`official_group` not between", value1, value2, "officialGroup");
+            return (Criteria) this;
+        }
+
         public Criteria andKeyIdIsNull() {
             addCriterion("`key_id` is null");
             return (Criteria) this;

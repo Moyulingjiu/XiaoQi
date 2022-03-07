@@ -15,10 +15,7 @@ import top.beforedawn.plugins.*;
 import top.beforedawn.util.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class Main {
     private static final ArrayList<BasePlugin> plugins = new ArrayList<>();
@@ -61,7 +58,7 @@ public class Main {
                 } else {
                     builder.append("管理员/群主");
                 }
-                builder.append("踢出成员").append(event.getMember().getNick()).append("（").append(event.getMember().getId()).append("）");
+                builder.append("踢出成员").append(event.getMember().getNameCard()).append("（").append(event.getMember().getId()).append("）");
                 event.getGroup().sendMessage(builder.toString());
             }
         });
@@ -71,7 +68,7 @@ public class Main {
             MyGroup group = GroupPool.get(new SingleEvent(event.getBot().getId(), event.getMember().getId(), event.getGroupId()));
             if (group.isMemberWatcher()) {
                 event.getGroup().sendMessage(String.format("我们此时此刻失去了一位成员%s（%d）",
-                        event.getMember().getNick(),
+                        event.getMember().getNameCard(),
                         event.getMember().getId())
                 );
             }
@@ -438,7 +435,7 @@ public class Main {
         // 全局开关
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("退群")) {
             if (singleEvent.aboveGroupAdmin()) {
-                if (singleEvent.getGroupId() != singleEvent.getConfig().getOfficialGroup()) {
+                if (!Objects.equals(singleEvent.getGroupId(), singleEvent.getConfig().getOfficialGroup())) {
                     singleEvent.send("再见啦~" + singleEvent.getBotName() + "会想你们的~");
                     singleEvent.quit();
                     if (singleEvent.getConfig().getBotSwitcher().isRemindQuit()) {
@@ -537,17 +534,23 @@ public class Main {
 
     public static void main(String[] args) {
         // 统一配置路径
-        // todo: 这两个参数应该由args获取而非写死
-//        String workdir = "C:/mirai";
-//        Long botId = 477768027L;
-        String workdir = "/home/project/xiaoqi/data";
-        Long botId = 2034794240L;
+        System.out.println(Arrays.toString(args));
+        if (args.length < 2) {
+            System.out.println("参数错误，启动失败");
+            return;
+        }
+        String workdir = args[0];
+        long botId = CommonUtil.getLong(args[1]);
 
         System.out.println("当前系统环境");
         System.out.println(System.getProperty("os.name").toLowerCase(Locale.US));
         System.out.println(System.getProperty("os.arch").toLowerCase(Locale.US));
         System.out.println(System.getProperty("os.version").toLowerCase(Locale.US));
         System.out.println("======");
+        if (workdir.length() == 0 || botId <= 0L) {
+            System.out.println("参数错误，无法启动bot");
+            return;
+        }
 
         Bot bot = MyBot.getBot(new BotConfig(workdir, botId));
         registerPlugins();
@@ -576,7 +579,10 @@ public class Main {
                         singleEvent.send("发现屏蔽词“" + muteWord + "”但对方是管理员/群主" + singleEvent.getBotName() + "无权撤回");
                     } else {
                         MessageSource.recall(event.getMessage());
-                        singleEvent.send("发现屏蔽词“" + muteWord + "”予以撤回");
+                        MessageChainBuilder builder = new MessageChainBuilder();
+                        builder.append(new At(singleEvent.getSenderId()));
+                        builder.append(new PlainText("发现屏蔽词“" + muteWord + "”予以撤回"));
+                        singleEvent.send(builder.asMessageChain());
                     }
                     permission = false;
                     break;

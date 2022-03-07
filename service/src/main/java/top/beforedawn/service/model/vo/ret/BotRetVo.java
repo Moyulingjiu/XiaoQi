@@ -15,6 +15,7 @@ public class BotRetVo {
     private Long qq;
     private String password;
     private String name;
+    private Long officialGroup; // 官方群
     private Long masterQq;
     private Long keyId;
     private Boolean valid; // 是否还是一个有效的机器人

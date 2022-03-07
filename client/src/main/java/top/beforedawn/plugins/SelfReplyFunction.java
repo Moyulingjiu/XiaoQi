@@ -58,7 +58,7 @@ public class SelfReplyFunction extends BasePlugin {
         if (singleEvent.getMessage().plainStartWith("天气"))
             singleEvent.send(getMessage(singleEvent, singleEvent.getMessage().getPlainString(), true));
         else if (singleEvent.getMessage().plainStartWith("计算"))
-            singleEvent.send(getMessage(singleEvent, singleEvent.getMessage().getPlainString(), true));
+            singleEvent.send(getMessage(singleEvent, singleEvent.getMessage().getPlainString().replace("+", "加"), true));
         else {
             if (CommonUtil.randomInteger(1000) < 10 || singleEvent.getMessage().isBeAt()) {
                 singleEvent.send(getMessage(singleEvent, singleEvent.getMessage().getPlainString(), false));

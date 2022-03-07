@@ -4,17 +4,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 复制群回复的确认
+ * 清空复杂回复的确认
  *
  * @author 墨羽翎玖
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class CopyGroupConfirmContext extends Context {
-    Long originGroup;
+public class ComplexReplyClearContext extends Context {
     Long groupId;
 
-    public CopyGroupConfirmContext() {
+    public ComplexReplyClearContext() {
         maxStep = 1;
     }
 }

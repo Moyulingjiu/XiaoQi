@@ -31,6 +31,17 @@ public class BotController {
         return Common.decorate(ReturnNo.OK, convention);
     }
 
+    @GetMapping("/device")
+    public Object getDevice(
+            @RequestParam() Long botId
+    ) {
+        if (botService.invalidBot(botId)) {
+            return Common.decorate(ReturnNo.FORBIDDEN);
+        }
+        String device = "123";
+        return Common.decorate(ReturnNo.OK, device);
+    }
+
     @GetMapping("/bot/{qq}")
     public Object getBotByQq(
             @PathVariable Long qq

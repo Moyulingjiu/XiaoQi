@@ -14,6 +14,11 @@ import top.beforedawn.util.SingleEvent;
 
 import java.util.ArrayList;
 
+/**
+ * 普通自定义回复
+ *
+ * @author 墨羽翎玖
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor

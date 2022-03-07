@@ -45,7 +45,7 @@ public class BotConfig {
     private Long id; // id
     private String name; // 机器人名字
     private long qq; // QQ号
-    private long officialGroup; // 官方群
+    private Long officialGroup; // 官方群
     private String password; // 密码
     private Long keyId;
     private String keyValue;
@@ -100,6 +100,7 @@ public class BotConfig {
         qq = botRemoteInformation.getQq();
         password = botRemoteInformation.getPassword();
         name = botRemoteInformation.getName();
+        officialGroup = botRemoteInformation.getOfficialGroup();
         master = botRemoteInformation.getMasterQq();
         keyId = botRemoteInformation.getKeyId();
         keyValue = botRemoteInformation.getKeyValue();
@@ -177,7 +178,6 @@ public class BotConfig {
         JSONObject jsonObject = JSONObject.parseObject(content);
 
         // 读取主人和管理员
-        officialGroup = jsonObject.getLong("officialGroup");
         JSONArray jsonAdmin = jsonObject.getJSONArray("admin");
         for (int i = 0; i < jsonAdmin.size(); i++) {
             try {
