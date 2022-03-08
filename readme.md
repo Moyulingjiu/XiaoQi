@@ -1,5 +1,11 @@
 # 小柒
 
+## 文档
+
+地址：http://beforedawn.top/
+
+
+
 ## 框架说明
 
 小柒最底层基于mirai实现。
