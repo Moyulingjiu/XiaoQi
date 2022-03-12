@@ -103,37 +103,49 @@ public class Blacklist {
         return globalGroups.get(id);
     }
 
-    private static String showBlacklist(Map<Long, SimpleBlacklist> map) {
+    private static String showBlacklist(Map<Long, SimpleBlacklist> map, int page, int pageSize) {
         StringBuilder builder = new StringBuilder();
         boolean init = false;
         if (map.size() == 0) {
             return "暂无";
         }
+
+        int total = map.keySet().size();
+        if (total % pageSize != 0) total = total / pageSize + 1;
+        else total = total / pageSize;
+        if (page >= total || page < 0) return "页码超限";
+
+        int index = 0;
         for (Long key : map.keySet()) {
+            if (index < page * pageSize) continue;
+            else if (index >= (page + 1) * pageSize) break;
+            index++;
             SimpleBlacklist simpleBlacklist = map.get(key);
             if (!init) {
                 init = true;
             } else {
                 builder.append("\n");
             }
+            builder.append(index).append("、");
             builder.append(simpleBlacklist.toString());
         }
+        builder.append("\n--------\n").append("页码：").append(page + 1).append("/").append(total);
         return builder.toString();
     }
 
-    public String showUser() {
-        return showBlacklist(users);
+    public String showUser(int page, int pageSize) {
+        return showBlacklist(users, page, pageSize);
     }
 
-    public String showGroup() {
-        return showBlacklist(groups);
+    public String showGroup(int page, int pageSize) {
+        return showBlacklist(groups, page, pageSize);
     }
 
-    public String showGlobalUser() {
-        return showBlacklist(globalUsers);
+    public String showGlobalUser(int page, int pageSize) {
+        return showBlacklist(globalUsers, page, pageSize);
     }
 
-    public String showGlobalGroup() {
-        return showBlacklist(globalGroups);
+    public String showGlobalGroup(int page, int pageSize) {
+        return showBlacklist(globalGroups, page, pageSize);
     }
 }

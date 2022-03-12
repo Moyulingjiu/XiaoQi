@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BotFunction extends BasePlugin {
+    private static final int BLACKLIST_PAGE_SIZE = 20;
     private static final int REQUEST_PAGE_SIZE = 20;
     private static final int MUTE_WORDS_PAGE_SIZE = 20;
     private static final int MAX_TUNNEL = 30;
@@ -103,35 +104,60 @@ public class BotFunction extends BasePlugin {
     }
 
     private void blacklist(SingleEvent singleEvent) {
-        if (singleEvent.getMessage().plainEqual("查看全局黑名单人")) {
+        // 查看全局黑名单人
+        if (singleEvent.getMessage().plainStartWith("查看全局黑名单人")) {
             if (singleEvent.aboveSystemAdmin()) {
                 Blacklist blacklist = singleEvent.getConfig().getBlacklist();
-                singleEvent.send(blacklist.showGlobalUser());
+                MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+                analysis.pop("查看全局黑名单人");
+                int page = CommonUtil.getInteger(analysis.getText());
+                if (page > 0) page--;
+                singleEvent.send(blacklist.showGlobalUser(page, BLACKLIST_PAGE_SIZE));
             } else {
                 singleEvent.send("权限不足");
             }
-        } else if (singleEvent.getMessage().plainEqual("查看全局黑名单群")) {
+        }
+        // 查看全局黑名单群
+        else if (singleEvent.getMessage().plainStartWith("查看全局黑名单群")) {
             if (singleEvent.aboveSystemAdmin()) {
                 Blacklist blacklist = singleEvent.getConfig().getBlacklist();
-                singleEvent.send(blacklist.showGlobalGroup());
+                MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+                analysis.pop("查看全局黑名单群");
+                int page = CommonUtil.getInteger(analysis.getText());
+                if (page > 0) page--;
+                singleEvent.send(blacklist.showGlobalGroup(page, BLACKLIST_PAGE_SIZE));
             } else {
                 singleEvent.send("权限不足");
             }
-        } else if (singleEvent.getMessage().plainEqual("查看黑名单人")) {
+        }
+        // 查看黑名单人
+        else if (singleEvent.getMessage().plainStartWith("查看黑名单人")) {
             if (singleEvent.aboveBotAdmin()) {
                 Blacklist blacklist = singleEvent.getConfig().getBlacklist();
-                singleEvent.send(blacklist.showUser());
+                MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+                analysis.pop("查看黑名单人");
+                int page = CommonUtil.getInteger(analysis.getText());
+                if (page > 0) page--;
+                singleEvent.send(blacklist.showUser(page, BLACKLIST_PAGE_SIZE));
             } else {
                 singleEvent.send("权限不足");
             }
-        } else if (singleEvent.getMessage().plainEqual("查看黑名单群")) {
+        }
+        // 查看黑名单群
+        else if (singleEvent.getMessage().plainStartWith("查看黑名单群")) {
             if (singleEvent.aboveBotAdmin()) {
                 Blacklist blacklist = singleEvent.getConfig().getBlacklist();
-                singleEvent.send(blacklist.showGroup());
+                MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+                analysis.pop("查看黑名单群");
+                int page = CommonUtil.getInteger(analysis.getText());
+                if (page > 0) page--;
+                singleEvent.send(blacklist.showGroup(page, BLACKLIST_PAGE_SIZE));
             } else {
                 singleEvent.send("权限不足");
             }
-        } else if (singleEvent.getMessage().plainStartWith("添加黑名单人")) {
+        }
+        // 添加黑名单人
+        else if (singleEvent.getMessage().plainStartWith("添加黑名单人")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("添加黑名单人");
             ArrayList<String> split = analysis.split();
@@ -163,7 +189,9 @@ public class BotFunction extends BasePlugin {
             if (!flag) {
                 singleEvent.send("格式错误！");
             }
-        } else if (singleEvent.getMessage().plainStartWith("删除黑名单人")) {
+        }
+        // 删除黑名单人
+        else if (singleEvent.getMessage().plainStartWith("删除黑名单人")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("删除黑名单人");
             ArrayList<String> split = analysis.split();
@@ -187,7 +215,9 @@ public class BotFunction extends BasePlugin {
             if (!flag) {
                 singleEvent.send("格式错误！");
             }
-        } else if (singleEvent.getMessage().plainStartWith("添加黑名单群")) {
+        }
+        // 添加黑名单群
+        else if (singleEvent.getMessage().plainStartWith("添加黑名单群")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("添加黑名单群");
             ArrayList<String> split = analysis.split();
@@ -219,7 +249,9 @@ public class BotFunction extends BasePlugin {
             if (!flag) {
                 singleEvent.send("格式错误！");
             }
-        } else if (singleEvent.getMessage().plainStartWith("删除黑名单群")) {
+        }
+        // 删除黑名单群
+        else if (singleEvent.getMessage().plainStartWith("删除黑名单群")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("删除黑名单群");
             ArrayList<String> split = analysis.split();

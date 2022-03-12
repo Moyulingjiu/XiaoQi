@@ -3,6 +3,7 @@ package top.beforedawn.models.bo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.beforedawn.util.CommonUtil;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -45,6 +46,6 @@ public class SimpleBlacklist {
 
     @Override
     public String toString() {
-        return String.format("%d[%s]", key, comment);
+        return String.format("%s(%d)[%s]", CommonUtil.LocalDateTime2String(create), key, comment);
     }
 }

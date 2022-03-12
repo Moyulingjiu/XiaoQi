@@ -36,6 +36,7 @@ public class Main {
         plugins.add(new NudgeFunction());
         plugins.add(new UnlockFlashFunction());
         plugins.add(new DriftingBottleFunction());
+
         plugins.add(new RpgFunction());
         plugins.add(new TalkFunction());
         plugins.add(new SelfReplyFunction());
@@ -154,6 +155,13 @@ public class Main {
             if (group.isWelcome()) {
                 MessageChainBuilder messageChain = CommonUtil.getMessageChain(singleEvent, group.getWelcomeMessage());
                 messageChain.add(0, new At(event.getMember().getId()));
+                singleEvent.send(messageChain.asMessageChain());
+            }
+            // 黑名单判断
+            if (singleEvent.getConfig().isBlacklist(event.getMember().getId(), 0L)) {
+                MessageChainBuilder messageChain = new MessageChainBuilder();
+                messageChain.append(new At(event.getMember().getId()));
+                messageChain.append(new PlainText("该人在黑名单中"));
                 singleEvent.send(messageChain.asMessageChain());
             }
         });
@@ -320,7 +328,7 @@ public class Main {
             LocalDateTime lastHeart = LocalDateTime.now();
             while (true) {
                 LocalDateTime now = LocalDateTime.now();
-                if (!now.equals(last)) {
+                if (Duration.between(last, now).toMinutes() >= 1) {
                     last = now;
 
                     // 心跳报时

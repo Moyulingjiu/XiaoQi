@@ -12,6 +12,7 @@ import top.beforedawn.util.YamlReader;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * 机器人配置类
@@ -258,7 +259,7 @@ public class BotConfig {
             return true;
         }
         // 官方群和主人不会被拉入私有黑名单
-        if (userId == master || groupId == officialGroup) {
+        if (userId == master || Objects.equals(groupId, officialGroup)) {
             return blacklist.isGlobalBlacklist(userId, groupId, checkRight(userId));
         }
         return blacklist.isBlacklist(userId, groupId, checkRight(userId)) || blacklist.isGlobalBlacklist(userId, groupId, checkRight(userId));
