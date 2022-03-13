@@ -6,7 +6,7 @@ import top.beforedawn.models.bo.*;
 
 public class HttpUtil {
     private static final String serviceIp = "175.178.4.128";
-    //    private static final String serviceIp = "127.0.0.1";
+//        private static final String serviceIp = "127.0.0.1";
     private static final int servicePort = 9001;
 
     private static String serverAddress() {
@@ -35,6 +35,7 @@ public class HttpUtil {
             user.setLuck(50);
             return user;
         }
+        System.out.println(response);
         user.setId(response.getData().getLong("id"));
         user.setQq(response.getData().getLong("qq"));
         user.setLastChangePassword(CommonUtil.getLocalDateTime(response.getData().getString("lastChangePassword")));

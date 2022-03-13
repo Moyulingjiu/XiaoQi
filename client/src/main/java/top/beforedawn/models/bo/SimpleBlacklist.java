@@ -46,6 +46,6 @@ public class SimpleBlacklist {
 
     @Override
     public String toString() {
-        return String.format("%s(%d)[%s]", CommonUtil.LocalDateTime2String(create), key, comment);
+        return String.format("%d[%s]<%s>", key, comment, CommonUtil.LocalDateTime2String(create));
     }
 }

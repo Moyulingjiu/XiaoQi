@@ -62,7 +62,7 @@ public class UserDao {
         criteria.andQqEqualTo(qq);
         List<UserPo> userPos = userPoMapper.selectByExample(example);
         User user = null;
-        if (userPos.size() == 1) {
+        if (userPos.size() >= 1) {
             user = Common.cloneVo(userPos.get(0), User.class);
         }
         return user;

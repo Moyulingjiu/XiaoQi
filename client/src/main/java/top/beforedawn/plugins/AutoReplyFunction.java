@@ -272,7 +272,7 @@ public class AutoReplyFunction extends BasePlugin {
         }
         // 添加回复
         else if (singleEvent.getMessage().plainStartWith("添加回复")) {
-            if (!singleEvent.aboveGroupMaster()) {
+            if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权添加回复");
                 return;
             }
@@ -329,7 +329,7 @@ public class AutoReplyFunction extends BasePlugin {
         }
         // 删除回复
         else if (singleEvent.getMessage().plainStartWith("删除回复")) {
-            if (!singleEvent.aboveGroupMaster()) {
+            if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权删除回复");
                 return;
             }
@@ -431,7 +431,7 @@ public class AutoReplyFunction extends BasePlugin {
         }
         // 添加关键词
         else if (singleEvent.getMessage().plainStartWith("添加关键词")) {
-            if (!singleEvent.aboveGroupMaster()) {
+            if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权添加关键词");
                 return;
             }
@@ -488,7 +488,7 @@ public class AutoReplyFunction extends BasePlugin {
         }
         // 删除关键词
         else if (singleEvent.getMessage().plainStartWith("删除关键词")) {
-            if (!singleEvent.aboveGroupMaster()) {
+            if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权删除关键词");
                 return;
             }
@@ -590,7 +590,7 @@ public class AutoReplyFunction extends BasePlugin {
         }
         // 复杂回复
         else if (singleEvent.getMessage().plainEqual("添加复杂回复")) {
-            if (!singleEvent.aboveGroupMaster()) {
+            if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权添加复杂回复");
                 return;
             }
@@ -605,7 +605,7 @@ public class AutoReplyFunction extends BasePlugin {
         }
         // 删除复杂回复
         else if (singleEvent.getMessage().plainStartWith("删除复杂回复")) {
-            if (!singleEvent.aboveGroupMaster()) {
+            if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权删除复杂回复");
                 return;
             }

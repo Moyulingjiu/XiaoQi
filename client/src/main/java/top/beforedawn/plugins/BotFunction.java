@@ -9,6 +9,8 @@ import net.mamoe.mirai.event.events.BotInvitedJoinGroupRequestEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
 import net.mamoe.mirai.event.events.NewFriendRequestEvent;
 import net.mamoe.mirai.message.data.MessageChain;
+import net.mamoe.mirai.message.data.MessageChainBuilder;
+import net.mamoe.mirai.message.data.PlainText;
 import top.beforedawn.config.*;
 import top.beforedawn.models.bo.*;
 import top.beforedawn.models.context.BroadcastContext;
@@ -1243,13 +1245,16 @@ public class BotFunction extends BasePlugin {
             }
             new Thread(() -> {
                 MessageChain chain = singleEvent.getMessage().getOrigin();
+                MessageChainBuilder builder = new MessageChainBuilder();
+                builder.addAll(chain);
+                builder.append(new PlainText("——来自管理员（" + singleEvent.getSenderId() + "）的全局广播，无需回复。"));
                 ContactList<Group> groups = singleEvent.getBot().getGroups();
                 singleEvent.sendMaster(singleEvent.getBotName() + "已开始广播，总计群：" + groups.size() + "个\n" +
                         "执行人：" + singleEvent.getSenderName() + "（权限：" + singleEvent.getRight() + "）\n" +
                         "预估时间：" + groups.size() * 3 / 4 + "秒");
                 for (Group group : groups) {
                     singleEvent.record();
-                    group.sendMessage(chain);
+                    group.sendMessage(builder.asMessageChain());
                     try {
                         Thread.sleep(CommonUtil.randomInteger(500, 1000));
                     } catch (InterruptedException e) {

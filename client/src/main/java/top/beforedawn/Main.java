@@ -15,6 +15,7 @@ import top.beforedawn.models.bo.SimpleBlacklist;
 import top.beforedawn.plugins.*;
 import top.beforedawn.util.*;
 
+import java.lang.management.ManagementFactory;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -616,6 +617,8 @@ public class Main {
         System.out.println(System.getProperty("os.name").toLowerCase(Locale.US));
         System.out.println(System.getProperty("os.arch").toLowerCase(Locale.US));
         System.out.println(System.getProperty("os.version").toLowerCase(Locale.US));
+        String name = ManagementFactory.getRuntimeMXBean().getName();
+        System.out.println("运行时环境：" + name);
         System.out.println("======");
         if (workdir.length() == 0 || botId <= 0L) {
             System.out.println("参数错误，无法启动bot");
