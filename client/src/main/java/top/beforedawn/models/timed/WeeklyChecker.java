@@ -34,11 +34,10 @@ public class WeeklyChecker extends BaseRepeatChecker {
 
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
-        if (lastTime == null) {
-            return true;
-        }
-        if (now == null || Duration.between(lastTime, now).toDays() <= 6) {
-            return false;
+        if (lastTime != null) {
+            if (now == null || Duration.between(lastTime, now).toDays() <= 6) {
+                return false;
+            }
         }
         return now.getDayOfWeek().getValue() == day && now.getHour() == hour && now.getMinute() == minute;
     }

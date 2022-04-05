@@ -35,11 +35,10 @@ public class YearlyChecker extends BaseRepeatChecker {
 
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
-        if (lastTime == null) {
-            return true;
-        }
-        if (now == null || Duration.between(lastTime, now).toDays() <= 360) {
-            return false;
+        if (lastTime != null) {
+            if (now == null || Duration.between(lastTime, now).toDays() <= 360) {
+                return false;
+            }
         }
         return now.getMonthValue() == month && now.getDayOfMonth() == day && now.getHour() == hour && now.getMinute() == minute;
     }

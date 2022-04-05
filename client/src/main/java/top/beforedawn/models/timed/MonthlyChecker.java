@@ -34,11 +34,10 @@ public class MonthlyChecker extends BaseRepeatChecker {
 
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
-        if (lastTime == null) {
-            return true;
-        }
-        if (now == null || Duration.between(lastTime, now).toDays() <= 27) {
-            return false;
+        if (lastTime != null) {
+            if (now == null || Duration.between(lastTime, now).toDays() <= 27) {
+                return false;
+            }
         }
         return now.getDayOfMonth() == date && now.getHour() == hour && now.getMinute() == minute;
     }

@@ -33,11 +33,10 @@ public class DailyChecker extends BaseRepeatChecker {
 
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
-        if (lastTime == null) {
-            return true;
-        }
-        if (now == null || Duration.between(lastTime, now).toHours() <= 23) {
-            return false;
+        if (lastTime != null) {
+            if (now == null || Duration.between(lastTime, now).toHours() <= 23) {
+                return false;
+            }
         }
         return now.getHour() == hour && now.getMinute() == minute;
     }
