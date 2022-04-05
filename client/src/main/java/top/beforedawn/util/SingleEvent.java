@@ -38,6 +38,9 @@ public class SingleEvent {
     private NudgeEvent nudgeEvent;
     private MemberJoinEvent memberJoinEvent;
 
+    private Group group;
+    private Friend friend;
+
     public SingleEvent() {
         init();
     }
@@ -104,6 +107,8 @@ public class SingleEvent {
         friendMessageEvent = null;
         nudgeEvent = null;
         memberJoinEvent = null;
+        group = null;
+        friend = null;
     }
 
     public void setGroupMessageEvent(GroupMessageEvent event) {
@@ -407,6 +412,10 @@ public class SingleEvent {
             return getNudgeEvent().getSubject().uploadImage(ExternalResource.create(file));
         } else if (isMemberJoinEvent()) {
             return getMemberJoinEvent().getGroup().uploadImage(ExternalResource.create(file));
+        } else if (group != null) {
+            return group.uploadImage(ExternalResource.create(file));
+        } else if (friend != null) {
+            return friend.uploadImage(ExternalResource.create(file));
         }
         return null;
     }

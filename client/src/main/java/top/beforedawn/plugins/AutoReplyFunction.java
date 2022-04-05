@@ -1,5 +1,6 @@
 package top.beforedawn.plugins;
 
+import top.beforedawn.config.BackgroundTask;
 import top.beforedawn.config.ContextPool;
 import top.beforedawn.config.GroupPool;
 import top.beforedawn.models.bo.MessageLinearAnalysis;
@@ -9,6 +10,7 @@ import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.models.reply.KeyMatchReply;
 import top.beforedawn.models.reply.KeyReply;
+import top.beforedawn.models.timed.*;
 import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.SingleEvent;
 
@@ -20,8 +22,9 @@ import java.util.ArrayList;
 public class AutoReplyFunction extends BasePlugin {
     private static final int MAX_KEY_REPLY = 20;
     private static final int MAX_KEY = 100;
-    private static final int COMPLEX_REPLY_PAGE_SIZE = 30;
+    private static final int COMPLEX_REPLY_PAGE_SIZE = 20;
     private static final int PAGE_SIZE = 25;
+    private static final int TIMED_MESSAGE_PAGE_SIZE = 20;
 
     public AutoReplyFunction() {
         pluginName = "auto_reply";
@@ -45,7 +48,7 @@ public class AutoReplyFunction extends BasePlugin {
     @Override
     public boolean handContextGroup(SingleEvent singleEvent) {
         Context context = ContextPool.get(singleEvent.getSenderId());
-        // 复杂回复
+        // 添加复杂回复
         if (context instanceof ComplexReplyContext) {
             if (singleEvent.getMessage().plainEqual("*取消创建*")) {
                 ContextPool.remove(singleEvent.getSenderId());
@@ -223,6 +226,183 @@ public class AutoReplyFunction extends BasePlugin {
             GroupPool.save(singleEvent);
             singleEvent.setGroupId(groupId);
             singleEvent.send("清空关键词成功！");
+            return true;
+        }
+        // 清空定时消息
+        else if (context instanceof TimedMessageClearContext) {
+            ContextPool.remove(singleEvent.getSenderId());
+            if (!CommonUtil.isConfirmMessage(singleEvent.getMessage().getPlainString())) {
+                singleEvent.send("已取消清空");
+                return true;
+            }
+            Long groupId = singleEvent.getGroupId();
+            singleEvent.setGroupId(((TimedMessageClearContext) context).getGroupId());
+            MyGroup group = GroupPool.get(singleEvent);
+            // 取消注册的事件
+            for (GroupTimedMessage timedMessage : group.getTimedMessages()) {
+                BackgroundTask.getInstance().remove(timedMessage);
+            }
+            group.setTimedMessages(new ArrayList<>());
+            GroupPool.save(singleEvent, ((TimedMessageClearContext) context).getGroupId());
+            singleEvent.setGroupId(groupId);
+            singleEvent.send("清空定时消息成功！");
+            return true;
+        }
+        // 添加定时消息
+        else if (context instanceof TimedMessageContext) {
+            if (singleEvent.getMessage().plainEqual("*取消创建*")) {
+                ContextPool.remove(singleEvent.getSenderId());
+                singleEvent.send("已取消创建");
+                return true;
+            }
+            Long groupId = singleEvent.getGroupId();
+            singleEvent.setGroupId(((TimedMessageContext) context).getGroupId());
+            MyGroup group = GroupPool.get(singleEvent);
+            singleEvent.setGroupId(groupId);
+
+            switch (context.getStep()) {
+                case 0:
+                    String name = singleEvent.getMessage().getPlainString();
+                    if (group.timedMessageContains(name)) {
+                        singleEvent.send("已存在同名定时消息！请重新输入名字，或者输入“*取消创建*”来取消创建");
+                        return true;
+                    }
+                    ((TimedMessageContext) context).setName(name);
+                    singleEvent.send("请输入重复的周期：每天/每周/每月/每年");
+                    break;
+                case 1:
+                    String repeat = singleEvent.getMessage().getPlainString();
+                    ((TimedMessageContext) context).setType(repeat);
+                    switch (repeat) {
+                        case "每天":
+                            singleEvent.send(
+                                    "请输入每天a点b分（24小时制），或者输入“*取消创建*”来取消创建\n" +
+                                            "例如：每天20点0分，输入“20点0分”"
+                            );
+                            break;
+                        case "每周":
+                            singleEvent.send(
+                                    "请输入每周的星期a b点c分（24小时制），或者输入“*取消创建*”来取消创建\n" +
+                                            "例如：每周二的16点22分，输入“周二16点22分”"
+                            );
+                            break;
+                        case "每月":
+                            singleEvent.send(
+                                    "请输入每月的a日b点c分（24小时制），或者输入“*取消创建*”来取消创建\n" +
+                                            "例如：每月22日14点5分，输入“22日14点5分”"
+                            );
+                            break;
+                        case "每年":
+                            singleEvent.send(
+                                    "请输入每年的a月b日c点d分（24小时制），或者输入“*取消创建*”来取消创建\n" +
+                                            "例如：每年1月3日0点5分，输入“1月1日0点5分”"
+                            );
+                            break;
+                        default:
+                            singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                            return true;
+                    }
+                    break;
+                case 2:
+                    String time = singleEvent.getMessage().getPlainString();
+                    switch (((TimedMessageContext) context).getType()) {
+                        case "每天":
+                            if (!time.matches("^\\d{1,2}点\\d{1,2}分$")) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
+                            String[] times = time.split("点");
+                            int hour = Integer.parseInt(times[0]);
+                            int minute = Integer.parseInt(times[1].split("分")[0]);
+                            ((TimedMessageContext) context).setChecker(new DailyChecker(hour, minute));
+                            break;
+                        case "每周":
+                            if (!time.matches("^周[一二三四五六日天]\\d{1,2}点\\d{1,2}分$")) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
+                            int week = 0;
+                            switch (time.substring(0, 2)) {
+                                case "周一":
+                                    week = 1;
+                                    break;
+                                case "周二":
+                                    week = 2;
+                                    break;
+                                case "周三":
+                                    week = 3;
+                                    break;
+                                case "周四":
+                                    week = 4;
+                                    break;
+                                case "周五":
+                                    week = 5;
+                                    break;
+                                case "周六":
+                                    week = 6;
+                                    break;
+                                case "周日":
+                                case "周天":
+                                    week = 7;
+                                    break;
+                            }
+                            times = time.substring(2).split("点");
+                            hour = Integer.parseInt(times[0]);
+                            minute = Integer.parseInt(times[1].split("分")[0]);
+                            ((TimedMessageContext) context).setChecker(new WeeklyChecker(week, hour, minute));
+                            break;
+                        case "每月":
+                            if (!time.matches("^\\d{1,2}日\\d{1,2}点\\d{1,2}分$")) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
+                            times = time.split("日");
+                            int day = Integer.parseInt(times[0]);
+                            times = times[1].split("点");
+                            hour = Integer.parseInt(times[0]);
+                            minute = Integer.parseInt(times[1].split("分")[0]);
+                            ((TimedMessageContext) context).setChecker(new MonthlyChecker(day, hour, minute));
+                            break;
+                        case "每年":
+                            if (!time.matches("^\\d{1,2}月\\d{1,2}日\\d{1,2}点\\d{1,2}分$")) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
+                            times = time.split("月");
+                            int month = Integer.parseInt(times[0]);
+                            times = times[1].split("日");
+                            day = Integer.parseInt(times[0]);
+                            times = times[1].split("点");
+                            hour = Integer.parseInt(times[0]);
+                            minute = Integer.parseInt(times[1].split("分")[0]);
+                            ((TimedMessageContext) context).setChecker(new YearlyChecker(month, day, hour, minute));
+                            break;
+                        default:
+                            singleEvent.send("[FATAL]严重内部错误！请及时联系管理员！");
+                            ContextPool.remove(singleEvent.getSenderId());
+                            return true;
+                    }
+                    singleEvent.send("当前重复周期" + ((TimedMessageContext) context).getChecker() + "\n" +
+                            "请输入消息内容，或者输入“*取消创建*”来取消创建");
+                    break;
+                case 3:
+                    ((TimedMessageContext) context).setReply(CommonUtil.getSerializeMessage(singleEvent.getConfig().getWorkdir() + "image/", singleEvent.getMessage().getOrigin()));
+                    GroupTimedMessage groupTimedMessage = new GroupTimedMessage();
+                    groupTimedMessage.setGroupId(((TimedMessageContext) context).getGroupId());
+                    groupTimedMessage.setName(((TimedMessageContext) context).getName());
+
+                    groupTimedMessage.setReply(((TimedMessageContext) context).getReply());
+                    groupTimedMessage.setChecker(((TimedMessageContext) context).getChecker());
+                    groupTimedMessage.setLastTime(null);
+
+                    group.getTimedMessages().add(groupTimedMessage);
+                    BackgroundTask.getInstance().put(groupTimedMessage);
+                    ContextPool.remove(singleEvent.getSenderId());
+                    GroupPool.save(singleEvent, group.getId());
+                    singleEvent.send("创建成功！");
+                    break;
+            }
+            context.next();
             return true;
         }
         return false;
@@ -588,7 +768,7 @@ public class AutoReplyFunction extends BasePlugin {
             builder.append("--------").append("\n页码：").append(page + 1).append("/").append(total);
             singleEvent.send(builder.toString());
         }
-        // 复杂回复
+        // 添加复杂回复
         else if (singleEvent.getMessage().plainEqual("添加复杂回复")) {
             if (!singleEvent.aboveGroupAdmin()) {
                 singleEvent.send("你无权添加复杂回复");
@@ -649,10 +829,12 @@ public class AutoReplyFunction extends BasePlugin {
             int page = CommonUtil.getInteger(analysis.getText());
             if (page > 0) page--;
             int total = 0;
+            boolean init = false;
             StringBuilder builder = new StringBuilder();
             for (BaseAutoReply autoReply : group.getAutoReplies()) {
                 if (autoReply instanceof ComplexReply) {
                     if (total >= page * COMPLEX_REPLY_PAGE_SIZE && total < (page + 1) * COMPLEX_REPLY_PAGE_SIZE) {
+                        init = true;
                         builder.append(total + 1).append(".").append(((ComplexReply) autoReply).getKey()).append("\n");
                     }
                     total++;
@@ -665,8 +847,89 @@ public class AutoReplyFunction extends BasePlugin {
             if (total % COMPLEX_REPLY_PAGE_SIZE != 0) total = total / COMPLEX_REPLY_PAGE_SIZE + 1;
             else total = total / COMPLEX_REPLY_PAGE_SIZE;
             builder.append("--------").append("\n页码：").append(page + 1).append("/").append(total);
-            singleEvent.send(builder.toString());
+            if (init) {
+                singleEvent.send(builder.toString());
+            } else {
+                singleEvent.send("页码超限，总计：" + total + "页");
+            }
         }
+        // 查看定时消息
+        else if (singleEvent.getMessage().plainStartWith("查看定时消息")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("查看定时消息");
+            int page = CommonUtil.getInteger(analysis.getText());
+            if (page > 0) page--;
+            int total = 0;
+            boolean init = false;
+            StringBuilder builder = new StringBuilder();
+            for (GroupTimedMessage timedMessage : group.getTimedMessages()) {
+                if (total >= page * TIMED_MESSAGE_PAGE_SIZE && total < (page + 1) * TIMED_MESSAGE_PAGE_SIZE) {
+                    init = true;
+                    builder.append(total + 1).append(".").append(timedMessage.toString()).append("\n");
+                }
+                total++;
+            }
+            if (total == 0) {
+                singleEvent.send("暂无定时消息");
+                return;
+            }
+            if (total % TIMED_MESSAGE_PAGE_SIZE != 0) total = total / TIMED_MESSAGE_PAGE_SIZE + 1;
+            else total = total / TIMED_MESSAGE_PAGE_SIZE;
+            builder.append("--------").append("\n页码：").append(page + 1).append("/").append(total);
+            if (init) {
+                singleEvent.send(builder.toString());
+            } else {
+                singleEvent.send("页码超限，总计：" + total + "页");
+            }
+        }
+        // 清空定时消息
+        else if (singleEvent.getMessage().plainEqual("清空定时消息")) {
+            if (!singleEvent.aboveGroupMaster()) {
+                singleEvent.send("你无权清空定时消息");
+                return;
+            }
+            if (ContextPool.contains(singleEvent.getSenderId())) {
+                return;
+            }
+            TimedMessageClearContext context = new TimedMessageClearContext();
+            context.setGroupId(singleEvent.getGroupId());
+            ContextPool.put(singleEvent.getSenderId(), context);
+            singleEvent.send(CommonUtil.confirmMessage());
+        }
+        // 添加定时消息
+        else if (singleEvent.getMessage().plainEqual("添加定时消息")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权添加定时消息");
+                return;
+            }
+            if (ContextPool.contains(singleEvent.getSenderId())) {
+                return;
+            }
+            TimedMessageContext context = new TimedMessageContext();
+            context.setGroupId(singleEvent.getGroupId());
+            ContextPool.put(singleEvent.getSenderId(), context);
+            singleEvent.send("请给定时消息，取一个唯一标识的名字，保证你看见名字可以明白这是什么消息哦！（你可以在任意时刻输入“*取消创建*”来取消创建，前后的星号不可以省略）");
+        }
+        // 删除定时消息
+        else if (singleEvent.getMessage().plainStartWith("删除定时消息")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权删除定时消息");
+                return;
+            }
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("删除定时消息");
+            String name = analysis.getText();
 
+            for (GroupTimedMessage timedMessage : group.getTimedMessages()) {
+                if (timedMessage.getName().equals(name)) {
+                    group.getTimedMessages().remove(timedMessage);
+                    BackgroundTask.getInstance().remove(timedMessage);
+                    GroupPool.save(singleEvent);
+                    singleEvent.send("删除成功");
+                    return;
+                }
+            }
+            singleEvent.send("没有这个定时消息");
+        }
     }
 }

@@ -5,6 +5,7 @@ import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
 import org.jetbrains.annotations.NotNull;
 import top.beforedawn.config.BotConfig;
+import top.beforedawn.config.GroupPool;
 
 import java.io.File;
 import java.time.Duration;
@@ -19,6 +20,34 @@ import java.util.HashMap;
  */
 public class MyBot {
     private static final HashMap<Long, SimpleCombineBot> botPool = new HashMap<>(); // 机器人池
+
+    /**
+     * 遍历本地文件，注册背景任务
+     */
+    private static void loadLocalData(SimpleCombineBot bot) {
+        SingleEvent singleEvent = new SingleEvent(bot.getConfig().getQq());
+        singleEvent.setTitle("config");
+        singleEvent.setCombineBot(bot);
+
+        File directory = new File(bot.getConfig().getWorkdir() + "\\group");
+        if (directory.exists() && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files == null) {
+                return;
+            }
+            for (File file : files) {
+                System.out.println("加载" + file);
+                if (file != null && file.isFile() && file.getName().endsWith(".json")) {
+                    long groupId = CommonUtil.getLong(file.getName().substring(0, file.getName().length() - 5));
+                    if (groupId > 0) {
+                        // 加载群的时候会顺便注册任务
+                        GroupPool.load(singleEvent, groupId);
+                    }
+                }
+            }
+
+        }
+    }
 
     /**
      * 获取QQ号对应的配置类
@@ -54,7 +83,7 @@ public class MyBot {
             );
             return botPool.get(qq).getBot();
         }
-        Bot bot = BotFactory.INSTANCE.newBot(config.getQq(), config.getPassword(), new BotConfiguration() {{
+        Bot bot = BotFactory.INSTANCE.newBot(qq, config.getPassword(), new BotConfiguration() {{
             // 如果遇到 Bot 闲置一段时间后，发消息返回成功但群内收不到的情况，请切换心跳策略，依次尝试 STAT_HB、REGISTER 和 NONE。
             setHeartbeatStrategy(HeartbeatStrategy.STAT_HB);
             // 登录协议：ANDROID_PHONE，ANDROID_PAD，ANDROID_WATCH
@@ -65,7 +94,9 @@ public class MyBot {
         }});
         bot.login();
         config.update(new SingleEvent(config.getQq(), config.getQq()));
-        botPool.put(qq, new SimpleCombineBot(config, bot));
+        SimpleCombineBot combineBot = new SimpleCombineBot(config, bot);
+        botPool.put(qq, combineBot);
+        loadLocalData(combineBot);
         return bot;
     }
 }

@@ -628,7 +628,7 @@ class Result:
             'nurturer_synthesis': {  # 培育师合成路线
                 'number': 0,
                 'level': 0,
-                'time': 0,
+                'taskTime': 0,
                 'additional': [],
                 'path': []
             }
@@ -766,7 +766,7 @@ class Result:
             'init': False,
             'state': 'success',
             'name': '',
-            'time': ''
+            'taskTime': ''
         }
         self.harvest = {
             'init': False,
@@ -1245,7 +1245,7 @@ class Result:
                     reply += '<-' + self.show_goods(self.introduction['enchanter_synthesis']['path'])
 
                 if self.introduction['nurturer_synthesis']['number'] != 0:
-                    if self.introduction['nurturer_synthesis']['time'] == 0:
+                    if self.introduction['nurturer_synthesis']['taskTime'] == 0:
                         reply += '\n培育师' + get_roman_numerals(
                             self.introduction['nurturer_synthesis']['level']) + '可合成：' + self.introduction['name']
                         if self.introduction['nurturer_synthesis']['number'] > 1:
@@ -1254,7 +1254,7 @@ class Result:
                     else:
                         reply += '\n培育师' + get_roman_numerals(
                             self.introduction['nurturer_synthesis']['level']) + '可花费' + str(
-                            self.introduction['nurturer_synthesis']['time']) + '分钟培育：'
+                            self.introduction['nurturer_synthesis']['taskTime']) + '分钟培育：'
                         reply += self.show_goods(self.introduction['nurturer_synthesis']['path']) + '->'
                         reply += self.show_goods(self.introduction['nurturer_synthesis']['additional'])
 
@@ -1535,7 +1535,7 @@ class Result:
                 reply += '\n附魔失败！需要材料「' + self.show_items(self.enchanting['cost']) + '」'
         elif self.cultivation['init']:
             if self.cultivation['state'] == 'success':
-                reply += '\n成功培育「' + self.cultivation['name'] + '」将会在' + self.cultivation['time'] + '成熟'
+                reply += '\n成功培育「' + self.cultivation['name'] + '」将会在' + self.cultivation['taskTime'] + '成熟'
             elif self.cultivation['state'] == 'job mismatch':
                 reply += '\n培育失败！你不是培育师~'
             elif self.cultivation['state'] == 'level':
@@ -2324,7 +2324,7 @@ class Core:
                             'level': 0,
                             'additional': [],
                             'path': [],
-                            'time': 0
+                            'taskTime': 0
                         }
 
                         name = ''
@@ -2364,8 +2364,8 @@ class Core:
                                             synthesis_route[section[0]].append(item)
                                 elif section[0] == 'level':
                                     synthesis_route['level'] = get_number(section[1])
-                                elif section[0] == 'time':
-                                    synthesis_route['time'] = get_number(section[1])
+                                elif section[0] == 'taskTime':
+                                    synthesis_route['taskTime'] = get_number(section[1])
                         if self.goods.__contains__(name):
                             self.nurturer_synthesis[name] = synthesis_route
 
@@ -2955,7 +2955,7 @@ class Core:
             'nurturer_synthesis': {  # 培育师合成路线
                 'number': 0,
                 'level': 0,
-                'time': 0,
+                'taskTime': 0,
                 'additional': [],
                 'path': []
             }
@@ -7292,7 +7292,7 @@ class Core:
 
         if not is_check and self.nurturer_synthesis.__contains__(name) and level > 0:
             nurturer_synthesis_copy = copy.deepcopy(self.nurturer_synthesis[name])
-            if level >= nurturer_synthesis_copy['level'] and nurturer_synthesis_copy['time'] == 0:
+            if level >= nurturer_synthesis_copy['level'] and nurturer_synthesis_copy['taskTime'] == 0:
                 is_check = True
                 path = copy.deepcopy(nurturer_synthesis_copy['path'])
                 get_number = self.nurturer_synthesis[name]['number'] * number
@@ -7555,7 +7555,7 @@ class Core:
             'init': True,
             'state': 'success',
             'name': name,
-            'time': ''
+            'taskTime': ''
         }
 
         if user['occupation']['work'] == '培育师':
@@ -7575,10 +7575,10 @@ class Core:
                         if self.nurturer_synthesis[name]['level'] <= user['occupation']['work_level']:
                             new_crop = {
                                 'name': name,
-                                'time': addition_minute(getNow.toString(), self.nurturer_synthesis[name]['time'])
+                                'taskTime': addition_minute(getNow.toString(), self.nurturer_synthesis[name]['taskTime'])
                             }
                             user['occupation']['farm']['crop'].append(new_crop)
-                            cultivation['time'] = new_crop['time']
+                            cultivation['taskTime'] = new_crop['taskTime']
                         else:
                             cultivation['state'] = 'level'
                     else:
@@ -7618,7 +7618,7 @@ class Core:
         new_crop = []
         for index in range(len(user['occupation']['farm']['crop'])):
             name = user['occupation']['farm']['crop'][index]['name']
-            if is_beyond_deadline(user['occupation']['farm']['crop'][index]['time']):
+            if is_beyond_deadline(user['occupation']['farm']['crop'][index]['taskTime']):
                 items = copy.deepcopy(self.nurturer_synthesis[name]['additional'])
                 operated = []
                 is_back = False
@@ -7959,10 +7959,10 @@ class RPG:
             reply += str(len(user['occupation']['farm']['crop'])) + '/' + str(user['occupation']['farm']['max'])
 
             for crop in user['occupation']['farm']['crop']:
-                if is_beyond_deadline(crop['time']):
+                if is_beyond_deadline(crop['taskTime']):
                     reply += '\n' + crop['name'] + '（已经成熟）'
                 else:
-                    reply += '\n' + crop['name'] + '（' + crop['time'] + '成熟）'
+                    reply += '\n' + crop['name'] + '（' + crop['taskTime'] + '成熟）'
         else:
             reply = user['config']['name'] + '你不是培育师没有农场'
         return reply
@@ -8012,7 +8012,7 @@ class RPG:
             reply += '<-' + result.show_items(enchanter_synthesis[name]['path'])
 
         if nurturer_synthesis.__contains__(name):
-            if nurturer_synthesis[name]['time'] == 0:
+            if nurturer_synthesis[name]['taskTime'] == 0:
                 reply += '\n培育师' + get_roman_numerals(nurturer_synthesis[name]['level']) + '合成路线：'
                 reply += name
                 if nurturer_synthesis[name]['number'] != 0:
@@ -8020,7 +8020,7 @@ class RPG:
                 reply += '<-' + result.show_items(nurturer_synthesis[name]['path'])
             else:
                 reply += '\n培育师' + get_roman_numerals(nurturer_synthesis[name]['level']) + '可以培育' + str(
-                    nurturer_synthesis[name]['time']) + '分钟获得：' + result.show_items(
+                    nurturer_synthesis[name]['taskTime']) + '分钟获得：' + result.show_items(
                     nurturer_synthesis[name]['additional'])
 
         reply += '\n参与合成路线：'
@@ -8054,7 +8054,7 @@ class RPG:
                     break
 
         for key, value in nurturer_synthesis.items():
-            if value['time'] == 0:
+            if value['taskTime'] == 0:
                 for i in value['path']:
                     if i['name'] == name:
                         reply += '\n' + key

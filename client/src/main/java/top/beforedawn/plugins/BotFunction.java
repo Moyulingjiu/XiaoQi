@@ -16,6 +16,7 @@ import top.beforedawn.models.bo.*;
 import top.beforedawn.models.context.BroadcastContext;
 import top.beforedawn.models.context.Context;
 import top.beforedawn.models.context.WelcomeContext;
+import top.beforedawn.models.timed.GroupTimedMessage;
 import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
@@ -701,6 +702,14 @@ public class BotFunction extends BasePlugin {
                     singleEvent.send("修改失败，无法上传到云端。");
                 }
             }
+        }
+        // 查看背景任务
+        else if (singleEvent.getMessage().plainEqual("查看背景任务")) {
+            if (!singleEvent.aboveBotMaster()) {
+                singleEvent.send("你无权执行该操作");
+                return;
+            }
+            singleEvent.send("当前背景任务个数为：" + BackgroundTask.getInstance().size());
         }
     }
 

@@ -2,6 +2,8 @@ package top.beforedawn.models.bo;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,6 +105,14 @@ public class Blacklist {
         return globalGroups.get(id);
     }
 
+    /**
+     * 显示黑名单
+     *
+     * @param map 黑名单map
+     * @param page 页码
+     * @param pageSize 每页显示数量
+     * @return 显示黑名单
+     */
     private static String showBlacklist(Map<Long, SimpleBlacklist> map, int page, int pageSize) {
         StringBuilder builder = new StringBuilder();
         boolean init = false;
@@ -114,11 +124,15 @@ public class Blacklist {
         if (total % pageSize != 0) total = total / pageSize + 1;
         else total = total / pageSize;
         if (page >= total || page < 0) return "页码超限";
+        ArrayList<Long> keys = new ArrayList<>(map.keySet());
+        keys.sort(Comparator.naturalOrder());
 
         int index = 0;
-        for (Long key : map.keySet()) {
-            if (index < page * pageSize) continue;
-            else if (index >= (page + 1) * pageSize) break;
+        for (Long key : keys) {
+            if (index < page * pageSize) {
+                index++;
+                continue;
+            } else if (index >= (page + 1) * pageSize) break;
             index++;
             SimpleBlacklist simpleBlacklist = map.get(key);
             if (!init) {

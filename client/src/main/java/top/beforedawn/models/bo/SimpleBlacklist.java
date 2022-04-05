@@ -3,7 +3,7 @@ package top.beforedawn.models.bo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import top.beforedawn.util.CommonUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimpleBlacklist {
+public class SimpleBlacklist implements Comparable<SimpleBlacklist> {
     Long key; // 主键
     String comment; // 备注
     Long remind = 0L; // 提醒次数
@@ -46,6 +46,11 @@ public class SimpleBlacklist {
 
     @Override
     public String toString() {
-        return String.format("%d[%s]<%s>", key, comment, CommonUtil.LocalDateTime2String(create));
+        return String.format("%d[%s]", key, comment);
+    }
+
+    @Override
+    public int compareTo(@NotNull SimpleBlacklist o) {
+        return key.compareTo(o.key);
     }
 }

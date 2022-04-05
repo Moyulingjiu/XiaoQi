@@ -1,10 +1,7 @@
 package top.beforedawn;
 
 import net.mamoe.mirai.Bot;
-import net.mamoe.mirai.contact.AnonymousMember;
-import net.mamoe.mirai.contact.Friend;
-import net.mamoe.mirai.contact.Group;
-import net.mamoe.mirai.contact.MemberPermission;
+import net.mamoe.mirai.contact.*;
 import net.mamoe.mirai.event.GlobalEventChannel;
 import net.mamoe.mirai.event.events.*;
 import net.mamoe.mirai.message.data.*;
@@ -162,7 +159,15 @@ public class Main {
             if (singleEvent.getConfig().isBlacklist(event.getMember().getId(), 0L)) {
                 MessageChainBuilder messageChain = new MessageChainBuilder();
                 messageChain.append(new At(event.getMember().getId()));
-                messageChain.append(new PlainText("该人在黑名单中"));
+                SimpleBlacklist user = singleEvent.getConfig().getBlacklist().getUser(event.getMember().getId());
+                SimpleBlacklist globalUser = singleEvent.getConfig().getBlacklist().getGlobalUser(event.getMember().getId());
+                if (user != null) {
+                    messageChain.append(new PlainText("该人在黑名单中\n"));
+                    messageChain.append(new PlainText(user.toString()));
+                } else {
+                    messageChain.append(new PlainText("该人在全局黑名单中\n"));
+                    messageChain.append(new PlainText(globalUser.toString()));
+                }
                 singleEvent.send(messageChain.asMessageChain());
             }
         });
@@ -294,12 +299,12 @@ public class Main {
                 if (event.getOperator() != null && event.getOperator().getId() == event.getAuthorId()) {
                     int[] ids = event.getMessageIds();
                     if (ids.length != 0) {
-                        LocalDateTime time = MessagePool.getTime(ids[0]);
+                        LocalDateTime taskTime = MessagePool.getTime(ids[0]);
                         MessageChain chain = MessagePool.get(ids[0]);
-                        if (time == null || chain == null) return;
+                        if (taskTime == null || chain == null) return;
                         String authorName = event.getAuthor().getNick();
                         String message = "成员<" + authorName + ">（" + event.getAuthorId() + "）试图撤回" +
-                                CommonUtil.LocalDateTime2String(time) + "的消息\n" +
+                                CommonUtil.LocalDateTime2String(taskTime) + "的消息\n" +
                                 "--------\n";
                         MessageChainBuilder builder = new MessageChainBuilder();
                         builder.add(new PlainText(message));
@@ -315,60 +320,20 @@ public class Main {
      * 背景任务
      */
     private static void backgroundTask(Bot bot) {
-        new Thread(() -> {
-            System.out.println("已开始背景任务");
-            SingleEvent singleEvent = new SingleEvent(bot.getId());
-            singleEvent.setTitle("watcher");
-            BotConfig config = MyBot.getSimpleCombineBot(bot.getId(), singleEvent).getConfig();
-            Friend master = bot.getFriend(config.getMaster());
-            if (master != null) {
-                master.sendMessage(config.getName() + "已上线");
-            }
+        System.out.println("已开始背景任务");
+        SingleEvent singleEvent = new SingleEvent(bot.getId());
+        singleEvent.setTitle("watcher");
+        BotConfig config = MyBot.getSimpleCombineBot(bot.getId(), singleEvent).getConfig();
+        Friend master = bot.getFriend(config.getMaster());
+        if (master != null) {
+            master.sendMessage(config.getName() + "已上线");
+        }
 
-            LocalDateTime last = LocalDateTime.now();
-            LocalDateTime lastHeart = LocalDateTime.now();
-            while (true) {
-                LocalDateTime now = LocalDateTime.now();
-                if (Duration.between(last, now).toMinutes() >= 1) {
-                    last = now;
-
-                    // 心跳报时
-                    if (config.getBotSwitcher().isHeart()) {
-                        if (Duration.between(lastHeart, now).toHours() >= config.getBotSwitcher().getHeartInterval()) {
-                            lastHeart = now;
-                            Friend friend = bot.getFriend(config.getMaster());
-                            if (friend != null) {
-                                friend.sendMessage("心跳报告，当前时间" + CommonUtil.LocalDateTime2String(now) + "\n" +
-                                        "当前版本：" + BotConfig.VERSION);
-                            }
-                        }
-                    }
-                    // 每日零点清空数据
-                    if (now.getHour() == 0 && now.getMinute() == 0) {
-                        String msg = "当前版本：" + BotConfig.VERSION + "\n" + config.getStatistics().toString();
-                        config.getStatistics().refresh();
-                        Group group = bot.getGroup(config.getOfficialGroup());
-                        if (group != null) {
-                            singleEvent.record();
-                            group.sendMessage(msg);
-                        } else {
-                            Friend friend = bot.getFriend(config.getMaster());
-                            if (friend != null) {
-                                friend.sendMessage(msg);
-                            }
-                        }
-                    }
-                }
-                try {
-                    Thread.sleep(900);
-                    config = MyBot.getSimpleCombineBot(bot.getId(), singleEvent).getConfig();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    System.out.println("背景任务受到打断，已终止");
-                    break;
-                }
-            }
-        }).start();
+        BackgroundTask instance = BackgroundTask.getInstance();
+        instance.bot = bot;
+        instance.config = config;
+        Thread thread = new Thread(instance);
+        thread.start();
     }
 
     private static void inBlacklist(SingleEvent singleEvent) {
@@ -578,7 +543,19 @@ public class Main {
         return false;
     }
 
+    private static void isExpired(SingleEvent singleEvent) {
+        BotConfig config = singleEvent.getConfig();
+        if (config.getKeyValidEndDate() == null || config.getKeyType().equals("FOREVER")) {
+            return;
+        }
+        if (config.getKeyValidEndDate().isBefore(LocalDateTime.now())) {
+            singleEvent.sendMaster("您的机器人账号已过期，请联系管理员");
+            System.exit(0);
+        }
+    }
+
     public static void handle(SingleEvent singleEvent) {
+        isExpired(singleEvent);
         if (
                 !singleEvent.valid() ||
                         MessageStatistics.getRemindTime(singleEvent.getSenderId()) ||
@@ -613,6 +590,7 @@ public class Main {
         String workdir = args[0];
         long botId = CommonUtil.getLong(args[1]);
 
+        // 查看环境信息
         System.out.println("当前系统环境");
         System.out.println(System.getProperty("os.name").toLowerCase(Locale.US));
         System.out.println(System.getProperty("os.arch").toLowerCase(Locale.US));

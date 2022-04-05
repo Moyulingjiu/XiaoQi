@@ -12,7 +12,7 @@ class Luck:
 
     def get_luck_number(self, qq):
         if self.cache.__contains__(qq):
-            if (datetime.now() - self.cache[qq]['time']).seconds < 600:
+            if (datetime.now() - self.cache[qq]['taskTime']).seconds < 600:
                 return self.cache[qq]['data']
         url: str = "http://175.178.4.128:9001/user/luck/" + str(qq) + "?botId=1812322920"
         res = requests.get(url)
@@ -20,7 +20,7 @@ class Luck:
             return 50
         data = res.json()
         self.cache[qq] = {
-            'time': datetime.now(),
+            'taskTime': datetime.now(),
             'data': data['data']['luck']
         }
         return data['data']['luck']

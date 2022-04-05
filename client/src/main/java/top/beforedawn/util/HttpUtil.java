@@ -35,7 +35,6 @@ public class HttpUtil {
             user.setLuck(50);
             return user;
         }
-        System.out.println(response);
         user.setId(response.getData().getLong("id"));
         user.setQq(response.getData().getLong("qq"));
         user.setLastChangePassword(CommonUtil.getLocalDateTime(response.getData().getString("lastChangePassword")));

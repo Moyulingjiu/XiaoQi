@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import top.beforedawn.config.GroupEntryRule;
 import top.beforedawn.models.context.SerializeMessage;
 import top.beforedawn.models.reply.BaseAutoReply;
+import top.beforedawn.models.timed.GroupTimedMessage;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -38,6 +39,7 @@ public class MyGroup {
     private boolean swear = false; // 脏话
     private boolean autoReply = true; // 自定义回复（开关）
     private ArrayList<BaseAutoReply> autoReplies = new ArrayList<>(); // 自定义回复
+    private ArrayList<GroupTimedMessage> timedMessages = new ArrayList<>(); // 定时消息
     private boolean repeat = false; // 自动加一
     private boolean coc = false; // 部落冲突查询
     private boolean driftingBottle = true; // 漂流瓶
@@ -54,5 +56,14 @@ public class MyGroup {
 
     public void add(BaseAutoReply autoReply) {
         autoReplies.add(autoReply);
+    }
+
+    public boolean timedMessageContains(String name) {
+        for (GroupTimedMessage timedMessage : timedMessages) {
+            if (timedMessage.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

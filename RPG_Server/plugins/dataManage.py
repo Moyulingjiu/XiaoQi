@@ -484,7 +484,7 @@ def read_user(qq):
         'buffer': {
             'id': 0,
             'buffer': None,
-            'time': 'xx-xx-xx'
+            'taskTime': 'xx-xx-xx'
         },
         'statistics': {
             'reply': [],

@@ -36,6 +36,7 @@ public class CocFunction extends BasePlugin {
 
     @Override
     public void handleGroup(SingleEvent singleEvent) {
+        // 忽略大小写和空格
         String message = singleEvent.getMessage().getPlainString().toLowerCase().replace(" ", "");
         if (!message.startsWith("coc")) {
             return;
@@ -73,6 +74,7 @@ public class CocFunction extends BasePlugin {
                 主世界兵种
              */
             case "coc野蛮人":
+            case "coc小黄人":
                 sendCocImage(singleEvent, "兵种介绍-野蛮人.jpg");
                 break;
             case "coc弓箭手":
@@ -120,13 +122,18 @@ public class CocFunction extends BasePlugin {
                 sendCocImage(singleEvent, "兵种介绍-雷龙.jpg");
                 break;
             case "coc大雪怪":
+            case "coc雪怪":
                 sendCocImage(singleEvent, "兵种介绍-大雪怪.jpg");
                 break;
-
+            case "coc龙骑士":
+            case "coc龙骑":
+                sendCocImage(singleEvent, "兵种介绍-龙骑士.jpg");
+                break;
             /*
                 主世界黑油生物
             */
             case "coc亡灵":
+            case "coc苍蝇":
                 sendCocImage(singleEvent, "兵种介绍-亡灵.jpg");
                 break;
             case "coc野猪骑士":
@@ -135,9 +142,11 @@ public class CocFunction extends BasePlugin {
                 break;
             case "coc瓦基丽武神":
             case "coc女武神":
+            case "coc武神":
                 sendCocImage(singleEvent, "兵种介绍-武神.jpg");
                 break;
             case "coc戈仑石人":
+            case "coc石头人":
             case "coc石人":
                 sendCocImage(singleEvent, "兵种介绍-石头人.jpg");
                 break;
@@ -191,7 +200,9 @@ public class CocFunction extends BasePlugin {
                 sendCocImage(singleEvent, "兵种介绍-镜像法术.jpg");
                 break;
             case "coc隐形法术":
+            case "coc隐身法术":
             case "coc隐形":
+            case "coc隐身":
                 sendCocImage(singleEvent, "兵种介绍-隐形法术.jpg");
                 break;
             case "coc毒药法术":
@@ -217,7 +228,7 @@ public class CocFunction extends BasePlugin {
                 超级兵种
              */
             case "coc超级野蛮人":
-            case "coc小黄毛":
+            case "coc超级小黄人":
                 sendCocImage(singleEvent, "兵种介绍-超级野蛮人.jpg");
                 break;
             case "coc超级弓箭手":
@@ -244,15 +255,16 @@ public class CocFunction extends BasePlugin {
                 sendCocImage(singleEvent, "兵种介绍-超级气球.jpg");
                 break;
             case "coc超级飞龙":
+            case "coc超级火龙":
             case "coc超级龙":
                 sendCocImage(singleEvent, "兵种介绍-超级飞龙.jpg");
                 break;
-
             case "coc超级亡灵":
             case "coc马云":
                 sendCocImage(singleEvent, "兵种介绍-超级亡灵.jpg");
                 break;
             case "coc超级瓦基丽武神":
+            case "coc超级女武神":
             case "coc超级武神":
                 sendCocImage(singleEvent, "兵种介绍-超级武神.jpg");
                 break;

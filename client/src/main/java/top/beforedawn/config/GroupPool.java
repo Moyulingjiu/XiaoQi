@@ -3,6 +3,7 @@ package top.beforedawn.config;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import top.beforedawn.models.timed.*;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.context.SerializeMessage;
 import top.beforedawn.models.reply.BaseAutoReply;
@@ -150,6 +151,7 @@ public class GroupPool {
             }
         }
 
+        // 屏蔽词
         JSONArray muteWordsJson = jsonObject.getJSONArray("muteWords");
         if (muteWordsJson != null) {
             for (int i = 0; i < muteWordsJson.size(); i++) {
@@ -157,12 +159,64 @@ public class GroupPool {
             }
         }
 
+        // 定时任务
+        JSONArray timedMessages = jsonObject.getJSONArray("timedMessages");
+        if (timedMessages != null) {
+            for (int i = 0; i < timedMessages.size(); i++) {
+//                group.getTimedMessages().add(timedMessages.getObject(i, GroupTimedMessage.class));
+                JSONObject object = timedMessages.getJSONObject(i);
+                GroupTimedMessage groupTimedMessage = new GroupTimedMessage();
+                groupTimedMessage.setGroupId(object.getLong("groupId"));
+                groupTimedMessage.setName(object.getString("name"));
+                groupTimedMessage.setReply(object.getObject("reply", ArrayList.class));
+                groupTimedMessage.setLastTime(object.getObject("lastTime", LocalDateTime.class));
+
+                boolean flag = false;
+                try {
+                    groupTimedMessage.setChecker(object.getObject("checker", YearlyChecker.class));
+                    if (groupTimedMessage.getChecker().valid())
+                        flag = true;
+                } catch (JSONException ignored) {
+                }
+                if (!flag) {
+                    try {
+                        groupTimedMessage.setChecker(object.getObject("checker", MonthlyChecker.class));
+                        if (groupTimedMessage.getChecker().valid())
+                            flag = true;
+                    } catch (JSONException ignored) {
+                    }
+                }
+                if (!flag) {
+                    try {
+                        groupTimedMessage.setChecker(object.getObject("checker", WeeklyChecker.class));
+                        if (groupTimedMessage.getChecker().valid())
+                            flag = true;
+                    } catch (JSONException ignored) {
+                    }
+                }
+                if (!flag) {
+                    try {
+                        groupTimedMessage.setChecker(object.getObject("checker", DailyChecker.class));
+                        if (groupTimedMessage.getChecker().valid())
+                            flag = true;
+                    } catch (JSONException ignored) {
+                    }
+                }
+                if (flag) {
+                    group.getTimedMessages().add(groupTimedMessage);
+                    // 不用担心重复注册
+                    BackgroundTask.getInstance().put(groupTimedMessage);
+                }
+            }
+        }
+
+        // 自定义回复
         ArrayList<BaseAutoReply> autoReplies = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("autoReplies");
         for (int i = 0; i < jsonArray.size(); i++) {
             try {
                 KeyReply reply = jsonArray.getObject(i, KeyReply.class);
-                if (reply != null && reply.valid()){
+                if (reply != null && reply.valid()) {
                     autoReplies.add(reply);
                     continue;
                 }
@@ -189,7 +243,7 @@ public class GroupPool {
         }
         group.setAutoReplies(autoReplies);
 
-        Map tunnel = jsonObject.getObject("tunnel", Map.class);
+        Map<String, String> tunnel = jsonObject.getObject("tunnel", Map.class);
         if (tunnel != null)
             group.setTunnel(tunnel);
 
@@ -229,6 +283,7 @@ public class GroupPool {
         jsonObject.put("swear", group.isSwear());
         jsonObject.put("autoReply", group.isAutoReply());
         jsonObject.put("autoReplies", group.getAutoReplies());
+        jsonObject.put("timedMessages", group.getTimedMessages());
         jsonObject.put("repeat", group.isRepeat());
         jsonObject.put("coc", group.isCoc());
         jsonObject.put("driftingBottle", group.isDriftingBottle());
