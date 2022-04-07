@@ -183,7 +183,7 @@ public class BotConfig {
         }
         JSONObject jsonObject = JSONObject.parseObject(content);
 
-        // 读取主人和管理员
+        // 读取管理员
         JSONArray jsonAdmin = jsonObject.getJSONArray("admin");
         for (int i = 0; i < jsonAdmin.size(); i++) {
             try {
@@ -192,7 +192,6 @@ public class BotConfig {
 
             }
         }
-
 
         // 读取黑名单
         for (Object user : jsonObject.getJSONObject("blacklist").getJSONArray("user")) {
@@ -285,7 +284,7 @@ public class BotConfig {
      * @return boolean
      */
     public boolean isGroupBlacklist(Long groupId) {
-        if (groupId == officialGroup) {
+        if (Objects.equals(groupId, officialGroup)) {
             return blacklist.isGlobalBlacklist(0L, groupId, SystemRight.MEMBER);
         }
         return blacklist.isBlacklist(0L, groupId, SystemRight.MEMBER) || blacklist.isGlobalBlacklist(0L, groupId, SystemRight.MEMBER);
@@ -299,7 +298,7 @@ public class BotConfig {
     }
 
     public SimpleBlacklist getBlacklistGroup(Long id) {
-        if (id == officialGroup) {
+        if (Objects.equals(id, officialGroup)) {
             return null;
         }
         return blacklist.getGroup(id);
@@ -315,17 +314,11 @@ public class BotConfig {
 
     public boolean isMute(SingleEvent singleEvent) {
         MyGroup group = GroupPool.get(singleEvent);
-        if (group != null) {
-            return group.isMute();
-        }
-        return false;
+        return group.isMute();
     }
 
     public boolean isLimit(SingleEvent singleEvent) {
         MyGroup group = GroupPool.get(singleEvent);
-        if (group != null) {
-            return group.isLimit();
-        }
-        return false;
+        return group.isLimit();
     }
 }

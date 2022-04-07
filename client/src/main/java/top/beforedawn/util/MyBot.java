@@ -8,6 +8,7 @@ import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -82,6 +83,20 @@ public class MyBot {
                     config
             );
             return botPool.get(qq).getBot();
+        }
+        boolean flag = false;
+        int times = 0;
+        while (!flag) {
+            times++;
+            try {
+                InitFileChecker.checkAndRepair(config.getWorkdir());
+                flag = true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                if (times > 3) {
+                    break;
+                }
+            }
         }
         Bot bot = BotFactory.INSTANCE.newBot(qq, config.getPassword(), new BotConfiguration() {{
             // 如果遇到 Bot 闲置一段时间后，发消息返回成功但群内收不到的情况，请切换心跳策略，依次尝试 STAT_HB、REGISTER 和 NONE。
