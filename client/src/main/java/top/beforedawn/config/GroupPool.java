@@ -10,6 +10,7 @@ import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.models.reply.KeyMatchReply;
 import top.beforedawn.models.reply.KeyReply;
+import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.FileUtil;
 import top.beforedawn.util.SingleEvent;
 
@@ -168,8 +169,23 @@ public class GroupPool {
                 GroupTimedMessage groupTimedMessage = new GroupTimedMessage();
                 groupTimedMessage.setGroupId(object.getLong("groupId"));
                 groupTimedMessage.setName(object.getString("name"));
-                groupTimedMessage.setReply(object.getObject("reply", ArrayList.class));
-                groupTimedMessage.setLastTime(object.getObject("lastTime", LocalDateTime.class));
+
+                JSONArray reply = object.getJSONArray("reply");
+                for (int j = 0; j < reply.size(); j++) {
+                    groupTimedMessage.getReply().add(reply.getObject(j, SerializeMessage.class));
+                }
+
+                String lastTime = object.getString("lastTime");
+                if (lastTime != null && !lastTime.equals("null")) {
+                    int index = lastTime.lastIndexOf(".");
+                    String substring;
+                    if (index != -1) {
+                        substring = lastTime.substring(0, index).replace("T", " ");
+                    } else {
+                        substring = lastTime.replace("T", " ");
+                    }
+                    groupTimedMessage.setLastTime(CommonUtil.getLocalDateTime(substring));
+                }
 
                 boolean flag = false;
                 try {

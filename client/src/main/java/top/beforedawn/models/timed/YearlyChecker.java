@@ -36,7 +36,7 @@ public class YearlyChecker extends BaseRepeatChecker {
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
         if (lastTime != null) {
-            if (now == null || Duration.between(lastTime, now).toDays() <= 360) {
+            if (now == null || Duration.between(lastTime, now).toDays() <= 180) {
                 return false;
             }
         }

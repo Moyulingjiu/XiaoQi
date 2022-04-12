@@ -35,7 +35,7 @@ public class MonthlyChecker extends BaseRepeatChecker {
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
         if (lastTime != null) {
-            if (now == null || Duration.between(lastTime, now).toDays() <= 27) {
+            if (now == null || Duration.between(lastTime, now).toDays() <= 15) {
                 return false;
             }
         }

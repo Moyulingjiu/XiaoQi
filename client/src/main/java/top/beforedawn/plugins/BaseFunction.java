@@ -1,8 +1,11 @@
 package top.beforedawn.plugins;
 
 import net.mamoe.mirai.contact.MemberPermission;
+import top.beforedawn.models.bo.MessageLinearAnalysis;
 import top.beforedawn.models.bo.MyUser;
 import top.beforedawn.util.*;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * 基础功能
@@ -33,10 +36,22 @@ public class BaseFunction extends BasePlugin {
         else if (singleEvent.getMessage().plainStartWith("tarot")) {
             String url = "http://175.178.4.128:9000/tarot";
 //            String url = "http://localhost:8000/tarot";
-            HttpResponse response = HttpRequest.sendGet(url, "code=" + singleEvent.getMessage().getPlainString());
+            HttpResponse response = HttpRequest.sendGet(url, "code=" + java.net.URLEncoder.encode(singleEvent.getMessage().getPlainString().replaceAll(" +", ""), StandardCharsets.UTF_8));
             if (!response.getData().getString("data").equals("指令错误")) {
                 singleEvent.send(response.getData().getString("data"));
             }
+        }
+        // 随机字符串
+        else if (singleEvent.getMessage().plainStartWith("随机字符串")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("随机字符串");
+            int length = CommonUtil.getInteger(analysis.getText());
+            if (length == 0) {
+                length = 8;
+            } else if (length > 128) {
+                length = 128;
+            }
+            singleEvent.send(CommonUtil.randomString(length));
         }
     }
 

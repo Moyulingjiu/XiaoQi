@@ -35,7 +35,7 @@ public class WeeklyChecker extends BaseRepeatChecker {
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
         if (lastTime != null) {
-            if (now == null || Duration.between(lastTime, now).toDays() <= 6) {
+            if (now == null || Duration.between(lastTime, now).toDays() <= 1) {
                 return false;
             }
         }

@@ -34,7 +34,7 @@ public class DailyChecker extends BaseRepeatChecker {
     @Override
     public boolean isRepeat(LocalDateTime lastTime, LocalDateTime now) {
         if (lastTime != null) {
-            if (now == null || Duration.between(lastTime, now).toHours() <= 23) {
+            if (now == null || Duration.between(lastTime, now).toHours() <= 10) {
                 return false;
             }
         }

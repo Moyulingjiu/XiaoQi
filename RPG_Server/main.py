@@ -1,9 +1,9 @@
-from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from plugins import rpg
 from plugins import tarot
+import base64
 
 app = FastAPI()
 my_rpg = rpg.RPG()
@@ -30,14 +30,9 @@ async def root():
 
 @app.post("/rpg")
 async def rpg(message: Message):
-    if message.text == '签到':
-        print('收到签到请求')
     need_reply, reply_text, reply_image = my_rpg.handle(message.text, message.qq, message.member_name, message.bot_name,
                                                         message.be_at, message.limit)
-    print(need_reply)
-    print(reply_text)
     reply: Reply = Reply(need_reply=need_reply, reply_text=reply_text)
-    print(reply)
     return {"code": 0, "message": "成功", "data": reply}
 
 
@@ -50,26 +45,26 @@ async def tar(code: str):
         reply_text = tarot.GetTarot2()
     elif code == 'tarot':
         reply_text = tarot.tarot()
-    elif code == 'tarot 时间':
+    elif code == 'tarot时间':
         reply_text = tarot.tarotTime()
-    elif code == 'tarot 是非':
+    elif code == 'tarot是非':
         reply_text = tarot.tarotIs()
-    elif code == 'tarot 圣三角':
+    elif code == 'tarot圣三角':
         reply_text = tarot.tarotIs()
-    elif code == 'tarot 钻石展开法':
+    elif code == 'tarot钻石展开法':
         reply_text = tarot.tarotBussiness()
-    elif code == 'tarot 恋人金字塔':
+    elif code == 'tarot恋人金字塔':
         reply_text = tarot.tarotLove()
-    elif code == 'tarot 自我探索':
+    elif code == 'tarot自我探索':
         reply_text = tarot.tarotSelf()
-    elif code == 'tarot 吉普赛十字':
+    elif code == 'tarot吉普赛十字':
         reply_text = tarot.tarotCross()
-    elif code == 'tarot 二选一':
+    elif code == 'tarot二选一':
         reply_text = tarot.tarotChoose()
-    elif code == 'tarot 关系发展':
+    elif code == 'tarot关系发展':
         reply_text = tarot.tarotForward()
-    elif code == 'tarot 六芒星':
+    elif code == 'tarot六芒星':
         reply_text = tarot.tarotHexagram()
-    elif code == 'tarot 凯尔特十字':
+    elif code == 'tarot凯尔特十字':
         reply_text = tarot.tarotCelticCross()
     return {"code": 0, "message": "成功", "data": reply_text}

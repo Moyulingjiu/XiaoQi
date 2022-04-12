@@ -28,7 +28,7 @@ public class GroupTimedMessage implements BaseTimedTask {
     private Long groupId;
     private String name;
     // 以下参数为发送的消息，并不用于唯一确定一个任务
-    private ArrayList<SerializeMessage> reply;
+    private ArrayList<SerializeMessage> reply = new ArrayList<>();
     private BaseRepeatChecker checker;
     private LocalDateTime lastTime;
 

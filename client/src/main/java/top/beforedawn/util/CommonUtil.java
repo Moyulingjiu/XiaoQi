@@ -387,4 +387,23 @@ public class CommonUtil {
         if (message.equals("我确定")) return true;
         return false;
     }
+
+    /**
+     * 随机字符串
+     *
+     * @param len 长度
+     * @return 随机字符串
+     */
+    public static String randomString(int len) {
+        char[] chars = new char[]{
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        };
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < len; i++) {
+            builder.append(chars[(int) (Math.random() * chars.length)]);
+        }
+        return builder.toString();
+    }
 }

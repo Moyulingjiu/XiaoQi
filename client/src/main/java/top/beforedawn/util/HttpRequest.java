@@ -34,8 +34,11 @@ public class HttpRequest {
             // 设置通用的请求属性
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent",
-                    "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+            connection.setRequestProperty("Accept-Encoding", "gzip, deflate, br");
+            connection.setConnectTimeout(1000 * 5);
+            connection.setReadTimeout(1000 * 60);
             // 建立实际的连接
             connection.connect();
             // 定义 BufferedReader输入流来读取URL的响应

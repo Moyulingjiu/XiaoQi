@@ -29,7 +29,7 @@ public class RpgFunction extends BasePlugin {
     @Override
     public void handleCommon(SingleEvent singleEvent) {
         String message = singleEvent.getMessage().getPlainString();
-        if (!message.contains("@")) {
+        if (!message.contains("@") && !message.contains("\n")) {
             StringBuilder atMessage = new StringBuilder();
             for (Long aLong : singleEvent.getMessage().getAt()) {
                 atMessage.append("@").append(aLong);
