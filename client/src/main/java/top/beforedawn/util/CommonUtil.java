@@ -385,6 +385,7 @@ public class CommonUtil {
         if (message.equals("确认")) return true;
         if (message.equals("是")) return true;
         if (message.equals("我确定")) return true;
+        if (message.equals("确定")) return true;
         return false;
     }
 

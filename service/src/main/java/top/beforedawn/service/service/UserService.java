@@ -9,6 +9,7 @@ import top.beforedawn.service.model.vo.ret.UserRetVo;
 import top.beforedawn.service.util.Common;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 
@@ -56,10 +57,7 @@ public class UserService {
         if (user.getLastLuck() == null) {
             needRoll = true;
         } else {
-            Duration duration = Duration.between(user.getLastLuck(), LocalDateTime.now());
-            if (duration.toDays() >= 1) {
-                needRoll = true;
-            }
+            needRoll = user.getLastLuck().toLocalDate().equals(LocalDate.now());
         }
         if (needRoll) {
             Random r = new Random();

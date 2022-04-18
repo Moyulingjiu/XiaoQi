@@ -15,6 +15,7 @@ import top.beforedawn.config.*;
 import top.beforedawn.models.bo.*;
 import top.beforedawn.models.context.BroadcastContext;
 import top.beforedawn.models.context.Context;
+import top.beforedawn.models.context.GroupConfigClearContext;
 import top.beforedawn.models.context.WelcomeContext;
 import top.beforedawn.models.timed.GroupTimedMessage;
 import top.beforedawn.util.CommonUtil;
@@ -742,6 +743,7 @@ public class BotFunction extends BasePlugin {
             singleEvent.send(message);
         }
         // 单独控制每个开关
+
         // 限制模式
         else if (singleEvent.getMessage().plainEqual("开启限制模式")) {
             if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isLimit(), true, "已经在限制模式了")) {
@@ -1119,6 +1121,17 @@ public class BotFunction extends BasePlugin {
                 singleEvent.send("权限不足");
             }
         }
+        // 清空群设置
+        else if (singleEvent.getMessage().plainEqual("清空群设置")) {
+            if (!singleEvent.aboveGroupAdmin()) {
+                singleEvent.send("你无权执行清空群设置的操作");
+            } else if (!ContextPool.contains(singleEvent.getSenderId())) {
+                GroupConfigClearContext context = new GroupConfigClearContext();
+                context.setGroupId(singleEvent.getGroupId());
+                ContextPool.put(singleEvent.getSenderId(), context);
+                singleEvent.send(CommonUtil.confirmMessage());
+            }
+        }
     }
 
     public void request(SingleEvent singleEvent) {
@@ -1273,6 +1286,20 @@ public class BotFunction extends BasePlugin {
                 }
                 singleEvent.sendMaster("广播完成！");
             }).start();
+        }
+        // 清空群设置
+        else if (context instanceof GroupConfigClearContext) {
+            if (CommonUtil.isConfirmMessage(singleEvent.getMessage().getPlainString())) {
+                MyGroup group = new MyGroup();
+                group.setId(((GroupConfigClearContext) context).getGroupId());
+                GroupPool.remove(group.getId());
+                GroupPool.put(group);
+                GroupPool.save(singleEvent, group.getId());
+                singleEvent.send("清空成功！");
+            } else {
+                singleEvent.send("已取消清空！");
+            }
+            ContextPool.remove(singleEvent.getSenderId());
         }
         return false;
     }

@@ -22,7 +22,7 @@ import java.util.*;
 public class MyGroup {
     private Long id = 0L;
     private String name = "";
-    private LocalDateTime updateTime; // 更新时间
+    private LocalDateTime updateTime = LocalDateTime.now(); // 更新时间
 
     private boolean mute = false; // 禁言
     private boolean limit = false; // 处在限制模式的群
