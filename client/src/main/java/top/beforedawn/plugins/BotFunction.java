@@ -724,6 +724,7 @@ public class BotFunction extends BasePlugin {
         if (singleEvent.getMessage().plainEqual("模块列表")) {
             String message = "版本信息：" + BotConfig.VERSION + "\n" +
                     "是否处在限制模式：" + getSwitcher(group.isLimit()) + "\n" +
+                    "是否开启基础功能：" + getSwitcher(group.isBaseFunction()) + "\n" +
                     "是否开启戳一戳：" + getSwitcher(group.isNudge()) + "\n" +
                     "是否开启解除闪照：" + getSwitcher(group.isUnlockFlashImage()) + "\n" +
                     "是否开启防撤回：" + getSwitcher(group.isRecallGuard()) + "\n" +
@@ -1110,6 +1111,18 @@ public class BotFunction extends BasePlugin {
                 }
             }
             singleEvent.send("操作成功");
+        }
+        // 开启基础功能
+        else if (singleEvent.getMessage().plainEqual("开启基础功能")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isBaseFunction(), true, "已经开启了基础功能")) {
+                group.setBaseFunction(true);
+                GroupPool.save(singleEvent);
+            }
+        } else if (singleEvent.getMessage().plainEqual("关闭基础功能")) {
+            if (check(singleEvent, singleEvent.aboveGroupAdmin(), group.isBaseFunction(), false, "本来就没有开启基础功能")) {
+                group.setBaseFunction(false);
+                GroupPool.save(singleEvent);
+            }
         }
         // 清除缓存
         else if (singleEvent.getMessage().plainEqual("清除缓存")) {

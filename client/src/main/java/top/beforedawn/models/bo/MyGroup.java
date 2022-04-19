@@ -29,6 +29,7 @@ public class MyGroup {
     private ArrayList<String> muteWords = new ArrayList<>(); // 屏蔽词
 
     // 插件相关的开关
+    private boolean baseFunction = true; // 基础功能
     private boolean nudge = false; // 戳一戳
     private boolean unlockFlashImage = false; // 解除闪照
     private boolean recallGuard = false; // 防撤回

@@ -122,7 +122,8 @@ public class GroupPool {
         group.setGroupEntry(bool != null && bool);
         group.setGroupEntryRule(jsonObject.getObject("groupEntryRule", GroupEntryRule.class));
 
-
+        bool = jsonObject.getBoolean("baseFunction");
+        group.setBaseFunction(bool != null && bool);
         bool = jsonObject.getBoolean("allowCopyAutoReply");
         group.setAllowCopyAutoReply(bool != null && bool);
         bool = jsonObject.getBoolean("selfReply");
@@ -293,6 +294,7 @@ public class GroupPool {
         jsonObject.put("groupEntry", group.isGroupEntry());
         jsonObject.put("groupEntryRule", group.getGroupEntryRule());
 
+        jsonObject.put("baseFunction", group.isBaseFunction());
         jsonObject.put("allowCopyAutoReply", group.isAllowCopyAutoReply());
         jsonObject.put("selfReply", group.isSelfReply());
         jsonObject.put("talk", group.isTalk());
