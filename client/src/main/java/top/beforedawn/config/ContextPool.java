@@ -2,8 +2,7 @@ package top.beforedawn.config;
 
 import top.beforedawn.models.context.Context;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 上下文环境缓存池
@@ -11,10 +10,10 @@ import java.util.Map;
  * @author 墨羽翎玖
  */
 public class ContextPool {
-    private static Map<Long, Context> pool = new HashMap<>();
+    private static ConcurrentHashMap<Long, Context> pool = new ConcurrentHashMap<>();
 
     public static void clear() {
-        Map<Long, Context> newPool = new HashMap<>();
+        ConcurrentHashMap<Long, Context> newPool = new ConcurrentHashMap<>();
         for (Long key : pool.keySet()) {
             if (!pool.get(key).isOver())
                 newPool.put(key, pool.get(key));

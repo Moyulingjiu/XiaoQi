@@ -6,8 +6,7 @@ import top.beforedawn.util.SingleEvent;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 用户池
@@ -25,7 +24,7 @@ public class UserPool {
      */
     public static final int EXPIRATION_TIME = 1;
 
-    public static Map<Long, MyUser> users = new HashMap<>();
+    public static ConcurrentHashMap<Long, MyUser> users = new ConcurrentHashMap<>();
 
     public static int size() {
         return users.size();
@@ -50,11 +49,18 @@ public class UserPool {
     }
 
     /**
+     * 清空
+     */
+    public static void clear() {
+        users = new ConcurrentHashMap<>();
+    }
+
+    /**
      * 清理过期的用户
      */
     public static void clearUser() {
         if (users.size() >= POOL_MAX) {
-            Map<Long, MyUser> newUsers = new HashMap<>();
+            ConcurrentHashMap<Long, MyUser> newUsers = new ConcurrentHashMap<>();
             for (Long key : users.keySet()) {
                 MyUser user = users.get(key);
                 if (user.getUpdateTime() != null && Duration.between(user.getUpdateTime(), LocalDateTime.now()).toMinutes() < EXPIRATION_TIME) {

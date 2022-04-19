@@ -9,8 +9,7 @@ import top.beforedawn.util.FileUtil;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 消息统计类
@@ -23,9 +22,9 @@ import java.util.Map;
 public class MessageStatistics {
     private long dailyMessage = 0;
     private long totalMessage = 0;
-    private Map<String, Long> plugins = new HashMap<>();
-    private Map<Long, ArrayList<LocalDateTime>> userRecord = new HashMap<>();
-    private static Map<Long, LocalDateTime> remindTime = new HashMap<>();
+    private ConcurrentHashMap<String, Long> plugins = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Long, ArrayList<LocalDateTime>> userRecord = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Long, LocalDateTime> remindTime = new ConcurrentHashMap<>();
 
     public static boolean getRemindTime(long qq) {
         clearRemindTime();
@@ -39,7 +38,7 @@ public class MessageStatistics {
 
     public static void clearRemindTime() {
         LocalDateTime now = LocalDateTime.now();
-        Map<Long, LocalDateTime> newRemindTime = new HashMap<>();
+        ConcurrentHashMap<Long, LocalDateTime> newRemindTime = new ConcurrentHashMap<>();
         for (Long key : remindTime.keySet()) {
             if (Duration.between(remindTime.get(key), now).toMinutes() <= 1) {
                 newRemindTime.put(key, remindTime.get(key));
@@ -98,12 +97,14 @@ public class MessageStatistics {
     }
 
     public void record(Long userId) {
-        totalMessage++;
-        dailyMessage++;
-        // 记录当前用户的消息频率与水平
-        ArrayList<LocalDateTime> userMessage = userRecord.getOrDefault(userId, new ArrayList<>());
-        userMessage.add(LocalDateTime.now());
-        userRecord.put(userId, userMessage);
+        synchronized (this) {
+            totalMessage++;
+            dailyMessage++;
+            // 记录当前用户的消息频率与水平
+            ArrayList<LocalDateTime> userMessage = userRecord.getOrDefault(userId, new ArrayList<>());
+            userMessage.add(LocalDateTime.now());
+            userRecord.put(userId, userMessage);
+        }
     }
 
     public void record(Long userId, String title) {
@@ -114,7 +115,7 @@ public class MessageStatistics {
 
     public void refresh() {
         dailyMessage = 0;
-        plugins = new HashMap<>();
+        plugins = new ConcurrentHashMap<>();
     }
 
     @Override

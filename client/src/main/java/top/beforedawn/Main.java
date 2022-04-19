@@ -605,6 +605,7 @@ public class Main {
             return;
         }
 
+        // 正式启动bot
         Bot bot = MyBot.getBot(new BotConfig(workdir, botId));
         registerPlugins();
 

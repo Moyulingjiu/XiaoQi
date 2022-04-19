@@ -3,8 +3,7 @@ package top.beforedawn.config;
 import net.mamoe.mirai.event.events.BotInvitedJoinGroupRequestEvent;
 import net.mamoe.mirai.event.events.NewFriendRequestEvent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 申请事件的缓存池
@@ -12,8 +11,8 @@ import java.util.Map;
  * @author 墨羽翎玖
  */
 public class RequestEventPool {
-    public static final Map<Long, NewFriendRequestEvent> friendRequestEventMap = new HashMap<>();
-    public static final Map<Long, BotInvitedJoinGroupRequestEvent> groupRequestEventMap = new HashMap<>();
+    public static final ConcurrentHashMap<Long, NewFriendRequestEvent> friendRequestEventMap = new ConcurrentHashMap<>();
+    public static final ConcurrentHashMap<Long, BotInvitedJoinGroupRequestEvent> groupRequestEventMap = new ConcurrentHashMap<>();
 
     /**
      * 添加好友请求的事件

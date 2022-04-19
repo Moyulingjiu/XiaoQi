@@ -4,8 +4,7 @@ import net.mamoe.mirai.message.data.MessageChain;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 消息缓存
@@ -14,8 +13,8 @@ import java.util.Map;
  */
 public class MessagePool {
     private static final int VALID_MINUTE = 5;
-    private static Map<Integer, MessageChain> cache = new HashMap<>();
-    private static Map<Integer, LocalDateTime> cacheTime = new HashMap<>();
+    private static ConcurrentHashMap<Integer, MessageChain> cache = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Integer, LocalDateTime> cacheTime = new ConcurrentHashMap<>();
     private static LocalDateTime lastUpdate = LocalDateTime.now();
 
     /**
@@ -25,8 +24,8 @@ public class MessagePool {
         if (Duration.between(lastUpdate, LocalDateTime.now()).toMinutes() <= VALID_MINUTE) {
             return;
         }
-        Map<Integer, MessageChain> newCache = new HashMap<>();
-        Map<Integer, LocalDateTime> newCacheTime = new HashMap<>();
+        ConcurrentHashMap<Integer, MessageChain> newCache = new ConcurrentHashMap<>();
+        ConcurrentHashMap<Integer, LocalDateTime> newCacheTime = new ConcurrentHashMap<>();
         for (Integer key : cacheTime.keySet()) {
             if (Duration.between(cacheTime.get(key), LocalDateTime.now()).toMinutes() <= VALID_MINUTE) {
                 newCache.put(key, cache.get(key));

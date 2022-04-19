@@ -1,6 +1,5 @@
 package top.beforedawn.plugins;
 
-import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.contact.ContactList;
 import net.mamoe.mirai.contact.Group;
 import net.mamoe.mirai.contact.MemberPermission;
@@ -17,14 +16,12 @@ import top.beforedawn.models.context.BroadcastContext;
 import top.beforedawn.models.context.Context;
 import top.beforedawn.models.context.GroupConfigClearContext;
 import top.beforedawn.models.context.WelcomeContext;
-import top.beforedawn.models.timed.GroupTimedMessage;
 import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BotFunction extends BasePlugin {
     private static final int BLACKLIST_PAGE_SIZE = 20;
@@ -37,9 +34,16 @@ public class BotFunction extends BasePlugin {
     }
 
     private void information(SingleEvent singleEvent) {
-        if (singleEvent.getMessage().plainEqual("帮助") || singleEvent.getMessage().plainEqual("指令")) {
-            singleEvent.send("帮助文档地址：http://beforedawn.top/");
-        } else if (singleEvent.getMessage().plainEqual("机器人信息")) {
+        if (singleEvent.getMessage().plainEqual("帮助") ||
+                singleEvent.getMessage().plainEqual("指令") ||
+                singleEvent.getMessage().plainEqual("菜单") ||
+                singleEvent.getMessage().plainEqual(".help") ||
+                singleEvent.getMessage().plainEqual("*help") ||
+                singleEvent.getMessage().plainEqual("你能做什么")) {
+            singleEvent.send("帮助文档地址：https://beforedawn.top/");
+        }
+        // 机器人信息
+        else if (singleEvent.getMessage().plainEqual("机器人信息")) {
             StringBuilder builder = new StringBuilder();
             builder.append("机器人id：").append(singleEvent.getConfig().getQq()).append("\n");
             builder.append("名字：").append(singleEvent.getConfig().getName()).append("\n");
@@ -75,13 +79,17 @@ public class BotFunction extends BasePlugin {
             }
 
             singleEvent.send(builder.toString());
-        } else if (singleEvent.getMessage().plainEqual("统计信息")) {
+        }
+        // 统计信息
+        else if (singleEvent.getMessage().plainEqual("统计信息")) {
             String builder = singleEvent.getConfig().getStatistics().toString() +
                     "\n" + "缓存User：" + UserPool.size() + "/" + UserPool.POOL_MAX +
                     "\n" + "缓存Group：" + GroupPool.size() + "/" + GroupPool.POOL_MAX +
                     "\n" + "版本信息：" + BotConfig.VERSION;
             singleEvent.send(builder);
-        } else if (singleEvent.getMessage().plainEqual("我的权限")) {
+        }
+        // 获取权限
+        else if (singleEvent.getMessage().plainEqual("我的权限")) {
             switch (singleEvent.getRight()) {
                 case SYSTEM_SUPER_ADMIN:
                     singleEvent.send("你的权限：系统超级管理员");
@@ -99,10 +107,14 @@ public class BotFunction extends BasePlugin {
                     singleEvent.send("你的权限：普通成员");
                     break;
             }
-        } else if (singleEvent.getMessage().plainEqual("我的积分")) {
+        }
+        // 获取积分
+        else if (singleEvent.getMessage().plainEqual("我的积分")) {
             MyUser user = UserPool.getUser(singleEvent);
             singleEvent.send(singleEvent.getSenderName() + "你的系统积分：" + user.getPoint());
-        } else if (singleEvent.getMessage().plainEqual("版本信息")) {
+        }
+        // 获取版本信息
+        else if (singleEvent.getMessage().plainEqual("版本信息")) {
             singleEvent.send("版本信息：" + BotConfig.VERSION);
         }
     }
@@ -1127,8 +1139,8 @@ public class BotFunction extends BasePlugin {
         // 清除缓存
         else if (singleEvent.getMessage().plainEqual("清除缓存")) {
             if (singleEvent.aboveBotMaster()) {
-                GroupPool.groups = new HashMap<>();
-                UserPool.users = new HashMap<>();
+                GroupPool.clear();
+                UserPool.clear();
                 singleEvent.send("清空成功");
             } else {
                 singleEvent.send("权限不足");
@@ -1183,7 +1195,7 @@ public class BotFunction extends BasePlugin {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("拒绝群申请");
             long id = CommonUtil.getLong(analysis.getText());
-            if (RequestEventPool.rejectFriend(id)) {
+            if (RequestEventPool.rejectGroup(id)) {
                 singleEvent.send("已拒绝该请求");
             } else {
                 singleEvent.send("请求不存在");

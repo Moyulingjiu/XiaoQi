@@ -3,13 +3,13 @@ package top.beforedawn.config;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import top.beforedawn.models.timed.*;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.models.context.SerializeMessage;
 import top.beforedawn.models.reply.BaseAutoReply;
 import top.beforedawn.models.reply.ComplexReply;
 import top.beforedawn.models.reply.KeyMatchReply;
 import top.beforedawn.models.reply.KeyReply;
+import top.beforedawn.models.timed.*;
 import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.FileUtil;
 import top.beforedawn.util.SingleEvent;
@@ -17,8 +17,8 @@ import top.beforedawn.util.SingleEvent;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 群池
@@ -36,7 +36,7 @@ public class GroupPool {
      */
     public static final int EXPIRATION_TIME = 1;
 
-    public static Map<Long, MyGroup> groups = new HashMap<>();
+    public static ConcurrentHashMap<Long, MyGroup> groups = new ConcurrentHashMap<>();
 
     public static int size() {
         return groups.size();
@@ -61,11 +61,18 @@ public class GroupPool {
     }
 
     /**
+     * 清空
+     */
+    public static void clear() {
+        groups = new ConcurrentHashMap<>();
+    }
+
+    /**
      * 自动清除太久没有使用的群
      */
     public static void clearGroup() {
         if (groups.size() >= POOL_MAX) {
-            Map<Long, MyGroup> newGroups = new HashMap<>();
+            ConcurrentHashMap<Long, MyGroup> newGroups = new ConcurrentHashMap<>();
             for (Long key : groups.keySet()) {
                 MyGroup group = groups.get(key);
                 if (group.getUpdateTime() != null && Duration.between(group.getUpdateTime(), LocalDateTime.now()).toMinutes() < EXPIRATION_TIME) {

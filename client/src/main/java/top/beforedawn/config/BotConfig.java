@@ -96,7 +96,7 @@ public class BotConfig {
     /**
      * 更新远程的数据
      */
-    public void update(SingleEvent singleEvent) {
+    public synchronized void update(SingleEvent singleEvent) {
         updateTime = LocalDateTime.now();
         BotRemoteInformation botRemoteInformation = HttpUtil.getBot(singleEvent);
         if (botRemoteInformation == null) {
@@ -143,7 +143,7 @@ public class BotConfig {
     /**
      * 保存到本地文件
      */
-    public void save() {
+    public synchronized void save() {
         saveTime = LocalDateTime.now();
         statistics.save(workdir + statisticsFilename);
         JSONObject jsonObject = new JSONObject();
@@ -174,7 +174,7 @@ public class BotConfig {
     /**
      * 加载本地数据
      */
-    public void loadFile() {
+    public synchronized void loadFile() {
         saveTime = LocalDateTime.now();
         statistics.load(workdir + statisticsFilename);
         String content = FileUtil.readFile(workdir + configFilename);
