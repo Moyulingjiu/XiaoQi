@@ -1,5 +1,6 @@
 package top.beforedawn.plugins;
 
+import net.mamoe.mirai.message.data.MessageChainBuilder;
 import top.beforedawn.config.BackgroundTask;
 import top.beforedawn.config.ContextPool;
 import top.beforedawn.config.GroupPool;
@@ -314,6 +315,10 @@ public class AutoReplyFunction extends BasePlugin {
                             String[] times = time.split("点");
                             int hour = Integer.parseInt(times[0]);
                             int minute = Integer.parseInt(times[1].split("分")[0]);
+                            if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
                             ((TimedMessageContext) context).setChecker(new DailyChecker(hour, minute));
                             break;
                         case "每周":
@@ -349,6 +354,10 @@ public class AutoReplyFunction extends BasePlugin {
                             times = time.substring(2).split("点");
                             hour = Integer.parseInt(times[0]);
                             minute = Integer.parseInt(times[1].split("分")[0]);
+                            if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
                             ((TimedMessageContext) context).setChecker(new WeeklyChecker(week, hour, minute));
                             break;
                         case "每月":
@@ -361,6 +370,10 @@ public class AutoReplyFunction extends BasePlugin {
                             times = times[1].split("点");
                             hour = Integer.parseInt(times[0]);
                             minute = Integer.parseInt(times[1].split("分")[0]);
+                            if (day <= 0 || day > 31 || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
                             ((TimedMessageContext) context).setChecker(new MonthlyChecker(day, hour, minute));
                             break;
                         case "每年":
@@ -375,6 +388,10 @@ public class AutoReplyFunction extends BasePlugin {
                             times = times[1].split("点");
                             hour = Integer.parseInt(times[0]);
                             minute = Integer.parseInt(times[1].split("分")[0]);
+                            if (month <= 0 || month > 12 || day <= 0 || day > 31 || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+                                singleEvent.send("非法输入，请重新输入，或者输入“*取消创建*”来取消创建");
+                                return true;
+                            }
                             ((TimedMessageContext) context).setChecker(new YearlyChecker(month, day, hour, minute));
                             break;
                         default:
@@ -881,6 +898,23 @@ public class AutoReplyFunction extends BasePlugin {
             } else {
                 singleEvent.send("页码超限，总计：" + total + "页");
             }
+        }
+        // 发送定时消息
+        else if (singleEvent.getMessage().plainStartWith("发送定时消息")) {
+            MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
+            analysis.pop("发送定时消息");
+            String name = analysis.getText();
+
+            for (GroupTimedMessage timedMessage : group.getTimedMessages()) {
+                if (timedMessage.getName().equals(name)) {
+                    MessageChainBuilder messageChain = CommonUtil.getMessageChain(singleEvent, timedMessage.getReply());
+                    singleEvent.send(messageChain.asMessageChain());
+                    singleEvent.send("--------\n" +
+                            "定时消息“" + name + "”如上");
+                    return;
+                }
+            }
+            singleEvent.send("没有这个定时消息");
         }
         // 清空定时消息
         else if (singleEvent.getMessage().plainEqual("清空定时消息")) {
