@@ -420,7 +420,9 @@ def subtract_date(date1, date2):
 
 # 级别转为罗马数字
 def get_roman_numerals(number):
-    if number == 1:
+    if number == 0:
+        return '传奇'
+    elif number == 1:
         return 'Ⅰ'
     elif number == 2:
         return 'Ⅱ'
@@ -628,7 +630,7 @@ class Result:
             'nurturer_synthesis': {  # 培育师合成路线
                 'number': 0,
                 'level': 0,
-                'taskTime': 0,
+                'time': 0,
                 'additional': [],
                 'path': []
             }
@@ -766,7 +768,7 @@ class Result:
             'init': False,
             'state': 'success',
             'name': '',
-            'taskTime': ''
+            'time': ''
         }
         self.harvest = {
             'init': False,
@@ -1245,7 +1247,7 @@ class Result:
                     reply += '<-' + self.show_goods(self.introduction['enchanter_synthesis']['path'])
 
                 if self.introduction['nurturer_synthesis']['number'] != 0:
-                    if self.introduction['nurturer_synthesis']['taskTime'] == 0:
+                    if self.introduction['nurturer_synthesis']['time'] == 0:
                         reply += '\n培育师' + get_roman_numerals(
                             self.introduction['nurturer_synthesis']['level']) + '可合成：' + self.introduction['name']
                         if self.introduction['nurturer_synthesis']['number'] > 1:
@@ -1254,7 +1256,7 @@ class Result:
                     else:
                         reply += '\n培育师' + get_roman_numerals(
                             self.introduction['nurturer_synthesis']['level']) + '可花费' + str(
-                            self.introduction['nurturer_synthesis']['taskTime']) + '分钟培育：'
+                            self.introduction['nurturer_synthesis']['time']) + '分钟培育：'
                         reply += self.show_goods(self.introduction['nurturer_synthesis']['path']) + '->'
                         reply += self.show_goods(self.introduction['nurturer_synthesis']['additional'])
 
@@ -1459,6 +1461,7 @@ class Result:
             else:
                 reply += '\n元素：' + str(self.monster_introduction['element'])
             reply += '\n介绍：' + str(self.monster_introduction['comments'])
+            reply += '\n掉落物：' + self.show_items(self.monster_introduction['spoils'])
         elif self.PVE['init']:
             if self.PVE['state'] == 'win':
                 reply += '\n成功击败「' + self.show_monsters(self.PVE['monsters']) + '」，损失' + str(self.PVE['hp']) + '点生命值'
@@ -1535,7 +1538,7 @@ class Result:
                 reply += '\n附魔失败！需要材料「' + self.show_items(self.enchanting['cost']) + '」'
         elif self.cultivation['init']:
             if self.cultivation['state'] == 'success':
-                reply += '\n成功培育「' + self.cultivation['name'] + '」将会在' + self.cultivation['taskTime'] + '成熟'
+                reply += '\n成功培育「' + self.cultivation['name'] + '」将会在' + self.cultivation['time'] + '成熟'
             elif self.cultivation['state'] == 'job mismatch':
                 reply += '\n培育失败！你不是培育师~'
             elif self.cultivation['state'] == 'level':
@@ -2324,7 +2327,7 @@ class Core:
                             'level': 0,
                             'additional': [],
                             'path': [],
-                            'taskTime': 0
+                            'time': 0
                         }
 
                         name = ''
@@ -2364,11 +2367,11 @@ class Core:
                                             synthesis_route[section[0]].append(item)
                                 elif section[0] == 'level':
                                     synthesis_route['level'] = get_number(section[1])
-                                elif section[0] == 'taskTime':
-                                    synthesis_route['taskTime'] = get_number(section[1])
+                                elif section[0] == 'time':
+                                    synthesis_route['time'] = get_number(section[1])
                         if self.goods.__contains__(name):
                             self.nurturer_synthesis[name] = synthesis_route
-
+        
         # 获取怪物表
         self.special_monster = dataManage.load_obj(special_monster_path)
         with open(monster_path + '.txt', 'r+', encoding='utf-8') as f:
@@ -2955,7 +2958,7 @@ class Core:
             'nurturer_synthesis': {  # 培育师合成路线
                 'number': 0,
                 'level': 0,
-                'taskTime': 0,
+                'time': 0,
                 'additional': [],
                 'path': []
             }
@@ -4172,15 +4175,27 @@ class Core:
         if user['occupation']['work'] == '矿工':
             user['attribute']['occupation']['armor'] += 2
             user['attribute']['occupation']['strength']['max'] += 100
+            
+            if user['occupation']['work_level'] >= 7:
+                user['attribute']['occupation']['strength']['max'] += 300
         elif user['occupation']['work'] == '培育师':
             user['attribute']['occupation']['san']['max'] += 20
             user['attribute']['occupation']['strength']['max'] += 100
+            
+            if user['occupation']['work_level'] >= 7:
+                user['attribute']['occupation']['strength']['max'] += 300
         elif user['occupation']['work'] == '锻造师':
             user['attribute']['occupation']['speed'] += 10
             user['attribute']['occupation']['strength']['max'] += 100
+            
+            if user['occupation']['work_level'] >= 7:
+                user['attribute']['occupation']['strength']['max'] += 300
         elif user['occupation']['work'] == '附魔师':
             user['attribute']['occupation']['san']['max'] += 20
             user['attribute']['occupation']['strength']['max'] += 100
+            
+            if user['occupation']['work_level'] >= 7:
+                user['attribute']['occupation']['strength']['max'] += 300
 
         if user['occupation']['fight'] == '战士':
             user['attribute']['occupation']['attack'] += 3 * user['occupation']['fight_level']
@@ -4188,24 +4203,36 @@ class Core:
 
             user['attribute']['occupation']['speed'] += 30
             user['attribute']['occupation']['hp']['max'] += 20 + 2 * user['occupation']['fight_level']
+            
+            if user['occupation']['fight_level'] >= 7:
+                user['attribute']['occupation']['hp']['max'] += 200
         elif user['occupation']['fight'] == '盾战士':
             user['attribute']['occupation']['armor'] += int(4 * user['occupation']['fight_level'])
             user['attribute']['occupation']['san']['max'] -= 5 * user['occupation']['fight_level']
 
             user['attribute']['occupation']['speed'] -= 10
             user['attribute']['occupation']['hp']['max'] += 10 + 5 * user['occupation']['fight_level']
+            
+            if user['occupation']['fight_level'] >= 7:
+                user['attribute']['occupation']['hp']['max'] += 200
         elif user['occupation']['fight'] == '弓箭手':
             user['attribute']['occupation']['attack'] += 3 * user['occupation']['fight_level']
             user['attribute']['occupation']['speed'] += 15 + 5 * user['occupation']['fight_level']
             user['attribute']['occupation']['san']['max'] += 10 * user['occupation']['fight_level']
 
             user['attribute']['occupation']['hp']['max'] -= 10 - 2 * user['occupation']['fight_level']
+            
+            if user['occupation']['fight_level'] >= 7:
+                user['attribute']['occupation']['hp']['max'] += 200
         elif user['occupation']['fight'] == '魔法师':
             user['attribute']['occupation']['attack'] += 3 * user['occupation']['fight_level']
             user['attribute']['occupation']['san']['max'] += 20 * user['occupation']['fight_level']
             user['attribute']['occupation']['speed'] += 20 + 2 * user['occupation']['fight_level']
 
             user['attribute']['occupation']['hp']['max'] -= 20
+            
+            if user['occupation']['fight_level'] >= 7:
+                user['attribute']['occupation']['hp']['max'] += 200
 
         user['skill']['max'] = 3
         if user['occupation']['fight'] == '魔法师':
@@ -4557,6 +4584,36 @@ class Core:
                             'strong': 0
                         }
                     }
+                elif user['occupation']['work_level'] == 6:
+                    item = {
+                        'name': '七级矿工升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 7:
+                    item = {
+                        'name': '八级矿工升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 8:
+                    item = {
+                        'name': '九级矿工升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
             elif user['occupation']['work'] == '锻造师':
                 if user['occupation']['work_level'] == 1:
                     item = {
@@ -4601,6 +4658,36 @@ class Core:
                 elif user['occupation']['work_level'] == 5:
                     item = {
                         'name': '六级锻造师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 6:
+                    item = {
+                        'name': '七级锻造师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 7:
+                    item = {
+                        'name': '八级锻造师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 8:
+                    item = {
+                        'name': '九级锻造师升级凭证',
                         'number': 1,
                         'enchanting': {
                             'sharp': 0,
@@ -4659,6 +4746,36 @@ class Core:
                             'strong': 0
                         }
                     }
+                elif user['occupation']['work_level'] == 6:
+                    item = {
+                        'name': '七级附魔师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 7:
+                    item = {
+                        'name': '八级附魔师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 8:
+                    item = {
+                        'name': '九级附魔师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
             elif user['occupation']['work'] == '培育师':
                 if user['occupation']['work_level'] == 1:
                     item = {
@@ -4710,9 +4827,39 @@ class Core:
                             'strong': 0
                         }
                     }
+                elif user['occupation']['work_level'] == 6:
+                    item = {
+                        'name': '七级培育师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 7:
+                    item = {
+                        'name': '八级培育师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
+                elif user['occupation']['work_level'] == 8:
+                    item = {
+                        'name': '九级培育师升级凭证',
+                        'number': 1,
+                        'enchanting': {
+                            'sharp': 0,
+                            'rapid': 0,
+                            'strong': 0
+                        }
+                    }
             level_up_occupation['need'] = item
 
-            if user['occupation']['work_level'] >= 6:
+            if user['occupation']['work_level'] >= 7:
                 level_up_occupation['state'] = 'max'
             else:
                 reply, user = self.remove_items(user, item)
@@ -5049,7 +5196,17 @@ class Core:
             elif user['occupation']['fight_level'] == 6:
                 item = {
                     'name': '史诗灵',
-                    'number': 20,
+                    'number': 40,
+                    'enchanting': {
+                        'sharp': 0,
+                        'rapid': 0,
+                        'strong': 0
+                    }
+                }
+            elif user['occupation']['fight_level'] == 7:
+                item = {
+                    'name': '史诗灵',
+                    'number': 100,
                     'enchanting': {
                         'sharp': 0,
                         'rapid': 0,
@@ -5058,7 +5215,7 @@ class Core:
                 }
             level_up_occupation['need'] = item
 
-            if user['occupation']['fight_level'] >= 6:
+            if user['occupation']['fight_level'] >= 7:
                 level_up_occupation['state'] = 'max'
             else:
                 reply, user = self.remove_items(user, item)
@@ -6004,7 +6161,7 @@ class Core:
                                         init_map.append(key)
                                 if len(init_map) != 0:
                                     user['config']['place'] = random.choice(init_map)
-                                use['comments'] = '再一次天转地旋之后你被传送到了' + user['config']['place']
+                                use['comments'] = '在一次天转地旋之后你被传送到了' + user['config']['place']
                                 user['survival_data']['travel'] += 1
                             elif name == '中级传送石':
                                 init_map = []
@@ -6013,19 +6170,35 @@ class Core:
                                         init_map.append(key)
                                 if len(init_map) != 0:
                                     user['config']['place'] = random.choice(init_map)
-                                use['comments'] = '再一次天转地旋之后你被传送到了' + user['config']['place']
+                                use['comments'] = '在一次天转地旋之后你被传送到了' + user['config']['place']
                                 user['survival_data']['travel'] += 1
                             elif name == '高级传送石':
                                 init_map = []
                                 for key, value in self.map.items():
-                                    if self.map[key]['level'] == 2 or self.map[key]['level'] == 3:
+                                    if self.map[key]['level'] == 2:
                                         init_map.append(key)
                                 if len(init_map) != 0:
                                     user['config']['place'] = random.choice(init_map)
-                                use['comments'] = '再一次天转地旋之后你被传送到了' + user['config']['place']
+                                use['comments'] = '在一次天转地旋之后你被传送到了' + user['config']['place']
+                                user['survival_data']['travel'] += 1
+                            elif name == '史诗传送石':
+                                init_map = []
+                                for key, value in self.map.items():
+                                    if self.map[key]['level'] == 3:
+                                        init_map.append(key)
+                                if len(init_map) != 0:
+                                    user['config']['place'] = random.choice(init_map)
+                                use['comments'] = '在一次天转地旋之后你被传送到了' + user['config']['place']
                                 user['survival_data']['travel'] += 1
                             elif name == '传奇传送石':
-                                use['comments'] = '好像什么也没有发生'
+                                init_map = []
+                                for key, value in self.map.items():
+                                    if self.map[key]['level'] == 4:
+                                        init_map.append(key)
+                                if len(init_map) != 0:
+                                    user['config']['place'] = random.choice(init_map)
+                                use['comments'] = '在一次天转地旋之后你被传送到了' + user['config']['place']
+                                user['survival_data']['travel'] += 1
                             elif name == '木元素传送石':
                                 init_map = []
                                 for key, value in self.map.items():
@@ -6108,7 +6281,7 @@ class Core:
                                 buff['level'] = 5
                                 buff['type'] = 1
                                 buff['date'] = addition_minute(getNow.toString(), 5)
-                                use['comments'] = '你获得了3分钟的5级进攻buff'
+                                use['comments'] = '你获得了5分钟的5级进攻buff'
                                 reply, user = self.get_buff(user, buff)
                             elif name == '四级进攻卷轴':
                                 buff['name'] = '进攻'
@@ -6575,14 +6748,14 @@ class Core:
                 init = True
             remove_equipment['name'] += get_name_with_enchanting(user['equipment']['shoes'])
 
-        user = self.get_user(qq)
-        new_result = self.remove_equipment(qq, get_name_with_enchanting(user['equipment']['knapsack']))
-        if new_result.remove_equipment['state'] == 'success':
-            if init:
-                remove_equipment['name'] += '、'
-            else:
-                init = True
-            remove_equipment['name'] += get_name_with_enchanting(user['equipment']['knapsack'])
+        # user = self.get_user(qq)
+        # new_result = self.remove_equipment(qq, get_name_with_enchanting(user['equipment']['knapsack']))
+        # if new_result.remove_equipment['state'] == 'success':
+        #     if init:
+        #         remove_equipment['name'] += '、'
+        #     else:
+        #         init = True
+        #     remove_equipment['name'] += get_name_with_enchanting(user['equipment']['knapsack'])
 
         user = self.get_user(qq)
         new_result = self.remove_equipment(qq, get_name_with_enchanting(user['equipment']['ornaments']))
@@ -6764,7 +6937,85 @@ class Core:
             mining['strength'] += 2
             mining['times'] += 1
 
-            if level >= 6:  # 六级矿工
+
+            if level >= 7:  # 七级矿工
+                ran = random.randint(0, 100000)
+                items = {
+                    'name': '',
+                    'number': 1,
+                    'enchanting': {
+                        'sharp': 0,
+                        'rapid': 0,
+                        'strong': 0
+                    }
+                }
+                if ran < 60000:
+                    items['name'] = '碎石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 75260:
+                    items['name'] = '石头'
+                    reply, user = self.get_items(user, items)
+                elif ran < 81260:
+                    items['name'] = '铁锭'
+                    reply, user = self.get_items(user, items)
+                elif ran < 82260:
+                    items['name'] = '铝锭'
+                    reply, user = self.get_items(user, items)
+                elif ran < 83260:
+                    items['name'] = '钛矿石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 84260:
+                    items['name'] = '下界石英'
+                    reply, user = self.get_items(user, items)
+                elif ran < 84860:
+                    items['name'] = '灵石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 85860:
+                    items['name'] = '寒铁'
+                    reply, user = self.get_items(user, items)
+                elif ran < 86360:
+                    items['name'] = '星钢岩'
+                    reply, user = self.get_items(user, items)
+                elif ran < 87360:
+                    items['name'] = '钨矿石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 88360:
+                    items['name'] = '铬矿石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 88370:
+                    items['name'] = '火元素晶石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 88380:
+                    items['name'] = '水元素晶石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 88390:
+                    items['name'] = '雷元素晶石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 88400:
+                    items['name'] = '木元素晶石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 88900:
+                    items['name'] = '钻石'
+                    reply, user = self.get_items(user, items)
+                elif ran < 92900:
+                    items['name'] = '金锭'
+                    reply, user = self.get_items(user, items)
+                elif ran < 93900:
+                    items['name'] = '末地水晶'
+                    reply, user = self.get_items(user, items)
+                elif ran < 98900:
+                    items['name'] = '元金'
+                    reply, user = self.get_items(user, items)
+                elif ran < 99500:
+                    items['name'] = '原始仙石'
+                    reply, user = self.get_items(user, items)
+                else:
+                    items['name'] = '燧石'
+                    reply, user = self.get_items(user, items)
+
+                if reply:
+                    mining['gets'].append(items)
+            elif level >= 6:  # 六级矿工
                 ran = random.randint(0, 100000)
                 items = {
                     'name': '',
@@ -7292,7 +7543,7 @@ class Core:
 
         if not is_check and self.nurturer_synthesis.__contains__(name) and level > 0:
             nurturer_synthesis_copy = copy.deepcopy(self.nurturer_synthesis[name])
-            if level >= nurturer_synthesis_copy['level'] and nurturer_synthesis_copy['taskTime'] == 0:
+            if level >= nurturer_synthesis_copy['level'] and nurturer_synthesis_copy['time'] == 0:
                 is_check = True
                 path = copy.deepcopy(nurturer_synthesis_copy['path'])
                 get_number = self.nurturer_synthesis[name]['number'] * number
@@ -7555,7 +7806,7 @@ class Core:
             'init': True,
             'state': 'success',
             'name': name,
-            'taskTime': ''
+            'time': ''
         }
 
         if user['occupation']['work'] == '培育师':
@@ -7575,10 +7826,10 @@ class Core:
                         if self.nurturer_synthesis[name]['level'] <= user['occupation']['work_level']:
                             new_crop = {
                                 'name': name,
-                                'taskTime': addition_minute(getNow.toString(), self.nurturer_synthesis[name]['taskTime'])
+                                'time': addition_minute(getNow.toString(), self.nurturer_synthesis[name]['time'])
                             }
                             user['occupation']['farm']['crop'].append(new_crop)
-                            cultivation['taskTime'] = new_crop['taskTime']
+                            cultivation['time'] = new_crop['time']
                         else:
                             cultivation['state'] = 'level'
                     else:
@@ -7618,7 +7869,7 @@ class Core:
         new_crop = []
         for index in range(len(user['occupation']['farm']['crop'])):
             name = user['occupation']['farm']['crop'][index]['name']
-            if is_beyond_deadline(user['occupation']['farm']['crop'][index]['taskTime']):
+            if is_beyond_deadline(user['occupation']['farm']['crop'][index]['time']):
                 items = copy.deepcopy(self.nurturer_synthesis[name]['additional'])
                 operated = []
                 is_back = False
@@ -7830,13 +8081,30 @@ class RPG:
         reply += '\n转换群系：' + str(user['survival_data']['travel']) + '次'
         return reply
 
-    def get_knapsack(self, user):
+    def get_knapsack(self, user, page: int):
+        page_size = 20
+        if page <= 0:
+            page = 0
+        else:
+            page -= 1
         knapsack = self.core.get_knapsack(user)
         reply = user['config']['name'] + '你的背包如下：' + str(len(self.core.get_knapsack(user))) + '/' + str(
             self.core.get_max_knapsack(user))
-
+        
+        index = 0
         for item in knapsack:
-            reply += '\n' + get_name_with_enchanting(item)
+            if page * page_size <= index < (page + 1) * page_size:
+                reply += '\n' + get_name_with_enchanting(item)
+            index += 1
+        reply += '\n--------\n'
+        total = int(index / page_size)
+        if index % page_size > 0:
+            total += 1
+        if total == 0:
+            return user['config']['name'] + '你的背包为空'
+        if page >= total:
+            return '超出页码限制'
+        reply += '当前页码：' + str(page + 1) + '/' + str(total) + '，输入“背包' + str(page + 2) + "”来查看下一页"
         return reply
 
     def get_buff(self, user):
@@ -7959,10 +8227,10 @@ class RPG:
             reply += str(len(user['occupation']['farm']['crop'])) + '/' + str(user['occupation']['farm']['max'])
 
             for crop in user['occupation']['farm']['crop']:
-                if is_beyond_deadline(crop['taskTime']):
+                if is_beyond_deadline(crop['time']):
                     reply += '\n' + crop['name'] + '（已经成熟）'
                 else:
-                    reply += '\n' + crop['name'] + '（' + crop['taskTime'] + '成熟）'
+                    reply += '\n' + crop['name'] + '（' + crop['time'] + '成熟）'
         else:
             reply = user['config']['name'] + '你不是培育师没有农场'
         return reply
@@ -8012,7 +8280,7 @@ class RPG:
             reply += '<-' + result.show_items(enchanter_synthesis[name]['path'])
 
         if nurturer_synthesis.__contains__(name):
-            if nurturer_synthesis[name]['taskTime'] == 0:
+            if nurturer_synthesis[name]['time'] == 0:
                 reply += '\n培育师' + get_roman_numerals(nurturer_synthesis[name]['level']) + '合成路线：'
                 reply += name
                 if nurturer_synthesis[name]['number'] != 0:
@@ -8020,7 +8288,7 @@ class RPG:
                 reply += '<-' + result.show_items(nurturer_synthesis[name]['path'])
             else:
                 reply += '\n培育师' + get_roman_numerals(nurturer_synthesis[name]['level']) + '可以培育' + str(
-                    nurturer_synthesis[name]['taskTime']) + '分钟获得：' + result.show_items(
+                    nurturer_synthesis[name]['time']) + '分钟获得：' + result.show_items(
                     nurturer_synthesis[name]['additional'])
 
         reply += '\n参与合成路线：'
@@ -8054,7 +8322,7 @@ class RPG:
                     break
 
         for key, value in nurturer_synthesis.items():
-            if value['taskTime'] == 0:
+            if value['time'] == 0:
                 for i in value['path']:
                     if i['name'] == name:
                         reply += '\n' + key
@@ -8155,7 +8423,29 @@ class RPG:
         result += '\n-------------------'
         result += '\n当前%d/%d页，输入“物品大全%d”查看下一页' % (page, total_page, page + 1)
         return result
-
+    
+    def view_all_monster(self, page):
+        page_size = 20
+        if page <= 0:
+            page = 0
+        else:
+            page -= 1
+        index = 0
+        result = '怪物大全'
+        result += '\n-------------------'
+        for key, value in self.core.monster.items():
+            if page * page_size <= index < (page + 1) * page_size:
+                result += '\n%d.%s Lv.%s' % (index + 1, key, get_roman_numerals(value['level']))
+            index += 1
+        total = int(index / page_size)
+        if index % page_size > 0:
+            total += 1
+        if page >= total:
+            return '超出页码限制'
+        result += '\n-------------------'
+        result += '\n当前%d/%d页，输入“怪物大全%d”查看下一页' % (page + 1, total, page + 2)
+        return result
+        
     # 入口函数
     def handle(self, message, qq, member_name, bot_name, be_at, limit):
         global lock
@@ -8209,7 +8499,12 @@ class RPG:
                 need_reply = True
             elif (message == '背包' or message == '我的背包') and not limit:
                 user = self.core.get_user(qq)
-                reply_text = self.get_knapsack(user)
+                reply_text = self.get_knapsack(user, 0)
+                need_reply = True
+            elif (message[:2] == '背包' and message[2:].isdigit()) and not limit:
+                page = int(message[2:].strip())
+                user = self.core.get_user(qq)
+                reply_text = self.get_knapsack(user, page)
                 need_reply = True
             elif (message == '成就' or message == '我的成就') and not limit:
                 user = self.core.get_user(qq)
@@ -8302,6 +8597,12 @@ class RPG:
                 need_reply = True
             elif message[:4] == '物品大全' and message[4:].strip().isdigit() and not limit:
                 reply_text = self.view_all_goods(int(message[4:].strip()))
+                need_reply = True
+            elif message == '怪物大全' and not limit:
+                reply_text = self.view_all_monster(1)
+                need_reply = True
+            elif message[:4] == '怪物大全' and message[4:].strip().isdigit() and not limit:
+                reply_text = self.view_all_monster(int(message[4:].strip()))
                 need_reply = True
 
         # 复杂交互操作
@@ -8739,7 +9040,7 @@ class RPG:
 
         # 管理员操作
         if not need_reply:
-            if qq == 1597867839 or qq in [2209882494]:
+            if qq == 1597867839:
                 need_reply, reply_text, reply_image = self.operate(message, qq)
 
         # 如果访问了游戏相关的内容那么初始化姓名

@@ -473,7 +473,7 @@ public class Main {
         // 全局开关
         if (singleEvent.isGroupMessage() && singleEvent.getMessage().plainBeAtEqual("退群")) {
             if (singleEvent.aboveGroupAdmin()) {
-                if (!Objects.equals(singleEvent.getGroupId(), singleEvent.getConfig().getOfficialGroup())) {
+                if (!singleEvent.getGroupId().equals(singleEvent.getConfig().getOfficialGroup()) || singleEvent.aboveBotMaster()) {
                     singleEvent.send("再见啦~" + singleEvent.getBotName() + "会想你们的~");
                     singleEvent.quit();
                     if (singleEvent.getConfig().getBotSwitcher().isRemindQuit()) {
@@ -628,9 +628,9 @@ public class Main {
                 if (message.contains(muteWord) && !message.startsWith("删除屏蔽词")) {
                     MemberPermission botPermission = event.getGroup().getBotPermission();
                     if (botPermission == MemberPermission.MEMBER) {
-                        singleEvent.send("发现屏蔽词“" + muteWord + "”但" + singleEvent.getBotName() + "无权撤回");
+                        singleEvent.sendAt("发现屏蔽词“" + muteWord + "”但" + singleEvent.getBotName() + "无权撤回");
                     } else if (botPermission == MemberPermission.ADMINISTRATOR && event.getPermission() != MemberPermission.MEMBER) {
-                        singleEvent.send("发现屏蔽词“" + muteWord + "”但对方是管理员/群主" + singleEvent.getBotName() + "无权撤回");
+                        singleEvent.sendAt("发现屏蔽词“" + muteWord + "”但对方是管理员/群主" + singleEvent.getBotName() + "无权撤回");
                     } else {
                         MessageSource.recall(event.getMessage());
                         MessageChainBuilder builder = new MessageChainBuilder();

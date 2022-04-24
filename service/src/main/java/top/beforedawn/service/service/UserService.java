@@ -56,7 +56,7 @@ public class UserService {
         if (user.getLastLuck() == null) {
             needRoll = true;
         } else {
-            needRoll = user.getLastLuck().toLocalDate().equals(LocalDate.now());
+            needRoll = !user.getLastLuck().toLocalDate().equals(LocalDate.now());
         }
         if (needRoll) {
             Random r = new Random();

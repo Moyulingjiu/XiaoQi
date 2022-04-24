@@ -49,3 +49,14 @@
 
 采石场 level=2
 废弃矿道 level=2
+
+废土第一街区 level=3
+废土第二街区 level=3
+废土第三街区 level=3
+废土第四街区 level=3
+
+休谟斯圣山天梯 level=3
+休谟斯圣山学院 level=3
+休谟斯圣山圣殿 level=3
+
+# 测试地图 level=3

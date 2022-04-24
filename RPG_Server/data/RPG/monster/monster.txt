@@ -148,7 +148,6 @@
 暗爪（晚霞） level=10 armor=18 attack=260 speed=170  hp=80  comments=晚霞的微光中，依稀能看到一个怪物 spoils=金锭x5 element=暗
 幽眼（晚霞） level=10 armor=19 attack=260 speed=300  hp=60  comments=似乎有什么在看着我们 spoils=钻石x3 element=暗
 暗之天使（晚霞） level=11 armor=160 attack=400 speed=300  hp=90  comments=天使？？这种是生物我们无法战胜 spoils=龙晶 element=暗
-黑洞 level=12 armor=350 attack=900 speed=180  hp=300  comments=看到这个的时候，我们应该是已经死了 spoils=无x1 element=暗
 
 小暗点（烛光） level=8 armor=26 attack=210 speed=160  hp=70  comments=烛光中的一丝黑暗 spoils=棉花x2 element=暗
 暗之精灵（烛光） level=8 armor=25 attack=220 speed=160  hp=70  comments=烛光中的夜精灵 spoils=金锭x1 element=暗
@@ -166,7 +165,7 @@
 暗之巨人（深夜） level=9 armor=39 attack=240 speed=200  hp=80  comments=巨人族，沉浸于黑暗中 spoils=三级进攻卷轴x1 element=暗
 暗爪（深夜） level=10 armor=18 attack=260 speed=170  hp=80  comments=什么怪物在袭击我们？ spoils=龙晶x1，福袋x3 element=暗
 幽眼（深夜） level=10 armor=19 attack=260 speed=300  hp=60  comments=似乎有什么在看着我们 spoils=龙血x1，福袋x3 element=暗
-暗之天使（深夜） level=11 armor=160 attack=400 speed=300  hp=90  comments=天使？？这种是生物我们无法战胜 spoils=龙鳞 element=暗
+暗之天使（深夜） level=11 armor=160 attack=400 speed=300  hp=90  comments=天使？？这种是生物我们无法战胜 spoils=龙鳞x1 element=暗
 
 
 小石头 level=8 armor=26 attack=210 speed=160  hp=70  comments=一个石头怪物 spoils=石头x20，沙子x5
@@ -177,8 +176,95 @@
 大地之灵 level=11 armor=160 attack=400 speed=300  hp=90  comments=不可战胜之物 spoils=石头x400，金锭x40，铁锭x40
 
 铁精 level=8 armor=36 attack=190 speed=180  hp=80  comments=铁成精了！ spoils=铁锭x5，沙子x2
-地精（晚霞） level=9 armor=39 attack=240 speed=200  hp=80  comments=小小的侏儒 spoils=铁锭x8，空间兽x1
-地精（烛光） level=9 armor=39 attack=240 speed=200  hp=80  comments=小小的侏儒 spoils=蚕丝x8，土豆x5
-地精（深夜） level=9 armor=39 attack=240 speed=200  hp=80  comments=小小的侏儒 spoils=金锭x8，胡萝卜x5
+地精（晚霞） level=9 armor=39 attack=240 speed=200  hp=80  comments=地精，一种生活在地底的生物 spoils=铁锭x8，空间兽x1
+地精（烛光） level=9 armor=39 attack=240 speed=200  hp=80  comments=地精，一种生活在地底的生物 spoils=蚕丝x8，土豆x5
+地精（深夜） level=9 armor=39 attack=240 speed=200  hp=80  comments=地精，一种生活在地底的生物 spoils=金锭x8，胡萝卜x5
 吞石兽 level=10 armor=28 attack=230 speed=200  hp=100  comments=一种生活在地底的生物 spoils=精神药水x12，石头x30
-贪婪矿工 level=11 armor=160 attack=240 speed=400  hp=110  comments=天使？？这种生物的力量好强大 spoils=木板x400，铁锭x80
+贪婪矿工 level=11 armor=160 attack=240 speed=400  hp=110  comments=在财富中迷失的人类 spoils=木板x400，铁锭x80
+
+
+黑洞 level=12 armor=350 attack=900 speed=180  hp=300  comments=看到这个的时候，我们应该是已经死了 spoils=无x1 element=暗
+
+# ========================================
+# 第四次更新
+# ========================================
+机械扒手鼠（朝霞） level=8 armor=160 attack=240 speed=400  hp=110  comments=行走在废土之上一只喜欢偷东西的机械老鼠 spoils=灵魂x1
+铁皮装甲狗（朝霞） level=8 armor=200 attack=250 speed=100  hp=200  comments=带有装甲的铁皮狗 spoils=灵魂x1
+破碎机器人（朝霞） level=8 attack=100 armor=300 speed=150  hp=150  comments=他们看起来块头很大 spoils=灵魂x1
+科学怪人吉辛提（朝霞） level=9 attack=235 armor=300 speed=200  hp=150  comments=哈哈哈哈！是谁在大笑 spoils=灵魂x1
+碎片收集者（朝霞） level=9 attack=235 armor=300 speed=200  hp=150  comments=哈哈哈哈！是谁在大笑 spoils=灵魂x1
+堕落改造者（朝霞） level=9 attack=300 armor=100 speed=200  hp=400  comments=他们自愿堕落 spoils=灵魂x1
+机械炸弹鼠（朝霞） level=10 attack=327 armor=186 speed=334  hp=256  comments=炸弹来了！ spoils=灵魂x1
+生化改造人（朝霞） level=10 attack=327 armor=124 speed=280  hp=270  comments=他们是什么！美队？ spoils=灵魂x1
+残次腐败机甲（朝霞） level=10 attack=222 armor=228 speed=345  hp=196  comments=他们是什么！美队？ spoils=灵魂x1
+腐败机甲（朝霞） level=11 attack=360 armor=200 speed=300  hp=150  comments=腐败！ spoils=灵魂x1
+锈蚀移动堡垒（朝霞） level=11 attack=350 armor=140 speed=350  hp=300  comments=雄伟壮丽的堡垒，任何面对它的人都会绝望！ spoils=灵魂x1
+自发意识集群（朝霞） level=12 attack=500 armor=50 speed=300  hp=350  comments=我们好像在与大地战斗！所有的金属都在和我们战斗！ spoils=灵魂x1
+
+
+机械扒手鼠（午阳） level=8 armor=160 attack=240 speed=400  hp=110  comments=行走在废土之上一只喜欢偷东西的机械老鼠 spoils=流光蚕x1
+铁皮装甲狗（午阳） level=8 armor=200 attack=250 speed=100  hp=200  comments=带有装甲的铁皮狗 spoils=铁锭x15
+破碎机器人（午阳） level=8 attack=100 armor=300 speed=150  hp=150  comments=他们看起来块头很大 spoils=钛矿石x5，九天玄铁x1
+科学怪人吉辛提（午阳） level=9 attack=235 armor=300 speed=200  hp=150  comments=哈哈哈哈！是谁在大笑 spoils=精神药水x5，火元素晶石x1
+碎片收集者（午阳） level=9 attack=235 armor=300 speed=200  hp=150  comments=哈哈哈哈！是谁在大笑 spoils=太古岩石x1，雷元素晶石x1
+堕落改造者（午阳） level=9 attack=300 armor=100 speed=200  hp=400  comments=他们自愿堕落 spoils=凤羽x1
+机械炸弹鼠（午阳） level=10 attack=327 armor=186 speed=334  hp=256  comments=炸弹来了！ spoils=火元素晶石x2
+生化改造人（午阳） level=10 attack=327 armor=124 speed=280  hp=270  comments=他们是什么！美队？ spoils=水元素晶石x2
+残次腐败机甲（午阳） level=10 attack=222 armor=228 speed=345  hp=196  comments=他们是什么！美队？ spoils=凤羽x2
+腐败机甲（午阳） level=11 attack=360 armor=200 speed=300  hp=150  comments=腐败！ spoils=太古合金剑x1
+锈蚀移动堡垒（午阳） level=11 attack=350 armor=140 speed=350  hp=300  comments=雄伟壮丽的堡垒，任何面对它的人都会绝望！ spoils=石头x100
+自发意识集群（午阳） level=12 attack=500 armor=50 speed=300  hp=350  comments=我们好像在与大地战斗！所有的金属都在和我们战斗！ spoils=凤羽x5
+
+
+机械扒手鼠（深夜） level=8 armor=160 attack=240 speed=400  hp=110  comments=行走在废土之上一只喜欢偷东西的机械老鼠 spoils=火元素晶石x1
+铁皮装甲狗（深夜） level=8 armor=200 attack=250 speed=100  hp=200  comments=带有装甲的铁皮狗 spoils=水元素晶石x1
+破碎机器人（深夜） level=8 attack=100 armor=300 speed=150  hp=150  comments=他们看起来块头很大 spoils=魔法石x1
+科学怪人吉辛提（深夜） level=9 attack=235 armor=300 speed=200  hp=150  comments=哈哈哈哈！是谁在大笑 spoils=火元素晶石x1，雷元素晶石x1
+碎片收集者（深夜） level=9 attack=235 armor=300 speed=200  hp=150  comments=哈哈哈哈！是谁在大笑 spoils=凤羽x1
+堕落改造者（深夜） level=9 attack=300 armor=100 speed=200  hp=400  comments=他们自愿堕落 spoils=凤羽x1，太古岩石x1
+机械炸弹鼠（深夜） level=10 attack=327 armor=186 speed=334  hp=256  comments=炸弹来了！ spoils=秘银火铳x1
+生化改造人（深夜） level=10 attack=327 armor=124 speed=280  hp=270  comments=他们是什么！美队？ spoils=太古合金甲x1
+残次腐败机甲（深夜） level=10 attack=222 armor=228 speed=345  hp=196  comments=他们是什么！美队？ spoils=凤羽x3
+腐败机甲（深夜） level=11 attack=360 armor=200 speed=300  hp=150  comments=腐败！ spoils=龙血x1，龙晶x1
+锈蚀移动堡垒（深夜） level=11 attack=350 armor=140 speed=350  hp=300  comments=雄伟壮丽的堡垒，任何面对它的人都会绝望！ spoils=流光蚕x10
+自发意识集群（深夜） level=12 attack=500 armor=50 speed=300  hp=350  comments=我们好像在与大地战斗！所有的金属都在和我们战斗！ spoils=雷击木x1
+
+
+
+
+机械驯兽师（朝霞） level=9 attack=280 armor=160 speed=200  hp=110  comments=他们擅长与机械打交道 spoils=灵魂x1
+普通机器人（朝霞） level=9 attack=300 armor=200 speed=150  hp=250  comments=机器人出动 spoils=灵魂x1
+嗜血机械狗（朝霞） level=9 attack=250 armor=200 speed=200  hp=250  comments=他们会循着血腥味找到你 spoils=灵魂x1
+双足陆行机器人（朝霞） level=10 attack=300 armor=100 speed=200  hp=500  comments=机器人出动 spoils=灵魂x1
+皇家机械狗（朝霞） level=10 attack=300 armor=120 speed=400  hp=150  comments=机器人出动 spoils=灵魂x1
+机械巨人（朝霞） level=10 attack=300 armor=150 speed=280  hp=270  comments=是山吗？ spoils=灵魂x1
+皇家守卫机器人（朝霞） level=11 attack=280 armor=280 speed=200  hp=300  comments=机器人出动 spoils=灵魂x1
+追踪浮游器（朝霞） level=11 attack=300 armor=267 speed=150  hp=500  comments=他们如同幽灵一般无处不在 spoils=灵魂x1
+机械蜂巢（朝霞） level=11 attack=260 armor=300 speed=200  hp=300  comments=遮天蔽日 spoils=灵魂x1
+钢铁之翼天空领主（朝霞） level=12 attack=300 armor=300 speed=400  hp=300  comments=参见吾王！ spoils=灵魂x1
+
+
+机械驯兽师（午阳） level=9 attack=280 armor=160 speed=200  hp=110  comments=他们擅长与机械打交道 spoils=桃木树苗x1
+普通机器人（午阳） level=9 attack=300 armor=200 speed=150  hp=250  comments=机器人出动 spoils=金锭x20，黑火药x1
+嗜血机械狗（午阳） level=9 attack=250 armor=200 speed=200  hp=250  comments=他们会循着血腥味找到你 spoils=沙子x10，燧石x10
+双足陆行机器人（午阳） level=10 attack=300 armor=100 speed=200  hp=500  comments=机器人出动 spoils=太古岩石x1，木元素晶石x1
+皇家机械狗（午阳） level=10 attack=300 armor=120 speed=400  hp=150  comments=机器人出动 spoils=秘银x1，水元素晶石x1
+机械巨人（午阳） level=10 attack=300 armor=150 speed=280  hp=270  comments=是山吗？ spoils=凤血x1
+皇家守卫机器人（午阳） level=11 attack=280 armor=280 speed=200  hp=300  comments=机器人出动 spoils=木元素晶石x2
+追踪浮游器（午阳） level=11 attack=300 armor=267 speed=150  hp=500  comments=他们如同幽灵一般无处不在 spoils=雷元素晶石x2
+机械蜂巢（午阳） level=11 attack=260 armor=300 speed=200  hp=300  comments=遮天蔽日 spoils=凤血x2
+钢铁之翼天空领主（午阳） level=12 attack=300 armor=300 speed=400  hp=300  comments=参见吾王！ spoils=凤血x5
+
+
+机械驯兽师（深夜） level=9 attack=280 armor=160 speed=200  hp=110  comments=他们擅长与机械打交道 spoils=木元素晶石x1
+普通机器人（深夜） level=9 attack=300 armor=200 speed=150  hp=250  comments=机器人出动 spoils=雷元素晶石x1
+嗜血机械狗（深夜） level=9 attack=250 armor=200 speed=200  hp=250  comments=他们会循着血腥味找到你 spoils=魔法石x1
+双足陆行机器人（深夜） level=10 attack=300 armor=100 speed=200  hp=500  comments=机器人出动 spoils=水元素晶石x1，木元素晶石x1
+皇家机械狗（深夜） level=10 attack=300 armor=120 speed=400  hp=150  comments=机器人出动 spoils=凤血x1
+机械巨人（午阳） level=10 attack=300 armor=150 speed=280  hp=270  comments=是山吗？ spoils=凤血x1，秘银x1
+皇家守卫机器人（深夜） level=11 attack=280 armor=280 speed=200  hp=300  comments=机器人出动 spoils=秘银剑x1
+追踪浮游器（深夜） level=11 attack=300 armor=267 speed=150  hp=500  comments=他们如同幽灵一般无处不在 spoils=太古合金剑x1
+机械蜂巢（深夜） level=11 attack=260 armor=300 speed=200  hp=300  comments=遮天蔽日 spoils=桃木树苗x10
+钢铁之翼天空领主（深夜） level=12 attack=300 armor=300 speed=400  hp=300  comments=参见吾王！ spoils=火灵木x1
+
+

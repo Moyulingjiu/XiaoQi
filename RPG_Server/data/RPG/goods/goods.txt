@@ -85,108 +85,107 @@
 #=========================================
 # 晶石
 #=========================================
-低级传送石 cost=-1 sell=1 comments=一块充斥着空间之力的石头，使用它或许有奇效 type=26
-中级传送石 cost=50 sell=1 limit=10 comments=磅礴的空间之力简直快要溢出来，使用它或许有奇效 type=26
-高级传送石 cost=-1 sell=1 comments=磅礴的空间之力的背后直觉告诉你有一丝危险的气息 type=26
-传奇传送石 cost=-1 sell=1 comments=只有真正的传奇才敢使用它！ type=26
-木元素传送石 cost=-1 sell=1 comments=它好像在指引我们去一个地方 type=26
-火元素传送石 cost=-1 sell=1 comments=它好像在指引我们去一个地方 type=26
-水元素传送石 cost=-1 sell=1 comments=它好像在指引我们去一个地方 type=26
-雷元素传送石 cost=-1 sell=1 comments=它好像在指引我们去一个地方 type=26
-光元素传送石 cost=-1 sell=1 comments=它好像在指引我们去一个地方 type=26
-暗元素传送石 cost=-1 sell=1 comments=它好像在指引我们去一个地方 type=26
+低级传送石 cost=-1 sell=-1 comments=一块充斥着空间之力的石头，使用它或许有奇效 type=26
+中级传送石 cost=50 sell=-1 limit=10 comments=磅礴的空间之力简直快要溢出来，使用它或许有奇效 type=26
+高级传送石 cost=-1 sell=-1 comments=磅礴的空间之力的背后直觉告诉你有一丝危险的气息 type=26
+史诗传送石 cost=-1 sell=-1 comments=后面会有着什么东西呢？不妨用一下试试 type=26
+传奇传送石 cost=-1 sell=-1 comments=只有真正的传奇才敢使用它！ type=26
+
+木元素传送石 cost=-1 sell=-1 comments=它好像在指引我们去一个地方 type=26
+火元素传送石 cost=-1 sell=-1 comments=它好像在指引我们去一个地方 type=26
+水元素传送石 cost=-1 sell=-1 comments=它好像在指引我们去一个地方 type=26
+雷元素传送石 cost=-1 sell=-1 comments=它好像在指引我们去一个地方 type=26
+光元素传送石 cost=-1 sell=-1 comments=它好像在指引我们去一个地方 type=26
+暗元素传送石 cost=-1 sell=-1 comments=它好像在指引我们去一个地方 type=26
 
 
-水元素晶石 cost=-1 sell=10 comments=附带着水元素的石头 type=32
-火元素晶石 cost=-1 sell=10 comments=附带着火元素的石头 type=32
-雷元素晶石 cost=-1 sell=10 comments=附带着雷元素的石头 type=32
-木元素晶石 cost=-1 sell=10 comments=附带着木元素的石头 type=32
-光元素晶石 cost=-1 sell=10 comments=附带着木元素的石头 type=32
-暗元素晶石 cost=-1 sell=10 comments=附带着木元素的石头 type=32
+水元素晶石 cost=-1 sell=-1 comments=附带着水元素的石头 type=32
+火元素晶石 cost=-1 sell=-1 comments=附带着火元素的石头 type=32
+雷元素晶石 cost=-1 sell=-1 comments=附带着雷元素的石头 type=32
+木元素晶石 cost=-1 sell=-1 comments=附带着木元素的石头 type=32
+光元素晶石 cost=-1 sell=-1 comments=附带着光元素的石头 type=32
+暗元素晶石 cost=-1 sell=-1 comments=附带着暗元素的石头 type=32
 #=========================================
 # 材料
 #=========================================
 
-棉花 cost=-1 sell=1 comments=一小团棉花 type=31
-布 cost=-1 sell=1 comments=一小块布 type=31
+棉花 cost=-1 sell=-1 comments=一小团棉花 type=31
+布 cost=-1 sell=-1 comments=一小块布 type=31
 丝绸 cost=-1 sell=-1 comments=一块丝绸，摸上去十分顺滑 type=31
-皮革 cost=-1 sell=1 comments=一小块皮革 type=31
-燧石 cost=-1 sell=1 comments=一小块燧石 type=31
+皮革 cost=-1 sell=-1 comments=一小块皮革 type=31
+燧石 cost=-1 sell=-1 comments=一小块燧石 type=31
 
 木板 cost=5 sell=1 comments=一小块木板 type=31
-灵木 cost=-1 sell=10 comments=充斥着魔法之力的木板，可以合成更强大的装备 type=31
-
-火灵木 cost=-1 sell=10 comments=被赋予了火元素之力的灵木 type=31
-雷击木 cost=-1 sell=10 comments=被赋予了雷元素之力的灵木 type=31
+灵木 cost=-1 sell=-1 comments=充斥着魔法之力的木板，可以合成更强大的装备 type=31
 
 碎石 cost=-1 sell=-1 comments=小石头，可以合成石头 type=32
 石头 cost=-1 sell=1 comments=可以合成一些初始装备 type=32
-沙子 cost=-1 sell=1 comments=一小团沙子，可以合成一些东西 type=32
-铁锭 cost=-1 sell=5 comments=光亮沉重，可以合成一些初始装备 type=32
-铝锭 cost=-1 sell=10 comments=灰暗轻便，可以合成一些合金 type=32
-钛矿石 cost=-1 sell=10 comments=光洁明亮，可以合成一些合金 type=32
-下界石英 cost=-1 sell=25 comments=幽暗扭曲，可以合成一些装备 type=32
-灵石 cost=-1 sell=40 comments=釉白圣洁，可以合成一些装备 type=32
-魔法石 cost=-1 sell=40 comments=具有神奇力量的石头，它的内部有着汹涌的魔法之力 type=32
-末地水晶 cost=-1 sell=40 comments=具有神奇力量的水晶，可以合成一些装备 type=32
+沙子 cost=-1 sell=-1 comments=一小团沙子，可以合成一些东西 type=32
+铁锭 cost=-1 sell=-1 comments=光亮沉重，可以合成一些初始装备 type=32
+铝锭 cost=-1 sell=-1 comments=灰暗轻便，可以合成一些合金 type=32
+钛矿石 cost=-1 sell=-1 comments=光洁明亮，可以合成一些合金 type=32
+下界石英 cost=-1 sell=-1 comments=幽暗扭曲，可以合成一些装备 type=32
+灵石 cost=-1 sell=-1 comments=釉白圣洁，可以合成一些装备 type=32
+魔法石 cost=-1 sell=-1 comments=具有神奇力量的石头，它的内部有着汹涌的魔法之力 type=32
+末地水晶 cost=-1 sell=-1 comments=具有神奇力量的水晶，可以合成一些装备 type=32
 
 黑火药 cost=-1 sell=-1 comments=BOOM！！ type=34
 
-寒铁 cost=-1 sell=10 comments=从寒冷地方而来，坚硬无比 type=32
-星钢岩 cost=-1 sell=15 comments=从天上掉下来的陨石 type=32
-秘银 cost=-1 sell=15 comments=它十分珍贵，外表呈银白色，比钢铁坚固的多却很轻巧 type=32
-太古岩石 cost=-1 sell=30 comments=从远古时代流传下来的宝贝 type=32
-钨矿石 cost=-1 sell=5 comments=单质为银白色有光泽的金属，硬度高，熔点高，常温下不受空气侵蚀，化学性质比较稳定 type=32
-铬矿石 cost=-1 sell=5 comments=地表最坚硬的金属 type=32
+寒铁 cost=-1 sell=-1 comments=从寒冷地方而来，坚硬无比 type=32
+星钢岩 cost=-1 sell=-1 comments=从天上掉下来的陨石 type=32
+秘银 cost=-1 sell=-1 comments=它十分珍贵，外表呈银白色，比钢铁坚固的多却很轻巧 type=32
+太古岩石 cost=-1 sell=-1 comments=从远古时代流传下来的宝贝 type=32
+钨矿石 cost=-1 sell=-1 comments=单质为银白色有光泽的金属，硬度高，熔点高，常温下不受空气侵蚀，化学性质比较稳定 type=32
+铬矿石 cost=-1 sell=-1 comments=地表最坚硬的金属 type=32
 
 
-九天玄铁 cost=-1 sell=20 comments=经过加工后的星钢岩 type=34
-空间碎片 cost=-1 sell=20 comments=经过精密加工后的末地石 type=34
-太古合金 cost=-1 sell=50 comments=极其优秀的合金 type=34
-钨合金 cost=-1 sell=20 comments=由钨矿石合成的合金 type=34
-铬合金 cost=-1 sell=20 comments=由铬矿石合成的合金 type=34
+九天玄铁 cost=-1 sell=-1 comments=经过加工后的星钢岩 type=34
+空间碎片 cost=-1 sell=-1 comments=经过精密加工后的末地石 type=34
+太古合金 cost=-1 sell=-1 comments=极其优秀的合金 type=34
+钨合金 cost=-1 sell=-1 comments=由钨矿石合成的合金 type=34
+铬合金 cost=-1 sell=-1 comments=由铬矿石合成的合金 type=34
 
 
-铝合金 cost=-1 sell=20 comments=经过加工而成的合金，具有不错的性能，可以合成装备 type=34
-钛合金 cost=-1 sell=20 comments=经过加工而成的合金，具有不错的性能，可以合成装备 type=34
-下界合金 cost=-1 sell=40 comments=经过加工而成的合金，具有不错的性能，可以合成装备 type=34
-下界核心 cost=-1 sell=60 comments=经过中和加工而成的装备核心，具有不错的性能，可以合成装备 type=34
-灵魂结晶 cost=-1 sell=80 comments=一个强韧的灵魂中和了下界石英，再用灵石固定，就成了灵魂结晶 type=34
+铝合金 cost=-1 sell=-1 comments=经过加工而成的合金，具有不错的性能，可以合成装备 type=34
+钛合金 cost=-1 sell=-1 comments=经过加工而成的合金，具有不错的性能，可以合成装备 type=34
+下界合金 cost=-1 sell=-1 comments=经过加工而成的合金，具有不错的性能，可以合成装备 type=34
+下界核心 cost=-1 sell=-1 comments=经过中和加工而成的装备核心，具有不错的性能，可以合成装备 type=34
+灵魂结晶 cost=-1 sell=-1 comments=一个强韧的灵魂中和了下界石英，再用灵石固定，就成了灵魂结晶 type=34
 
 龙晶 cost=-1 sell=-1 comments=暂无简介 type=34
 龙血 cost=-1 sell=-1 comments=从强大的龙族身上逼出的精血 type=34
 龙鳞 cost=-1 sell=-1 comments=龙的鳞片 type=34
 
-玛瑙 cost=-1 sell=30 comments=附魔师所需要的石头，我也不知道这些材料怎么合成的玛瑙 type=34
-天蓝石 cost=-1 sell=30 comments=附魔师所需要的石头，蕴含了锋利 type=34
-青金石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
-猫眼 cost=-1 sell=30 comments=附魔师所需要的宝石，一定是魔法合成的 type=34
-碧玺 cost=-1 sell=30 comments=附魔师所需要的宝石，蕴含了速度 type=34
-翡翠 cost=-1 sell=30 comments=附魔师所需要的宝石，蕴含了速度 type=34
-红水晶 cost=-1 sell=30 comments=附魔师所需要的水晶，虽然水晶并不坚固 type=34
-蓝水晶 cost=-1 sell=30 comments=附魔师所需要的水晶，蕴含了坚固 type=34
-紫水晶 cost=-1 sell=30 comments=附魔师所需要的水晶，蕴含了坚固 type=34
+玛瑙 cost=-1 sell=-1 comments=附魔师所需要的石头，我也不知道这些材料怎么合成的玛瑙 type=34
+天蓝石 cost=-1 sell=-1 comments=附魔师所需要的石头，蕴含了锋利 type=34
+青金石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+猫眼 cost=-1 sell=-1 comments=附魔师所需要的宝石，一定是魔法合成的 type=34
+碧玺 cost=-1 sell=-1 comments=附魔师所需要的宝石，蕴含了速度 type=34
+翡翠 cost=-1 sell=-1 comments=附魔师所需要的宝石，蕴含了速度 type=34
+红水晶 cost=-1 sell=-1 comments=附魔师所需要的水晶，虽然水晶并不坚固 type=34
+蓝水晶 cost=-1 sell=-1 comments=附魔师所需要的水晶，蕴含了坚固 type=34
+紫水晶 cost=-1 sell=-1 comments=附魔师所需要的水晶，蕴含了坚固 type=34
 
-锆石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
-绿松石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
-鸡血石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
-琥珀 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
-七彩石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
-夜光石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+锆石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+绿松石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+鸡血石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+琥珀 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+七彩石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
+夜光石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了锋利 type=34
 
-珊瑚 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
-欧珀 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
-辰砂 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
-软玉 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
-珍珠 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
-白玉 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
+珊瑚 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
+欧珀 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
+辰砂 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
+软玉 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
+珍珠 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
+白玉 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了迅捷 type=34
 
-红宝石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
-蓝宝石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
-紫宝石 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
-红玉髓 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
-蓝玉髓 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
-紫玉髓 cost=-1 sell=30 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
+红宝石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
+蓝宝石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
+紫宝石 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
+红玉髓 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
+蓝玉髓 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
+紫玉髓 cost=-1 sell=-1 comments=附魔师所需要的石头 ，蕴含了坚固 type=34
 
 
 钻石 cost=1000 sell=50 comments=璀璨闪亮，可以用来合成很多东西以及附魔 type=32
@@ -204,7 +203,7 @@
 棉花种子 cost=-1 sell=1 comments=一颗棉花种子 type=27
 蚕 cost=-1 sell=1 comments=一条蚕，可以吐出蚕丝 type=27
 
-蚕丝 cost=-1 sell=20 comments=珍贵无比的蚕丝 type=22
+蚕丝 cost=-1 sell=-1 comments=珍贵无比的蚕丝 type=22
 肉 cost=30 hp=1 strength=1 sell=3 comments=牲畜的肉，可以直接吃，也可以做成药水 type=22
 熟肉 cost=50 sell=-1 hp=4 strength=4 comments=一块烤熟的肉，尝起来还不错 type=22
 米 cost=5 sell=1 comments=可以直接吃，也可以做成药水 type=22
@@ -212,11 +211,11 @@
 #=========================================
 # 药水
 #=========================================
-体力药水 cost=5 sell=1 strength=10 limit=20 comments=一瓶普通的体力药水，可以帮助恢复体力 type=21
-晨露 cost=20 sell=1 strength=-1 limit=1 comments=活力满满！直接回满体力 type=21
+体力药水 cost=5 sell=1 strength=10 limit=10 comments=一瓶普通的体力药水，可以帮助恢复体力 type=21
+晨露 cost=100 sell=1 strength=200 limit=1 comments=活力满满！巨额回复体力 type=21
 
-生命药水 cost=5 sell=1 hp=10 limit=20 comments=一瓶普通的生命药水，可以帮助恢复生命 type=21
-甘霖 cost=20 sell=1 hp=-1 limit=1 comments=活力满满！直接回满生命 type=21
+生命药水 cost=5 sell=1 hp=10 limit=10 comments=一瓶普通的生命药水，可以帮助恢复生命 type=21
+甘霖 cost=100 sell=1 hp=200 limit=1 comments=活力满满！巨额回复生命 type=21
 
 精神药水 cost=5 sell=1 san=10 limit=20 comments=回复一部分精神力，强大的精神才可以释放出强大的技能 type=21
 
@@ -412,11 +411,11 @@
 #=========================================
 # 第二期饰品
 #=========================================
-元素面具 san-max=20 strength-recovery=20 cost=2500 sell=1300 comments=四大元素组成的花纹在这上面 type=12
-木纹护额 san-max=30 san-recovery=20 cost=3200 sell=1800 comments=曾经似乎被某个会木遁的忍者带过 type=12
+元素面具 san-max=20 strength-recovery=20 cost=2500 sell=-1 comments=四大元素组成的花纹在这上面 type=12
+木纹护额 san-max=30 san-recovery=20 cost=3200 sell=-1 comments=曾经似乎被某个会木遁的忍者带过 type=12
 
-火灵指环 san-max=10 speed=10 cost=2000 sell=1000 comments=戴上它，身体变得暖和了些 type=14
-冰霜戒指 san-max=10 attack=2 cost=1800 sell=600 comments=属于深入冰川的勇者的指环！ type=14
+火灵指环 san-max=10 speed=10 cost=2000 sell=-1 comments=戴上它，身体变得暖和了些 type=14
+冰霜戒指 san-max=10 attack=2 cost=1800 sell=-1 comments=属于深入冰川的勇者的指环！ type=14
 
 雷霆之心 hp-max=20 cost=1500 sell=500 comments=雷电在里面闪烁！ type=13
 生命女神之祝福 cost=-1 comments=勇士，您现在没有足够的力量佩戴也无法窥探她 type=13
@@ -643,3 +642,58 @@
 龙鳞法杖 attack=183 armor=-40 san-max=10 speed=10 cost=-1 sell=150 comments=龙的魔法力量大大加强了法杖的能力 type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=魔法师6
 龙鳞弓 attack=121 armor=-5 speed=50 cost=-1 sell=150 comments=拉开这种弓，属实不容易 type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=弓箭手6
 龙鳞弩 attack=114 armor=0 speed=80 cost=-1 sell=150 comments=灵活的弩身带来灵活的速度 type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=弓箭手6
+
+
+
+#=========================================
+# 四期装备
+#=========================================
+元金 cost=-1 sell=-1 comments=一种独特的黄金 type=32
+原始仙石 cost=-1 sell=-1 comments=灰色外表也不能掩饰其中的力量 type=32
+仙石 cost=-1 sell=-1 comments=其中蕴含着不一样的力量 type=31
+仙晶 cost=-1 sell=-1 comments=谪仙所用之物 type=32
+凤血 cost=-1 sell=-1 comments=从强大的凤凰身上采取的精血 type=34
+凤羽 cost=-1 sell=-1 comments=从凤凰身上折下来的正羽 type=34
+流光凤羽 cost=-1 sell=-1 comments=沐浴着凤血的风羽，其上好像有着七彩流光 type=34
+灵魂 cost=-1 sell=-1 comments=从强大的怪物身上采集 type=34
+精魄 cost=-1 sell=-1 comments=用灵魂演化而来 type=34
+
+火精魄 cost=-1 sell=-1 comments=带有火元素的精魄 type=34
+水精魄 cost=-1 sell=-1 comments=带有水元素的精魄 type=34
+木精魄 cost=-1 sell=-1 comments=带有木元素的精魄 type=34
+雷精魄 cost=-1 sell=-1 comments=带有雷元素的精魄 type=34
+
+流光蚕 cost=-1 sell=-1 comments=带着霞光的蚕 type=27
+流光蚕丝 cost=-1 sell=-1 commnets=表面流动着光彩的蚕丝 type=22
+
+桃木树苗 cost=-1 sell=-1 comments=桃木树苗 type=27
+桃木 cost=-1 sell=-1 comments=桃木 type=27
+
+火灵木 cost=-1 sell=-1 comments=被赋予了火元素之力的灵木 type=31
+雷击木 cost=-1 sell=-1 comments=被赋予了雷元素之力的灵木 type=31
+
+空间指环 knapsack=35 cost=-1 sell=-1 comments=拥有空间之力的存物宝贝 type=19
+
+#=========================================
+# 凤羽装备
+#=========================================
+桃木剑 attack=193 armor=35 cost=-1 sell=150 comments=一剑在手，诛邪散避！ type=111 enchanting-sharp=9 enchanting-rapid=9 occupation=战士7，魔法师7，弓箭手7
+霓裳羽衣 attack=25 armor=62 speed=0 cost=-1 sell=130 comments=翩若惊鸿，婉若游龙！ type=16 enchanting-rapid=8 enchanting-strong=8 occupation=魔法师7，弓箭手7
+
+凤羽头盔 attack=15 armor=32 speed=-6 cost=-1 sell=130 comments=风羽的光彩让它比龙鳞头盔更轻 type=15 enchanting-rapid=7 enchanting-strong=7
+
+凤羽甲 attack=15 armor=40 speed=-6 cost=-1 sell=130 comments=由凤凰羽毛制成的铠甲 type=16 enchanting-rapid=7 enchanting-strong=7 occupation=战士7，盾战士7
+凤羽衣 attack=20 armor=38 speed=-6 cost=-1 sell=130 comments=wow！黑科技，难以想象这么轻同时还有如此高的防护 type=16 enchanting-rapid=7 enchanting-strong=7 occupation=魔法师7，弓箭手7
+
+凤羽护腿 attack=15 armor=38 speed=-6 cost=-1 sell=130 comments=有了它，再也不会感觉凉飕飕的了 type=17 enchanting-rapid=7 enchanting-strong=7
+
+凤羽靴 attack=15 armor=32 speed=-6 cost=-1 sell=130 comments=虽然是由剩余的边角料制作而成，但是还是起到了很好的防护作用 type=18 enchanting-rapid=7 enchanting-strong=7
+
+凤羽剑 attack=163 armor=15 cost=-1 sell=150 comments=剑来！ type=111 enchanting-sharp=7 enchanting-rapid=7 occupation=战士7
+凤羽戟 attack=178 armor=-5 cost=-1 sell=150 comments=横刀立马！ type=111 enchanting-sharp=7 enchanting-rapid=7 occupation=战士7
+凤羽棍 attack=177 armor=-10 hp-max=10 speed=20 cost=-1 sell=150 comments=大道希音 type=112 enchanting-sharp=7 enchanting-rapid=7 occupation=盾战士7
+凤羽盾 attack=136 armor=30 hp-max=40 speed=-30 cost=-1 sell=150 comments=不教胡马度阴山！ type=113 enchanting-sharp=7 enchanting-rapid=7 occupation=盾战士7
+凤羽旗 attack=164 armor=50 san-max=50 speed=-10 cost=-1 sell=150 comments=有些时候旗子是精神的象征 type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=魔法师7
+凤羽法杖 attack=223 armor=-30 san-max=10 speed=10 cost=-1 sell=150 comments=道可道，非常道。名可名，非常名。 type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=魔法师7
+凤羽弓 attack=161 armor=0 speed=60 cost=-1 sell=150 comments=凤啸九天！ type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=弓箭手7
+凤羽弩 attack=154 armor=10 speed=70 cost=-1 sell=150 comments=也许有些时候你不必拉开弩 type=116 enchanting-sharp=7 enchanting-rapid=7 occupation=弓箭手7
