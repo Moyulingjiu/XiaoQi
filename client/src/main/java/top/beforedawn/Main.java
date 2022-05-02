@@ -547,7 +547,7 @@ public class Main {
 
     private static void isExpired(SingleEvent singleEvent) {
         BotConfig config = singleEvent.getConfig();
-        if (config.getKeyValidEndDate() == null || config.getKeyType().equals("FOREVER")) {
+        if (config.getKeyValidEndDate() == null || "FOREVER".equals(config.getKeyType())) {
             return;
         }
         if (config.getKeyValidEndDate().isBefore(LocalDateTime.now())) {
@@ -624,22 +624,26 @@ public class Main {
             MyGroup group = GroupPool.get(singleEvent);
             String message = singleEvent.getMessage().getPlainString();
             boolean permission = true;
-            for (String muteWord : group.getMuteWords()) {
-                if (message.contains(muteWord) && !message.startsWith("删除屏蔽词")) {
-                    MemberPermission botPermission = event.getGroup().getBotPermission();
-                    if (botPermission == MemberPermission.MEMBER) {
-                        singleEvent.sendAt("发现屏蔽词“" + muteWord + "”但" + singleEvent.getBotName() + "无权撤回");
-                    } else if (botPermission == MemberPermission.ADMINISTRATOR && event.getPermission() != MemberPermission.MEMBER) {
-                        singleEvent.sendAt("发现屏蔽词“" + muteWord + "”但对方是管理员/群主" + singleEvent.getBotName() + "无权撤回");
-                    } else {
-                        MessageSource.recall(event.getMessage());
-                        MessageChainBuilder builder = new MessageChainBuilder();
-                        builder.append(new At(singleEvent.getSenderId()));
-                        builder.append(new PlainText("发现屏蔽词“" + muteWord + "”予以撤回"));
-                        singleEvent.send(builder.asMessageChain());
+            // 防止两个机器人用屏蔽词互相卡死（群聊的屏蔽放到此处来）
+            if (MessageStatistics.getRemindTime(singleEvent.getSenderId())) return;
+            if (!message.startsWith("删除屏蔽词") && !message.startsWith("发现屏蔽词")) {
+                for (String muteWord : group.getMuteWords()) {
+                    if (message.contains(muteWord)) {
+                        MemberPermission botPermission = event.getGroup().getBotPermission();
+                        if (botPermission == MemberPermission.MEMBER) {
+                            singleEvent.sendAt("发现屏蔽词“" + muteWord + "”但" + singleEvent.getBotName() + "无权撤回");
+                        } else if (botPermission == MemberPermission.ADMINISTRATOR && event.getPermission() != MemberPermission.MEMBER) {
+                            singleEvent.sendAt("发现屏蔽词“" + muteWord + "”但对方是管理员/群主" + singleEvent.getBotName() + "无权撤回");
+                        } else {
+                            MessageSource.recall(event.getMessage());
+                            MessageChainBuilder builder = new MessageChainBuilder();
+                            builder.append(new At(singleEvent.getSenderId()));
+                            builder.append(new PlainText("发现屏蔽词“" + muteWord + "”予以撤回"));
+                            singleEvent.send(builder.asMessageChain());
+                        }
+                        permission = false;
+                        break;
                     }
-                    permission = false;
-                    break;
                 }
             }
             // 指令隧穿（不支持连续隧穿）

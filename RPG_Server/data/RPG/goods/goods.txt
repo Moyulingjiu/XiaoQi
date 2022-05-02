@@ -664,7 +664,7 @@
 雷精魄 cost=-1 sell=-1 comments=带有雷元素的精魄 type=34
 
 流光蚕 cost=-1 sell=-1 comments=带着霞光的蚕 type=27
-流光蚕丝 cost=-1 sell=-1 commnets=表面流动着光彩的蚕丝 type=22
+流光蚕丝 cost=-1 sell=-1 comments=表面流动着光彩的蚕丝 type=22
 
 桃木树苗 cost=-1 sell=-1 comments=桃木树苗 type=27
 桃木 cost=-1 sell=-1 comments=桃木 type=27

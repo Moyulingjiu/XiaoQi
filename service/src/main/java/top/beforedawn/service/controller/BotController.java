@@ -15,6 +15,12 @@ public class BotController {
     @Autowired
     BotService botService;
 
+    /**
+     * 公约
+     *
+     * @param botId 机器人id
+     * @return 公约
+     */
     @GetMapping("/convention")
     public Object getConvention(
             @RequestParam() Long botId
@@ -27,7 +33,8 @@ public class BotController {
                 "2. 不得利用机器人故意恶心、人身攻击他人，挑起争端。\n" +
                 "3. 加入生态的机器人主人有义务监督成员履行公约。\n" +
                 "4. 使用者使用小柒意味着同意本公约。\n" +
-                "5. 机器人创造者保留本公约最终解释权，并且有权在使用者违反上述规定时停止或收回其使用权。";
+                "5. 机器人创造者保留本公约最终解释权，并且有权在使用者违反上述规定时停止或收回其使用权。\n" +
+                "如有疑问可以前往官方群：479504567";
         return Common.decorate(ReturnNo.OK, convention);
     }
 

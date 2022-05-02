@@ -4244,9 +4244,11 @@ class Core:
                 user['skill']['max'] = 4
         user['occupation']['farm']['max'] = 4
         if user['occupation']['work'] == '培育师':
-            if user['occupation']['work_level'] >= 7:
+            if user['occupation']['work_level'] >= 9:
+                user['occupation']['farm']['max'] = 8
+            elif user['occupation']['work_level'] >= 8:
                 user['occupation']['farm']['max'] = 7
-            if user['occupation']['work_level'] >= 5:
+            elif user['occupation']['work_level'] >= 5:
                 user['occupation']['farm']['max'] = 6
             elif user['occupation']['work_level'] >= 3:
                 user['occupation']['farm']['max'] = 5
@@ -8082,7 +8084,7 @@ class RPG:
         return reply
 
     def get_knapsack(self, user, page: int):
-        page_size = 20
+        page_size = 30
         if page <= 0:
             page = 0
         else:
@@ -8456,7 +8458,10 @@ class RPG:
             self.core = Core()
 
         message = message.replace('(', '（').replace(')', '）').replace(',', '，').replace(':', '：')
-        message = message.lower()
+        message: str = message.lower()
+        if message.startswith('@') and '使用技能' in message:
+            split = message.find('使用技能')
+            message = message[split:] + message[:split]
 
         need_reply = False
         reply_text = ''
@@ -8625,13 +8630,9 @@ class RPG:
             ]
 
             if message == '签到':
-                print(message)
-                try:
-                    result = self.core.sign(qq)
-                    reply_text = result.show()
-                    need_reply = True
-                except Exception as e:
-                    print(e)
+                result = self.core.sign(qq)
+                reply_text = result.show()
+                need_reply = True
             elif '击剑' in message:
                 if be_at:
                     reply_text = bot_name + random.choice(replylist)
@@ -8915,7 +8916,7 @@ class RPG:
                     result = self.core.use_skill(qq, qq, index, number)
                     reply_text = result.show()
                     need_reply = True
-                elif len(information) == 2 and index > 0 and number > 0 and information[1].isdigit():
+                elif len(information) == 2 and index > 0 and number > 0 and information[1].strip().isdigit():
                     result = self.core.use_skill(qq, int(information[1]), index, number)
                     reply_text = result.show()
                     need_reply = True
@@ -9302,10 +9303,15 @@ class RPG:
                 reply_text = self.get_equipment(user)
                 need_reply = True
         elif message[:4] == '查看背包':
-            temp_message = message[4:].strip()
-            if temp_message.isdigit():
-                user = self.core.get_user(int(temp_message))
-                reply_text = self.get_knapsack(user)
+            temp_message = message[4:].strip().split(' ')
+            if len(temp_message) == 1 and temp_message[0].isdigit():
+                user = self.core.get_user(int(temp_message[0]))
+                reply_text = self.get_knapsack(user, 1)
+                need_reply = True
+            elif len(temp_message) == 2 and temp_message[0].isdigit() and temp_message[1].isdigit():
+                user = self.core.get_user(int(temp_message[0]))
+                page = int(temp_message[1])
+                reply_text = self.get_knapsack(user, page)
                 need_reply = True
         elif message[:4] == '查看成就':
             temp_message = message[4:].strip()
@@ -9345,7 +9351,6 @@ class RPG:
                 reply_text = '格式错误~'
             need_reply = True
         elif message[:6] == '移除buff':
-            print(message)
             name = message[6:].strip()
             if name != '':
                 user = self.core.get_user(qq)
