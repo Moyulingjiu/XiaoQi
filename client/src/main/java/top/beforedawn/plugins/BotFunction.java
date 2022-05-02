@@ -20,6 +20,7 @@ import top.beforedawn.util.CommonUtil;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
 
+import java.lang.management.ManagementFactory;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -723,6 +724,14 @@ public class BotFunction extends BasePlugin {
                 return;
             }
             singleEvent.send("当前背景任务个数为：" + BackgroundTask.getInstance().size());
+        }
+        // 查看运行状态
+        else if (singleEvent.getMessage().plainEqual("查看进程号")) {
+            if (!singleEvent.aboveSystemAdmin()) {
+                singleEvent.send("权限不足！");
+                return;
+            }
+            singleEvent.send(ManagementFactory.getRuntimeMXBean().getName());
         }
     }
 
