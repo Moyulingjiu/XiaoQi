@@ -9,12 +9,29 @@ import top.beforedawn.util.HttpResponse;
 import top.beforedawn.util.HttpUtil;
 import top.beforedawn.util.SingleEvent;
 
+import java.util.HashSet;
+
 /**
  * 漂流瓶
  *
  * @author 墨羽翎玖
  */
 public class DriftingBottleFunction extends BasePlugin {
+    private final HashSet<String> banWord = new HashSet<>() {
+        {
+            add("扩列");
+            add("傻逼");
+            add("傻B");
+            add("傻b");
+            add("傻比");
+            add("贱人");
+            add("肉便器");
+            add("rbq");
+            add("爸爸");
+            add("儿子");
+        }
+    };
+
     public DriftingBottleFunction() {
         pluginName = "drifting_bottle";
     }
@@ -37,6 +54,13 @@ public class DriftingBottleFunction extends BasePlugin {
         } else if (singleEvent.getMessage().plainStartWith("扔漂流瓶")) {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("扔漂流瓶");
+            String text = analysis.getText();
+            for (String s : banWord) {
+                if (text.contains(s)) {
+                    singleEvent.send("请注意漂流瓶不要骂人、扩列、含有群号等");
+                    break;
+                }
+            }
             HttpResponse response = HttpUtil.sendDriftingBottle(singleEvent, analysis.getText());
             if (response != null) {
                 singleEvent.send("你的漂流瓶已经被扔向了大海~");
