@@ -1,5 +1,6 @@
 package top.beforedawn.plugins;
 
+import top.beforedawn.config.BotConfig;
 import top.beforedawn.config.GroupPool;
 import top.beforedawn.models.bo.MyGroup;
 import top.beforedawn.util.HttpRequest;
@@ -42,8 +43,7 @@ public class RpgFunction extends BasePlugin {
                 limit = group.isRpgLimit();
             }
 
-            String url = "http://175.178.4.128:9000/rpg";
-//            String url = "http://127.0.0.1:8000/rpg";
+            String url = BotConfig.REMOTE_RPG_SERVER_IP + "/rpg";
             String json = "{\n" +
                     "    \"text\": \"" + (atMessage + message).strip() + "\",\n" +
                     "    \"qq\": " + singleEvent.getSenderId() + ",\n" +

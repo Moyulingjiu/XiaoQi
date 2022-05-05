@@ -5,17 +5,8 @@ import top.beforedawn.config.BotConfig;
 import top.beforedawn.models.bo.*;
 
 public class HttpUtil {
-    private static final String serviceIp = "175.178.4.128";
-//        private static final String serviceIp = "127.0.0.1";
-    private static final int servicePort = 9001;
-
     private static String serverAddress() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("http:").append("//").append(serviceIp);
-        if (servicePort != 0) {
-            builder.append(":").append(servicePort);
-        }
-        return builder.toString();
+        return BotConfig.REMOTE_SERVER_IP;
     }
 
     public static String convention(long botId) {

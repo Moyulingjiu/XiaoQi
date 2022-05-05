@@ -29,7 +29,7 @@ public class BotConfig {
     /**
      * 版本信息
      */
-    public static final String VERSION = "1.0.1";
+    public static final String VERSION = "1.0.2";
 
     /**
      * 每分钟最大的消息数量
@@ -39,17 +39,12 @@ public class BotConfig {
     /**
      * 远程服务器ip地址
      */
-    private static final String remoteServerIp = "http://localhost:8080";
+    public static final String REMOTE_SERVER_IP = "http://localhost:8080";
 
     /**
      * 远程RPG游戏服务器ip地址
      */
-    private static final String remoteRPGServerIp = "http://localhost:8081";
-
-    /**
-     * 花灵游戏服务器ip地址
-     */
-    private static final String remoteFlowerServerIp = "http://localhost:8082";
+    public static final String REMOTE_RPG_SERVER_IP = "http://175.178.4.128:9000";
 
     private final String configFilename = "config.json";
     private final String statisticsFilename = "statistics.json";
