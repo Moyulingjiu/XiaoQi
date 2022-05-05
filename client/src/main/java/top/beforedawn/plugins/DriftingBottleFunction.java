@@ -23,6 +23,7 @@ public class DriftingBottleFunction extends BasePlugin {
             add("傻逼");
             add("傻B");
             add("傻b");
+            add("shab");
             add("傻比");
             add("贱人");
             add("肉便器");
@@ -55,6 +56,10 @@ public class DriftingBottleFunction extends BasePlugin {
             MessageLinearAnalysis analysis = new MessageLinearAnalysis(singleEvent.getMessage());
             analysis.pop("扔漂流瓶");
             String text = analysis.getText();
+            if (text.length() > 100 || text.length() < 5) {
+                singleEvent.send("漂流瓶内容不能超过100字，也不能少于5字");
+                return;
+            }
             for (String s : banWord) {
                 if (text.contains(s)) {
                     singleEvent.send("请注意漂流瓶不要骂人、扩列、含有群号等");

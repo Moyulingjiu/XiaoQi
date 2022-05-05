@@ -18,6 +18,8 @@ import top.beforedawn.util.*;
 import java.lang.management.ManagementFactory;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     private static final ArrayList<BasePlugin> plugins = new ArrayList<>();
@@ -577,9 +579,13 @@ public class Main {
         }
 
         // 所有插件进行轮询
+        ExecutorService service = Executors.newFixedThreadPool(10);
         for (BasePlugin plugin : plugins) {
-            plugin.handle(singleEvent);
+            service.submit(() -> {
+                plugin.handle(singleEvent);
+            });
         }
+        service.shutdown();
     }
 
     public static void main(String[] args) {
