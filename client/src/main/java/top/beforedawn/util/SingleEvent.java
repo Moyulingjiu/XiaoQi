@@ -292,7 +292,7 @@ public class SingleEvent {
      *
      * @param chain 消息链
      */
-    public void sendMaster(MessageChain chain) {
+    public synchronized void sendMaster(MessageChain chain) {
         if (chain.isEmpty()) return;
         if (combineBot == null) return;
         Friend friend = combineBot.getBot().getFriend(getConfig().getMaster());
@@ -307,7 +307,7 @@ public class SingleEvent {
      *
      * @param plain 文本
      */
-    public void sendMaster(String plain) {
+    public synchronized void sendMaster(String plain) {
         if (plain == null || plain.equals("")) return;
         if (combineBot == null) return;
         Friend friend = combineBot.getBot().getFriend(getConfig().getMaster());
@@ -322,7 +322,7 @@ public class SingleEvent {
      *
      * @param chain 消息链
      */
-    public void send(MessageChain chain) {
+    public synchronized void send(MessageChain chain) {
         if (chain.isEmpty()) return;
         if (isGroupMessage()) {
             record();
